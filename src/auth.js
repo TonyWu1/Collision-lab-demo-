@@ -1,5 +1,5 @@
-import { getUserByUsername } from './users.js';
+import { getUserByEmail } from './users.js';
 
-export function login(username) {
-  return getUserByUsername(username);
+export function login(email) {
+  return getUserByEmail(email);
 }
