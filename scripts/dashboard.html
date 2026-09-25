@@ -409,9 +409,11 @@ function renderScenario1(steps) {
 
 function renderScenario2(steps) {
   const parts = [];
-  parts.push(stepCard('S2-A — feature/price-object', steps['S2-A']));
+  // S2-A uses feature/price-object-v2: both branches share 2333e05 as common ancestor,
+  // so the merge is genuinely conflict-free (no --theirs resolution needed).
+  parts.push(stepCard('S2-A — feature/price-object-v2', steps['S2-A']));
   parts.push(stepCard('S2-B — feature/cart', steps['S2-B']));
-  parts.push(mergeCard('S2-M — Merge: main → price-object → cart', steps['S2-M']));
+  parts.push(mergeCard('S2-M — Merge: price-object-v2 into cart (conflict-free)', steps['S2-M']));
 
   const s2c = steps['S2-C'];
   const cc2 = s2c?.collisionCheck;
@@ -448,18 +450,30 @@ function renderScenario3(steps) {
   parts.push(stepCard('S3-A — feature/soft-delete', steps['S3-A']));
   parts.push(stepCard('S3-B — feature/reporting', steps['S3-B']));
 
-  // S3-M — note: pre-collision unit failures are expected
+  // S3-M — collision detected immediately by existing tests (no integration test needed)
   const s3m = steps['S3-M'];
+  const ed  = s3m?.earlyDetection;
   let s3mExtra = '';
-  if (s3m && s3m.testRun?.parsed?.failed > 0) {
+  if (ed?.detected) {
+    s3mExtra = `
+      <div style="margin-top:8px;padding:10px 12px;background:#fff0e0;border:1px solid #f59e0b;border-radius:6px;font-size:.82rem;color:#78350f">
+        <strong>⚡ Early detection:</strong> The collision is already visible in the existing test suite — no integration test injection needed.
+        ${ed.count} test(s) from <code>reporting.test.js</code> fail immediately after this merge:
+        <ul style="margin:6px 0 0 16px;padding:0">
+          ${ed.tests.map((n) => `<li><code>${esc(n)}</code></li>`).join('')}
+        </ul>
+        <div style="margin-top:6px">These tests assert <code>getActiveUserCount()</code> returns 2 after removing a user.
+        After merging soft-delete, <code>getAllUsers()</code> still returns 3 records.
+        The tests are <em>not weakened</em> — they are direct evidence of the semantic collision.</div>
+      </div>`;
+  } else if (s3m && s3m.testRun?.parsed?.failed > 0) {
+    // fallback for older reports without earlyDetection field
     s3mExtra = `
       <div style="margin-top:8px;padding:8px 10px;background:#fff8f0;border:1px solid #fdba74;border-radius:5px;font-size:.8rem;color:#6a3500">
-        <strong>Note:</strong> ${s3m.testRun.parsed.failed} unit test failure(s) in the merged tree are <em>expected</em> —
-        <code>reporting.test.js</code> was written against the physical-delete contract and breaks when soft-delete is merged in.
-        This is early evidence of the collision, visible before the integration test is injected.
+        <strong>Note:</strong> ${s3m.testRun.parsed.failed} existing test(s) fail after merge — early collision detection.
       </div>`;
   }
-  parts.push(mergeCard('S3-M — Merge: main → soft-delete → reporting', s3m, s3mExtra));
+  parts.push(mergeCard('S3-M — Merge: reporting into soft-delete (conflict-free)', s3m, s3mExtra));
 
   const s3c = steps['S3-C'];
   const cc3 = s3c?.collisionCheck;

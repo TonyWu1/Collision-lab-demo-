@@ -19,18 +19,20 @@
  *   S1-F  fix/canonical-profile-identity — full suite; all pass; exit 0
  *
  * ─── Scenario 2 — Price format / cart total ───────────────────────────────
- *   S2-A  feature/price-object         — independent suite; all pass; exit 0
+ *   S2-A  feature/price-object-v2      — independent suite; all pass; exit 0
+ *          (modifies catalog.js in-place from 2333e05 baseline; no add/add conflict)
  *   S2-B  feature/cart                 — independent suite; all pass; exit 0
- *   S2-M  merge price-object + cart (from main) — no conflicts; unit tests pass
+ *   S2-M  merge price-object-v2 + cart — genuinely conflict-free; unit tests pass
  *   S2-C  inject cart-total collision integration test
- *           → 1 failure: NaN !== 40
+ *           → exactly 1 failure: NaN !== 40, ERR_ASSERTION
  *
  * ─── Scenario 3 — Soft delete / active-user reporting ─────────────────────
  *   S3-A  feature/soft-delete          — independent suite; all pass; exit 0
  *   S3-B  feature/reporting            — independent suite; all pass; exit 0
- *   S3-M  merge soft-delete + reporting (from main) — no conflicts; unit tests pass
+ *   S3-M  merge soft-delete + reporting — no textual conflicts
+ *          (collision already detected: reporting.test.js fails in merged tree)
  *   S3-C  inject active-count collision integration test
- *           → 1 failure: 3 !== 2
+ *           → named collision test fails: 3 !== 2, ERR_ASSERTION
  */
 
 import { spawnSync } from 'node:child_process';
@@ -291,7 +293,8 @@ function confirmsCollisionS1(parsed) {
   return { ok: true, reason: 'all conditions met: actual=null, expected=Alice, ERR_ASSERTION' };
 }
 
-// Scenario 2: exactly 1 failure — "COLLISION: cart total is NaN…", NaN actual, 40 expected
+// Scenario 2: exactly 1 failure — "COLLISION: cart total is NaN…"
+// actual must be the inline value 'NaN' (not null, not a number), expected 40, ERR_ASSERTION.
 const S2_COLLISION_TEST_NAME = 'COLLISION: cart total is NaN when catalog returns price objects';
 
 function confirmsCollisionS2(parsed) {
@@ -300,10 +303,10 @@ function confirmsCollisionS2(parsed) {
   if (!failing) return { ok: false, reason: 'no failing test found' };
   if (failing.name !== S2_COLLISION_TEST_NAME) return { ok: false, reason: `wrong test name: "${failing.name}"` };
   if (failing.errorCode !== 'ERR_ASSERTION') return { ok: false, reason: `code: ${failing.errorCode}` };
-  // actual should be NaN (serialised as 'NaN' inline value)
-  const actualOk = failing.actualIsNull === false;
-  if (!actualOk && failing.actualValue !== 'NaN') return { ok: false, reason: `actual not NaN: ${failing.actualValue}` };
-  return { ok: true, reason: 'all conditions met: NaN total, ERR_ASSERTION' };
+  // actual must be NaN — Node serialises it as the inline YAML value 'NaN'
+  if (failing.actualIsNull) return { ok: false, reason: 'actual is null, not NaN' };
+  if (failing.actualValue !== 'NaN') return { ok: false, reason: `actual value is not NaN; got: ${JSON.stringify(failing.actualValue)}` };
+  return { ok: true, reason: 'all conditions met: actual=NaN, expected=40, ERR_ASSERTION' };
 }
 
 // Scenario 3: the named collision test must fail with ERR_ASSERTION.
@@ -463,9 +466,8 @@ try {
     'feature/email-auth',
     'feature/profile-cache-v2',
     'fix/canonical-profile-identity',
-    'feature/price-object',
+    'feature/price-object-v2',
     'feature/cart',
-    'main',
     'feature/soft-delete',
     'feature/reporting',
   ];
@@ -648,15 +650,17 @@ evidence.scenarios.scenario2 = {
 const S2 = evidence.scenarios.scenario2.steps;
 let s2MergeDir = null;
 
-// S2-A: feature/price-object
+// S2-A: feature/price-object-v2
+// Both S2-A and S2-B branch from 2333e05 (shared numeric-price catalog baseline).
+// S2-A modifies catalog.js in-place; S2-B adds cart.js. Merge is genuinely conflict-free.
 {
-  console.log('\n[S2-A] feature/price-object — independent suite');
-  const step = { id: 'S2-A', branch: 'feature/price-object', sha: R['feature/price-object'] };
+  console.log('\n[S2-A] feature/price-object-v2 — independent suite');
+  const step = { id: 'S2-A', branch: 'feature/price-object-v2', sha: R['feature/price-object-v2'] };
   S2['S2-A'] = step;
   try {
-    const { dir } = addWorktree(R['feature/price-object']);
+    const { dir } = addWorktree(R['feature/price-object-v2']);
     step.worktreeDir = dir;
-    const tr = runTests(dir, 'S2-A feature/price-object');
+    const tr = runTests(dir, 'S2-A feature/price-object-v2');
     step.testRun = tr;
     console.log(tr.stdout);
     const { verdict, reason } = verdictForPassingSuite(tr);
@@ -682,68 +686,34 @@ let s2MergeDir = null;
   console.log(`  → ${step.verdict}: ${step.verdictReason}`);
 }
 
-// S2-M: merge worktree — start from main, merge price-object (resolve catalog conflict), then cart
+// S2-M: merge feature/price-object-v2 into feature/cart worktree — genuinely conflict-free
+// Common ancestor is 2333e05 which already has catalog.js (numeric price).
+// S2-A modifies catalog.js; S2-B only adds cart.js — no overlapping file changes.
 {
-  console.log('\n[S2-M] Merge: main → price-object (resolve catalog) → cart');
-  const step = { id: 'S2-M', description: 'merge feature/price-object and feature/cart from main baseline' };
+  console.log('\n[S2-M] Merge: feature/price-object-v2 into feature/cart (conflict-free)');
+  const step = { id: 'S2-M', description: 'merge feature/price-object-v2 into feature/cart; common ancestor 2333e05' };
   S2['S2-M'] = step;
   try {
-    // Start from main (which has numeric-price catalog)
-    const { dir } = addWorktree(R['main']);
+    // Start from feature/cart (has numeric catalog + cart.js)
+    const { dir } = addWorktree(R['feature/cart']);
     s2MergeDir = dir;
     step.worktreeDir = dir;
 
-    // Merge price-object — this causes add/add conflict on src/catalog.js
-    // because feature/price-object predates main's catalog.js commit.
-    // Resolve by taking feature/price-object's version.
-    const mr1 = spawnCapture(
+    // Merge price-object-v2 — modifies catalog.js, adds catalog.test.js; cart.js untouched
+    // No --theirs or manual conflict resolution. If it fails, the scenario is broken.
+    const mr = spawnCapture(
       GIT,
       ['-c', 'user.email=demo@collisionlab.local', '-c', 'user.name=CollisionLab',
-       'merge', '--no-edit', R['feature/price-object']],
+       'merge', '--no-edit', R['feature/price-object-v2']],
       dir,
     );
-    step.mergeResult1 = mr1;
-
-    let conflict1Resolved = false;
-    if (mr1.status !== 0) {
-      // Expected add/add conflict on src/catalog.js — resolve by taking theirs
-      const r1 = spawnCapture(GIT, ['checkout', '--theirs', 'src/catalog.js'], dir);
-      const r2 = spawnCapture(GIT, ['add', 'src/catalog.js'], dir);
-      const r3 = spawnCapture(
-        GIT,
-        ['-c', 'user.email=demo@collisionlab.local', '-c', 'user.name=CollisionLab',
-         'commit', '--no-edit'],
-        dir,
-      );
-      step.conflictResolution1 = { checkout: r1, add: r2, commit: r3 };
-      conflict1Resolved = r3.status === 0;
-      console.log(`  Price-object merge conflict resolved: ${conflict1Resolved ? '✅' : '❌'}`);
-    } else {
-      console.log('  Price-object merge: clean ✅');
-    }
-
-    const merge1Ok = mr1.status === 0 || conflict1Resolved;
-
-    // Merge cart (should be clean — different files)
-    let mr2 = null; let merge2Ok = false;
-    if (merge1Ok) {
-      mr2 = spawnCapture(
-        GIT,
-        ['-c', 'user.email=demo@collisionlab.local', '-c', 'user.name=CollisionLab',
-         'merge', '--no-edit', R['feature/cart']],
-        dir,
-      );
-      step.mergeResult2 = mr2;
-      merge2Ok = mr2.status === 0;
-      console.log(`  Cart merge exit: ${mr2.status}  ${merge2Ok ? '✅' : '❌'}`);
-    }
-
-    step.hasTextualConflicts = !(merge1Ok && merge2Ok);
-    console.log(`  Overall conflicts: ${step.hasTextualConflicts ? 'YES ❌' : 'NONE ✅'}`);
+    step.mergeResult1 = mr;
+    step.hasTextualConflicts = mr.status !== 0;
+    console.log(`  Merge exit: ${mr.status}  conflicts: ${step.hasTextualConflicts ? 'YES ❌' : 'NONE ✅'}`);
 
     if (step.hasTextualConflicts) {
       step.verdict = 'FAIL';
-      step.verdictReason = `Merge conflict — merge1: exit ${mr1.status}, merge2: exit ${mr2?.status ?? 'skipped'}`;
+      step.verdictReason = `Textual conflict during merge (exit ${mr.status}) — scenario setup is broken`;
     } else {
       const tr = runTests(dir, 'S2-M merged unit tests');
       step.testRun = tr;
@@ -842,27 +812,31 @@ let s3MergeDir = null;
   console.log(`  → ${step.verdict}: ${step.verdictReason}`);
 }
 
-// S3-M: merge worktree — start from main, merge soft-delete then reporting
+// S3-M: merge feature/reporting into feature/soft-delete worktree — genuinely conflict-free
+// Both branches share 2333e05 as common ancestor.
+// soft-delete modifies userStore.js; reporting adds reporting.js — no overlapping files.
 {
-  console.log('\n[S3-M] Merge: main → soft-delete → reporting');
-  const step = { id: 'S3-M', description: 'merge feature/soft-delete and feature/reporting from main baseline' };
+  console.log('\n[S3-M] Merge: feature/reporting into feature/soft-delete (conflict-free)');
+  const step = { id: 'S3-M', description: 'merge feature/reporting into feature/soft-delete; common ancestor 2333e05' };
   S3['S3-M'] = step;
   try {
-    const { dir } = addWorktree(R['main']);
+    // Start from feature/soft-delete (has soft-delete userStore.js)
+    const { dir } = addWorktree(R['feature/soft-delete']);
     s3MergeDir = dir;
     step.worktreeDir = dir;
 
+    // Merge feature/reporting — adds reporting.js and reporting.test.js; no overlap with userStore.js
     const mr1 = spawnCapture(
       GIT,
       ['-c', 'user.email=demo@collisionlab.local', '-c', 'user.name=CollisionLab',
-       'merge', '--no-edit', R['feature/soft-delete']],
+       'merge', '--no-edit', R['feature/reporting']],
       dir,
     );
     step.mergeResult1 = mr1;
-    console.log(`  Soft-delete merge exit: ${mr1.status}  ${mr1.status === 0 ? '✅' : '❌'}`);
+    console.log(`  Reporting merge exit: ${mr1.status}  ${mr1.status === 0 ? '✅' : '❌'}`);
 
     let mr2 = null;
-    if (mr1.status === 0) {
+    if (false) { // no second merge needed
       mr2 = spawnCapture(
         GIT,
         ['-c', 'user.email=demo@collisionlab.local', '-c', 'user.name=CollisionLab',
@@ -870,28 +844,33 @@ let s3MergeDir = null;
         dir,
       );
       step.mergeResult2 = mr2;
-      console.log(`  Reporting merge exit: ${mr2.status}  ${mr2.status === 0 ? '✅' : '❌'}`);
     }
 
-    step.hasTextualConflicts = mr1.status !== 0 || (mr2?.status ?? 1) !== 0;
+    step.hasTextualConflicts = mr1.status !== 0;
     console.log(`  Overall conflicts: ${step.hasTextualConflicts ? 'YES ❌' : 'NONE ✅'}`);
 
     if (step.hasTextualConflicts) {
       step.verdict = 'FAIL';
-      step.verdictReason = `Merge conflict — merge1: exit ${mr1.status}, merge2: exit ${mr2?.status ?? 'skipped'}`;
+      step.verdictReason = `Textual conflict during merge (exit ${mr1.status}) — scenario setup is broken`;
     } else {
-      // Run unit tests to record results but do NOT require all to pass.
-      // Scenario 3's collision bleeds into the unit suite (reporting.test.js assumes
-      // physical delete and fails after soft-delete is merged). The merge verdict is
-      // based on absence of textual conflicts only; collision evidence is in S3-C.
+      // Scenario 3's collision is already detected by the existing unit test suite:
+      // reporting.test.js was written against physical-delete semantics and fails
+      // immediately after merging soft-delete. This is NOT a test we weaken — it is
+      // direct evidence of the semantic collision appearing before any integration
+      // test is injected. Merge verdict is based on absence of textual conflicts.
       const tr = runTests(dir, 'S3-M merged unit tests');
       step.testRun = tr;
       console.log(tr.stdout);
       const spawnOk = !tr.spawnError && !tr.signal;
-      step.verdict = spawnOk ? 'PASS' : 'FAIL';
       const p = tr.parsed;
+      // Record early-detection details for the dashboard to display
+      const earlyFails = p?.tests?.filter((t) => !t.ok) ?? [];
+      step.earlyDetection = earlyFails.length > 0
+        ? { detected: true, count: earlyFails.length, tests: earlyFails.map((t) => t.name) }
+        : { detected: false, count: 0, tests: [] };
+      step.verdict = spawnOk ? 'PASS' : 'FAIL';
       step.verdictReason = spawnOk
-        ? `No textual conflicts; ${p ? `${p.passed} passed, ${p.failed} failed (pre-collision unit failures expected)` : 'tests ran'}`
+        ? `No textual conflicts; collision already detected: ${earlyFails.length} existing test(s) fail immediately — ${earlyFails.map((t) => `"${t.name}"`).join(', ')}`
         : `Process error: ${tr.spawnError ?? tr.signal}`;
     }
   } catch (err) { step.verdict = 'ERROR'; step.verdictReason = err.message; }
