@@ -1,8 +1,9 @@
-// User store with physical delete.
+// User store with soft delete (sets deleted: true instead of removing the record).
+// Downstream code that needs "active users" should filter on !u.deleted.
 const users = [
-  { id: 'u1', username: 'alice', email: 'alice@example.com' },
-  { id: 'u2', username: 'bruno', email: 'bruno@example.com' },
-  { id: 'u3', username: 'carla', email: 'carla@example.com' },
+  { id: 'u1', username: 'alice', email: 'alice@example.com', deleted: false },
+  { id: 'u2', username: 'bruno', email: 'bruno@example.com', deleted: false },
+  { id: 'u3', username: 'carla', email: 'carla@example.com', deleted: false },
 ];
 
 export function getAllUsers() {
@@ -14,15 +15,10 @@ export function getUserById(id) {
 }
 
 export function removeUser(id) {
-  const idx = users.findIndex((u) => u.id === id);
-  if (idx !== -1) users.splice(idx, 1);
+  const user = users.find((u) => u.id === id);
+  if (user) user.deleted = true;
 }
 
 export function resetUsers() {
-  users.splice(0);
-  users.push(
-    { id: 'u1', username: 'alice', email: 'alice@example.com' },
-    { id: 'u2', username: 'bruno', email: 'bruno@example.com' },
-    { id: 'u3', username: 'carla', email: 'carla@example.com' },
-  );
+  for (const u of users) u.deleted = false;
 }
