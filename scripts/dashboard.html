@@ -5,228 +5,219 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>CollisionLab — Evidence Dashboard</title>
 <style>
-/* ── Reset & base ──────────────────────────────────────────────────────── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { font-size: 15px; }
 body {
   font-family: -apple-system, "Segoe UI", system-ui, sans-serif;
-  background: #f7f8fa;
-  color: #1f2328;
-  line-height: 1.6;
-  min-height: 100vh;
+  background: #f7f8fa; color: #1f2328; line-height: 1.6; min-height: 100vh;
 }
-
-/* ── Layout ────────────────────────────────────────────────────────────── */
-.page-wrap   { max-width: 900px; margin: 0 auto; padding: 24px 20px 60px; }
-.header      { border-bottom: 1px solid #e5e7eb; padding-bottom: 16px; margin-bottom: 24px; }
-.header h1   { font-size: 1.35rem; font-weight: 600; letter-spacing: -.01em; }
+.page-wrap   { max-width: 960px; margin: 0 auto; padding: 24px 20px 60px; }
+.header      { border-bottom: 1px solid #e5e7eb; padding-bottom: 16px; margin-bottom: 20px; }
+.header h1   { font-size: 1.3rem; font-weight: 600; }
 .header .sub { font-size: .82rem; color: #57606a; margin-top: 3px; }
 
-/* ── Controls bar ──────────────────────────────────────────────────────── */
 .controls {
-  display: flex; align-items: center; gap: 10px;
-  margin-bottom: 22px; flex-wrap: wrap;
+  display: flex; align-items: center; gap: 10px; margin-bottom: 18px; flex-wrap: wrap;
 }
 select {
-  flex: 1 1 260px; max-width: 340px;
-  padding: 6px 10px; border: 1px solid #d0d7de; border-radius: 6px;
-  background: #fff; font-size: .9rem; color: #1f2328;
-  appearance: none;
+  flex: 1 1 260px; max-width: 340px; padding: 6px 28px 6px 10px;
+  border: 1px solid #d0d7de; border-radius: 6px; background: #fff;
+  font-size: .9rem; color: #1f2328; appearance: none;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M0 0l6 8 6-8z' fill='%2357606a'/%3E%3C/svg%3E");
   background-repeat: no-repeat; background-position: right 10px center;
-  padding-right: 28px;
 }
 select:focus { outline: 2px solid #3b82d4; outline-offset: 1px; }
 .btn {
   padding: 6px 16px; border-radius: 6px; border: 1px solid transparent;
   font-size: .9rem; font-weight: 500; cursor: pointer; white-space: nowrap;
-  transition: background .12s, opacity .12s;
 }
 .btn-primary { background: #1f6feb; color: #fff; border-color: #1f6feb; }
 .btn-primary:hover:not(:disabled) { background: #1a5fca; }
 .btn-primary:disabled { opacity: .5; cursor: not-allowed; }
 
-/* ── Notice banner ─────────────────────────────────────────────────────── */
 .notice {
   background: #fffbdd; border: 1px solid #d4a017; border-radius: 6px;
-  padding: 10px 14px; font-size: .83rem; color: #6a4c00;
-  margin-bottom: 20px; line-height: 1.5;
+  padding: 10px 14px; font-size: .83rem; color: #6a4c00; margin-bottom: 18px; line-height: 1.5;
 }
-
-/* ── Progress log ──────────────────────────────────────────────────────── */
-.progress-wrap { margin-bottom: 20px; }
+.progress-wrap { margin-bottom: 18px; }
 .progress-wrap.hidden { display: none; }
-.progress-title { font-size: .83rem; font-weight: 600; color: #57606a; margin-bottom: 6px; text-transform: uppercase; letter-spacing: .05em; }
+.progress-title { font-size: .8rem; font-weight: 600; color: #57606a; margin-bottom: 5px; text-transform: uppercase; letter-spacing: .05em; }
 .progress-log {
   background: #0d1117; color: #c9d1d9; font-family: "SFMono-Regular", Consolas, monospace;
-  font-size: .78rem; line-height: 1.5; border-radius: 6px;
-  padding: 12px 14px; max-height: 240px; overflow-y: auto;
-  white-space: pre-wrap; word-break: break-all;
+  font-size: .76rem; line-height: 1.5; border-radius: 6px; padding: 10px 12px;
+  max-height: 200px; overflow-y: auto; white-space: pre-wrap; word-break: break-all;
 }
 .progress-log .line-err { color: #f85149; }
-.progress-status { font-size: .83rem; margin-top: 8px; }
+.progress-status { font-size: .82rem; margin-top: 6px; }
 .progress-status.ok  { color: #2da44e; }
 .progress-status.err { color: #cf222e; }
 .progress-status.running { color: #9a6700; }
-
-/* ── Empty / error state ───────────────────────────────────────────────── */
 .empty-state { color: #57606a; font-size: .92rem; padding: 32px 0; text-align: center; }
 
-/* ── Report container ──────────────────────────────────────────────────── */
-.report { display: flex; flex-direction: column; gap: 14px; }
-
-/* ── Overall verdict banner ────────────────────────────────────────────── */
+/* ── Overall banner ── */
 .overall {
-  border-radius: 8px; padding: 14px 18px;
-  display: flex; align-items: flex-start; gap: 12px;
+  border-radius: 8px; padding: 12px 16px;
+  display: flex; align-items: flex-start; gap: 10px; margin-bottom: 16px;
 }
 .overall.pass  { background: #dafbe1; border: 1px solid #2da44e; }
 .overall.fail  { background: #fff0f0; border: 1px solid #cf222e; }
-.overall-icon  { font-size: 1.4rem; line-height: 1; flex-shrink: 0; margin-top: 1px; }
+.overall-icon  { font-size: 1.3rem; line-height: 1; flex-shrink: 0; margin-top: 1px; }
 .overall-body  { flex: 1; }
-.overall-title { font-size: 1rem; font-weight: 600; }
-.overall-note  { font-size: .82rem; margin-top: 4px; color: #57606a; }
+.overall-title { font-size: .98rem; font-weight: 600; }
+.overall-note  { font-size: .8rem; margin-top: 3px; }
 .overall.pass .overall-note { color: #1a7f37; }
 .overall.fail .overall-note { color: #82071e; }
 
-/* ── Meta row (timestamp, node, refs) ──────────────────────────────────── */
+/* ── Meta row ── */
 .meta-grid {
-  display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 8px 16px; background: #fff; border: 1px solid #e5e7eb;
-  border-radius: 8px; padding: 14px 16px;
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+  gap: 8px 14px; background: #fff; border: 1px solid #e5e7eb;
+  border-radius: 8px; padding: 12px 14px; margin-bottom: 16px;
 }
-.meta-item label { display: block; font-size: .73rem; font-weight: 600; color: #57606a; text-transform: uppercase; letter-spacing: .05em; }
-.meta-item .val  { font-size: .85rem; font-family: "SFMono-Regular", Consolas, monospace; word-break: break-all; }
-.meta-item .val a { color: #3b82d4; text-decoration: none; }
-.meta-item .val a:hover { text-decoration: underline; }
+.meta-item label { display: block; font-size: .72rem; font-weight: 600; color: #57606a; text-transform: uppercase; letter-spacing: .05em; }
+.meta-item .val  { font-size: .82rem; font-family: "SFMono-Regular", Consolas, monospace; word-break: break-all; }
 
-/* ── Section card ──────────────────────────────────────────────────────── */
+/* ── Scenario tabs ── */
+.scenario-tabs { display: flex; gap: 6px; margin-bottom: 14px; flex-wrap: wrap; }
+.tab-btn {
+  padding: 5px 14px; border-radius: 6px; border: 1px solid #d0d7de;
+  background: #fff; font-size: .85rem; cursor: pointer; font-weight: 500;
+  color: #57606a; white-space: nowrap;
+}
+.tab-btn.active { background: #1f6feb; color: #fff; border-color: #1f6feb; }
+.tab-btn.s-pass { border-color: #2da44e; }
+.tab-btn.s-fail { border-color: #cf222e; }
+.tab-btn.active.s-pass { background: #2da44e; border-color: #2da44e; }
+.tab-btn.active.s-fail { background: #cf222e; border-color: #cf222e; }
+.scenario-panel { display: none; }
+.scenario-panel.active { display: block; }
+
+/* ── Step cards ── */
+.steps { display: flex; flex-direction: column; gap: 10px; }
 .card {
-  background: #fff; border: 1px solid #e5e7eb; border-radius: 8px;
-  overflow: hidden;
+  background: #fff; border: 1px solid #e5e7eb; border-radius: 8px; overflow: hidden;
 }
 .card-header {
-  display: flex; align-items: center; gap: 10px;
-  padding: 12px 16px; border-bottom: 1px solid #e5e7eb;
-  background: #f7f8fa;
+  display: flex; align-items: center; gap: 8px; padding: 10px 14px;
+  border-bottom: 1px solid #e5e7eb; background: #f7f8fa;
 }
-.card-header h2  { font-size: .95rem; font-weight: 600; flex: 1; }
-.card-header .badge {
-  font-size: .72rem; font-weight: 600; padding: 2px 8px; border-radius: 20px;
-  white-space: nowrap;
+.card-header h2 { font-size: .9rem; font-weight: 600; flex: 1; }
+.badge {
+  font-size: .7rem; font-weight: 600; padding: 2px 7px; border-radius: 20px; white-space: nowrap;
 }
-.badge-pass    { background: #d1fae5; color: #065f46; }
-.badge-fail    { background: #fee2e2; color: #991b1b; }
-.badge-skip    { background: #f3f4f6; color: #374151; }
-.badge-error   { background: #fef3c7; color: #92400e; }
+.badge-pass      { background: #d1fae5; color: #065f46; }
+.badge-fail      { background: #fee2e2; color: #991b1b; }
+.badge-skip      { background: #f3f4f6; color: #374151; }
+.badge-error     { background: #fef3c7; color: #92400e; }
 .badge-collision { background: #fee2e2; color: #991b1b; border: 1px solid #fca5a5; }
-.card-body { padding: 14px 16px; font-size: .88rem; }
+.badge-fix       { background: #d1fae5; color: #065f46; border: 1px solid #6ee7b7; }
+.card-body { padding: 12px 14px; font-size: .86rem; }
+.verdict-reason { font-size: .82rem; color: #57606a; }
 
-/* ── Test count row ────────────────────────────────────────────────────── */
-.test-counts { display: flex; gap: 14px; align-items: center; margin-bottom: 10px; }
+/* ── Test counts ── */
+.test-counts { display: flex; gap: 12px; align-items: center; margin-bottom: 8px; }
 .count-pass  { color: #1a7f37; font-weight: 600; }
 .count-fail  { color: #cf222e; font-weight: 600; }
 .count-total { color: #57606a; }
-.duration    { color: #57606a; font-size: .8rem; margin-left: auto; }
+.duration    { color: #57606a; font-size: .78rem; margin-left: auto; }
 
-/* ── Collision block ───────────────────────────────────────────────────── */
-.collision-box {
-  background: #fff5f5; border: 1px solid #fca5a5; border-radius: 6px;
-  padding: 12px 14px; margin-top: 4px;
-}
-.collision-label {
-  font-size: .73rem; font-weight: 700; text-transform: uppercase;
-  color: #cf222e; letter-spacing: .06em; margin-bottom: 8px;
-}
-.collision-test-name {
-  font-weight: 600; font-size: .88rem; margin-bottom: 10px; color: #1f2328;
-}
-.diff-table { width: 100%; border-collapse: collapse; font-family: "SFMono-Regular", Consolas, monospace; font-size: .8rem; }
-.diff-table th { text-align: left; padding: 4px 8px; font-size: .72rem; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; background: #f7f8fa; border-bottom: 1px solid #e5e7eb; }
-.diff-table td { padding: 6px 8px; vertical-align: top; border-bottom: 1px solid #f0f0f0; }
-.diff-actual   { color: #cf222e; }
-.diff-expected { color: #1a7f37; }
-.diff-null     { font-style: italic; color: #9a3412; }
-.collision-caption { font-size: .78rem; color: #57606a; margin-top: 8px; }
-
-/* ── Merge block ───────────────────────────────────────────────────────── */
-.merge-result {
-  font-size: .82rem; margin-bottom: 10px;
-  display: flex; align-items: center; gap: 8px;
-}
+/* ── Merge result ── */
+.merge-result { font-size: .81rem; margin-bottom: 8px; display: flex; align-items: center; gap: 6px; }
 .merge-ok   { color: #1a7f37; font-weight: 600; }
 .merge-fail { color: #cf222e; font-weight: 600; }
 
-/* ── Expandable detail ─────────────────────────────────────────────────── */
+/* ── Collision box ── */
+.collision-box {
+  background: #fff5f5; border: 1px solid #fca5a5; border-radius: 6px; padding: 10px 12px; margin-top: 6px;
+}
+.collision-label {
+  font-size: .71rem; font-weight: 700; text-transform: uppercase; color: #cf222e; letter-spacing: .06em; margin-bottom: 6px;
+}
+.collision-test-name { font-weight: 600; font-size: .86rem; margin-bottom: 8px; }
+.diff-row { display: flex; gap: 8px; font-family: "SFMono-Regular", Consolas, monospace; font-size: .78rem; margin-bottom: 4px; }
+.diff-label { color: #57606a; min-width: 68px; flex-shrink: 0; }
+.diff-actual   { color: #cf222e; }
+.diff-expected { color: #1a7f37; }
+.collision-caption { font-size: .76rem; color: #57606a; margin-top: 6px; line-height: 1.5; }
+
+/* ── Fix box ── */
+.fix-box {
+  background: #dafbe1; border: 1px solid #6ee7b7; border-radius: 6px; padding: 10px 12px; margin-top: 6px;
+}
+.fix-label { font-size: .71rem; font-weight: 700; text-transform: uppercase; color: #065f46; letter-spacing: .06em; margin-bottom: 4px; }
+.fix-text  { font-size: .82rem; color: #1f2328; }
+
+/* ── Not-implemented box ── */
+.unimplemented-box {
+  background: #f7f8fa; border: 1px solid #e5e7eb; border-radius: 6px; padding: 10px 12px; margin-top: 6px;
+  font-size: .82rem; color: #57606a; font-style: italic;
+}
+
+/* ── Control check ── */
+.control-box {
+  border-radius: 5px; padding: 7px 10px; margin-top: 8px; font-size: .81rem;
+}
+.control-box.ok  { background: #dafbe1; border: 1px solid #2da44e; }
+.control-box.err { background: #fff0f0; border: 1px solid #cf222e; }
+
+/* ── SHA chip ── */
+.sha {
+  font-family: "SFMono-Regular", Consolas, monospace; font-size: .74rem;
+  background: #f0f6ff; color: #0550ae; border: 1px solid #b6d4fe;
+  border-radius: 4px; padding: 1px 5px; white-space: nowrap;
+}
+
+/* ── Expandable ── */
 details { margin-top: 8px; }
 details summary {
-  cursor: pointer; font-size: .8rem; color: #3b82d4; font-weight: 500;
-  user-select: none; list-style: none; display: flex; align-items: center; gap: 4px;
+  cursor: pointer; font-size: .78rem; color: #3b82d4; font-weight: 500;
+  user-select: none; list-style: none; display: flex; align-items: center; gap: 3px;
 }
-details summary::before { content: '▶'; font-size: .65rem; transition: transform .15s; }
+details summary::before { content: '▶'; font-size: .62rem; transition: transform .15s; }
 details[open] summary::before { transform: rotate(90deg); }
 details summary:hover { text-decoration: underline; }
 .detail-pre {
-  background: #0d1117; color: #c9d1d9;
-  font-family: "SFMono-Regular", Consolas, monospace;
-  font-size: .76rem; line-height: 1.5; border-radius: 5px;
-  padding: 10px 12px; max-height: 200px; overflow: auto;
-  margin-top: 6px; white-space: pre-wrap; word-break: break-all;
+  background: #0d1117; color: #c9d1d9; font-family: "SFMono-Regular", Consolas, monospace;
+  font-size: .74rem; line-height: 1.5; border-radius: 5px;
+  padding: 8px 10px; max-height: 180px; overflow: auto; margin-top: 5px;
+  white-space: pre-wrap; word-break: break-all;
 }
 
-/* ── SHA chip ──────────────────────────────────────────────────────────── */
-.sha {
-  font-family: "SFMono-Regular", Consolas, monospace;
-  font-size: .76rem; background: #f0f6ff; color: #0550ae;
-  border: 1px solid #b6d4fe; border-radius: 4px; padding: 1px 6px;
-  white-space: nowrap;
-}
-
-/* ── Verdict note ──────────────────────────────────────────────────────── */
-.verdict-reason { font-size: .84rem; color: #57606a; }
-
-/* ── Test list ─────────────────────────────────────────────────────────── */
-.test-list { list-style: none; margin: 0; padding: 0; }
-.test-list li {
-  padding: 3px 0; font-size: .82rem; font-family: "SFMono-Regular", Consolas, monospace;
-  border-bottom: 1px solid #f7f8fa; display: flex; gap: 8px; align-items: baseline;
-}
-.test-list li:last-child { border-bottom: none; }
-.t-ok   { color: #1a7f37; flex-shrink: 0; }
-.t-fail { color: #cf222e; flex-shrink: 0; }
-.t-name { word-break: break-word; }
-.t-dur  { color: #57606a; font-size: .72rem; margin-left: auto; white-space: nowrap; }
-
-/* ── Cleanup table ─────────────────────────────────────────────────────── */
-.cleanup-table { width: 100%; border-collapse: collapse; font-size: .8rem; }
-.cleanup-table td { padding: 4px 8px; border-bottom: 1px solid #f0f0f0; font-family: "SFMono-Regular", Consolas, monospace; }
+/* ── Cleanup ── */
+.cleanup-table { width: 100%; border-collapse: collapse; font-size: .78rem; }
+.cleanup-table td { padding: 3px 6px; border-bottom: 1px solid #f0f0f0; font-family: "SFMono-Regular", Consolas, monospace; }
 .cleanup-table tr:last-child td { border-bottom: none; }
 .cleanup-ok   { color: #1a7f37; }
 .cleanup-fail { color: #cf222e; font-weight: 600; }
+
+/* ── Scenario summary bar ── */
+.scenario-summary {
+  display: flex; gap: 8px; margin-bottom: 12px; flex-wrap: wrap;
+}
+.scenario-chip {
+  padding: 4px 10px; border-radius: 20px; font-size: .78rem; font-weight: 600; white-space: nowrap;
+}
+.chip-pass { background: #d1fae5; color: #065f46; }
+.chip-fail { background: #fee2e2; color: #991b1b; }
+.chip-note { font-size: .76rem; color: #57606a; }
 </style>
 </head>
 <body>
 <div class="page-wrap">
 
-  <!-- Header -->
   <div class="header">
     <h1>CollisionLab — Evidence Dashboard</h1>
-    <div class="sub">
-      Known-scenario evidence viewer. Displays results of the pre-built demonstration only.
-      Does not automatically discover new conflicts or call external services.
-    </div>
+    <div class="sub">Known-scenario evidence viewer · Bob-assisted semantic collision analysis · Three scenarios</div>
   </div>
 
-  <!-- Notice -->
   <div class="notice">
-    <strong>What you are seeing:</strong> This dashboard loads results from <code>scripts/run-demo.mjs</code>,
-    a scripted evidence runner for a single known semantic collision scenario.
-    A green "Evidence run completed" banner means the runner collected all five expected observations —
-    it does <em>not</em> mean the merged application passed.
-    The integration test in Step&nbsp;4 is intentionally failing application code.
+    <strong>What you are seeing:</strong> This dashboard loads results produced by <code>scripts/run-demo.mjs</code>,
+    a scripted evidence runner for three known semantic collision scenarios.
+    A green "Evidence run completed" banner means all expected observations were collected.
+    Application test failures in the collision steps are <em>intentional</em> — they are the reproduced semantic collisions, not runner errors.
+    A fix is shown only for Scenario 1; Scenarios 2 and 3 are marked "Fix not implemented."
   </div>
 
-  <!-- Controls -->
   <div class="controls">
     <select id="reportSelect" aria-label="Select a report">
       <option value="">— loading reports —</option>
@@ -234,194 +225,82 @@ details summary:hover { text-decoration: underline; }
     <button class="btn btn-primary" id="runBtn">Run demo now</button>
   </div>
 
-  <!-- Progress -->
   <div class="progress-wrap hidden" id="progressWrap">
     <div class="progress-title">Runner output</div>
     <div class="progress-log" id="progressLog"></div>
     <div class="progress-status running" id="progressStatus">Running…</div>
   </div>
 
-  <!-- Report area -->
   <div id="reportArea">
     <div class="empty-state">Select a report above, or click "Run demo now" to generate one.</div>
   </div>
 
-</div><!-- /page-wrap -->
+</div>
 
 <script>
-// ─────────────────────────────────────────────────────────────────────────────
+// ---------------------------------------------------------------------------
 // Utilities
-// ─────────────────────────────────────────────────────────────────────────────
+// ---------------------------------------------------------------------------
 const esc = (s) => String(s ?? '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-
-function shortSha(sha) {
-  return sha ? `<span class="sha">${esc(sha.slice(0,12))}</span>` : '—';
-}
-
-function fmtDuration(ms) {
-  if (ms == null) return '';
-  return ms < 1000 ? `${ms}ms` : `${(ms/1000).toFixed(1)}s`;
-}
-
+function shortSha(sha) { return sha ? `<span class="sha">${esc(String(sha).slice(0,12))}</span>` : ''; }
+function fmtMs(ms) { return ms == null ? '' : ms < 1000 ? `${ms}ms` : `${(ms/1000).toFixed(1)}s`; }
 function badgeFor(verdict) {
-  const map = { PASS:'pass', FAIL:'fail', SKIP:'skip', ERROR:'error' };
-  const cls = map[verdict] ?? 'skip';
-  return `<span class="badge badge-${cls}">${esc(verdict)}</span>`;
+  const m = { PASS:'pass', FAIL:'fail', SKIP:'skip', ERROR:'error' };
+  return `<span class="badge badge-${m[verdict]??'skip'}">${esc(verdict)}</span>`;
+}
+function detailBlock(label, content) {
+  return `<details><summary>${label}</summary><pre class="detail-pre">${esc(content)}</pre></details>`;
 }
 
-function testListHtml(tests) {
-  if (!tests || !tests.length) return '';
-  return `<ul class="test-list">${tests.map(t => `
-    <li>
-      <span class="${t.ok ? 't-ok' : 't-fail'}">${t.ok ? '✔' : '✖'}</span>
-      <span class="t-name">${esc(t.name)}</span>
-    </li>`).join('')}</ul>`;
-}
-
-function detailsBlock(summary, content) {
-  return `<details><summary>${summary}</summary><pre class="detail-pre">${esc(content)}</pre></details>`;
-}
-
-// ─────────────────────────────────────────────────────────────────────────────
-// Report rendering
-// ─────────────────────────────────────────────────────────────────────────────
-function renderReport(report) {
-  const parts = [];
-
-  // 1 — Overall banner
-  const isRunnerPass = report.overallVerdict === 'PASS';
-  parts.push(`
-    <div class="overall ${isRunnerPass ? 'pass' : 'fail'}">
-      <div class="overall-icon">${isRunnerPass ? '✅' : '❌'}</div>
-      <div class="overall-body">
-        <div class="overall-title">
-          Evidence run ${isRunnerPass ? 'completed successfully' : 'produced unexpected results'}
-        </div>
-        <div class="overall-note">
-          ${isRunnerPass
-            ? 'All five observations were collected as expected. '
-              + '<strong>The Step&nbsp;4 integration test intentionally fails — '
-              + 'this is the reproduced semantic collision, not a runner error.</strong>'
-            : 'One or more steps did not produce the expected outcome. '
-              + 'See individual step results below.'}
-        </div>
-      </div>
-    </div>`);
-
-  // 2 — Run metadata
-  const ts = (report.runTimestamp ?? '').replace(/-/g,':').replace('T','\u00a0');
-  const refs = report.refs ?? {};
-  parts.push(`
-    <div class="meta-grid">
-      <div class="meta-item">
-        <label>Run timestamp</label>
-        <div class="val">${esc(ts)}</div>
-      </div>
-      <div class="meta-item">
-        <label>Node</label>
-        <div class="val">${esc(report.nodeVersion ?? '—')}</div>
-      </div>
-      ${Object.entries(refs).map(([k,v]) => `
-      <div class="meta-item">
-        <label>${esc(k)}</label>
-        <div class="val">${shortSha(v)}</div>
-      </div>`).join('')}
-    </div>`);
-
-  // 3 — Step 1: Branch A
-  parts.push(renderPassingStep('Step 1 — Branch A', 'feature/email-auth',
-    report.steps?.step1, 'Independent test suite; email authentication only.'));
-
-  // 4 — Step 2: Branch B
-  const s2 = report.steps?.step2;
-  parts.push(renderPassingStep('Step 2 — Branch B', 'feature/profile-cache-v2',
-    s2, 'Independent test suite + username-login control check.',
-    s2 ? renderControlCheck(s2) : ''));
-
-  // 5 — Step 3: Merge
-  parts.push(renderMergeStep(report.steps?.step3));
-
-  // 6 — Step 4: Collision reproduction
-  parts.push(renderCollisionStep(report.steps?.step4));
-
-  // 7 — Step 5: Fix branch
-  parts.push(renderPassingStep('Step 5 — Fix branch', 'fix/canonical-profile-identity',
-    report.steps?.step5,
-    'Full test suite on the identity-safe fix. All tests must pass.'));
-
-  // 8 — Cleanup
-  parts.push(renderCleanup(report.cleanup));
-
-  return `<div class="report">${parts.join('\n')}</div>`;
-}
-
-function renderPassingStep(title, branchName, step, description, extra = '') {
+// ---------------------------------------------------------------------------
+// Step card builder (shared for passing / control-check steps)
+// ---------------------------------------------------------------------------
+function stepCard(title, step, extraHtml = '', collisionCard = false) {
   if (!step) return '';
-  const tr = step.testRun;
-  const p  = tr?.parsed;
+  const tr  = step.testRun;
+  const p   = tr?.parsed;
   const sha = step.sha ?? null;
 
   const countsHtml = p ? `
     <div class="test-counts">
-      <span class="count-pass">✔ ${p.passed} passed</span>
-      ${p.failed > 0 ? `<span class="count-fail">✖ ${p.failed} failed</span>` : ''}
-      <span class="count-total">/ ${(p.planned ?? p.passed + p.failed)}</span>
-      <span class="duration">${fmtDuration(tr?.durationMs)}</span>
+      <span class="count-pass">✔ ${p.passed}</span>
+      ${p.failed > 0 ? `<span class="count-fail">✖ ${p.failed}</span>` : ''}
+      <span class="count-total">/ ${p.planned ?? (p.passed + p.failed)}</span>
+      <span class="duration">${fmtMs(tr.durationMs)}</span>
     </div>` : '';
 
-  const procHtml = tr ? `
-    <div class="verdict-reason">
-      Process: exit&nbsp;<code>${tr.exitCode ?? '?'}</code>
-      ${tr.signal ? `&nbsp;signal&nbsp;<code>${esc(tr.signal)}</code>` : ''}
-      ${tr.spawnError ? `&nbsp;<span style="color:#cf222e">spawn error: ${esc(tr.spawnError)}</span>` : ''}
-    </div>` : '';
+  const procHtml = tr ? `<div class="verdict-reason">exit&nbsp;<code>${tr.exitCode ?? '?'}</code>${tr.signal ? ` signal&nbsp;<code>${esc(tr.signal)}</code>` : ''}</div>` : '';
 
-  const testsDetail = (p && p.tests?.length)
-    ? detailsBlock(`Show all ${p.tests.length} test results`, p.tests.map(t =>
-        `${t.ok ? '✔' : '✖'} ${t.name}`).join('\n'))
-    : '';
+  const stdoutBlock = tr?.stdout ? detailBlock('Show test output', tr.stdout) : '';
 
-  const stdoutDetail = tr?.stdout
-    ? detailsBlock('Show spec output', tr.stdout)
-    : '';
+  const headerCls = collisionCard ? ' style="background:#fff5f5;border-bottom-color:#fca5a5"' : '';
+  const cardCls   = collisionCard ? ' style="border-color:#fca5a5"' : '';
 
   return `
-    <div class="card">
-      <div class="card-header">
+    <div class="card"${cardCls}>
+      <div class="card-header"${headerCls}>
         <h2>${esc(title)} ${sha ? shortSha(sha) : ''}</h2>
         ${badgeFor(step.verdict)}
       </div>
       <div class="card-body">
-        <div class="verdict-reason" style="margin-bottom:8px">${esc(description)}</div>
         ${countsHtml}
         ${procHtml}
-        <div class="verdict-reason" style="margin-top:6px">${esc(step.verdictReason ?? '')}</div>
-        ${extra}
-        ${testsDetail}
-        ${stdoutDetail}
+        <div class="verdict-reason" style="margin-top:4px">${esc(step.verdictReason ?? '')}</div>
+        ${extraHtml}
+        ${stdoutBlock}
       </div>
     </div>`;
 }
 
-function renderControlCheck(step) {
-  const cc = step.controlCheckParsed;
-  if (!cc) return '';
-  const ok = cc.ok === true;
-  return `
-    <div style="margin-top:10px;padding:8px 10px;background:${ok?'#dafbe1':'#fff0f0'};border:1px solid ${ok?'#2da44e':'#cf222e'};border-radius:5px;font-size:.83rem;">
-      <strong>Control check</strong> — <code>loginAndLoadProfile('alice')</code>:
-      ${ok
-        ? `<span style="color:#1a7f37">✔ PASS</span> — returned
-           <code>{ id: '${esc(cc.profile?.id)}', username: '${esc(cc.profile?.username)}' }</code>`
-        : `<span style="color:#cf222e">✖ FAIL</span>`}
-    </div>`;
-}
-
-function renderMergeStep(step) {
+// ---------------------------------------------------------------------------
+// Merge step card
+// ---------------------------------------------------------------------------
+function mergeCard(title, step) {
   if (!step) return '';
-  const mr = step.mergeResult;
-  const tr = step.testRun;
-  const p  = tr?.parsed;
+  const mr1 = step.mergeResult1 ?? step.mergeResult;
+  const mr2 = step.mergeResult2;
+  const tr  = step.testRun;
+  const p   = tr?.parsed;
   const noConflict = step.hasTextualConflicts === false;
 
   const mergeHtml = `
@@ -429,186 +308,363 @@ function renderMergeStep(step) {
       <span class="${noConflict ? 'merge-ok' : 'merge-fail'}">
         ${noConflict ? '✔ No textual conflicts' : '✖ Textual conflicts detected'}
       </span>
-      ${mr ? `<span style="color:#57606a;font-size:.8rem">(exit&nbsp;${mr.status}, ${fmtDuration(mr.durationMs)})</span>` : ''}
+      ${mr1 ? `<span style="color:#57606a;font-size:.78rem">(${fmtMs(mr1.durationMs)})</span>` : ''}
     </div>`;
-
-  const mergeDetail = mr?.stdout
-    ? detailsBlock('Show merge output', mr.stdout)
-    : '';
 
   const countsHtml = p ? `
     <div class="test-counts">
-      <span class="count-pass">✔ ${p.passed} passed</span>
-      ${p.failed > 0 ? `<span class="count-fail">✖ ${p.failed} failed</span>` : ''}
-      <span class="count-total">/ ${p.planned ?? p.passed + p.failed}</span>
-      <span class="duration">${fmtDuration(tr?.durationMs)}</span>
+      <span class="count-pass">✔ ${p.passed}</span>
+      ${p.failed > 0 ? `<span class="count-fail">✖ ${p.failed}</span>` : ''}
+      <span class="count-total">/ ${p.planned ?? (p.passed + p.failed)}</span>
+      <span class="duration">${fmtMs(tr.durationMs)}</span>
     </div>` : '';
 
-  const stdoutDetail = tr?.stdout ? detailsBlock('Show merged suite output', tr.stdout) : '';
+  const mergeDetail = (mr1?.stdout || mr2?.stdout)
+    ? detailBlock('Show merge output', [mr1?.stdout, mr2?.stdout].filter(Boolean).join('\n'))
+    : '';
+  const stdoutBlock = tr?.stdout ? detailBlock('Show merged suite output', tr.stdout) : '';
 
   return `
     <div class="card">
       <div class="card-header">
-        <h2>Step 3 — Merge (feature/email-auth → feature/profile-cache-v2)</h2>
+        <h2>${esc(title)}</h2>
         ${badgeFor(step.verdict)}
       </div>
       <div class="card-body">
-        <div class="verdict-reason" style="margin-bottom:8px">
-          Merges both feature branches. Textual conflicts must be absent.
-          Unit tests in the merged tree must all pass.
-        </div>
         ${mergeHtml}
         ${mergeDetail}
         ${countsHtml}
-        <div class="verdict-reason" style="margin-top:6px">${esc(step.verdictReason ?? '')}</div>
-        ${stdoutDetail}
+        <div class="verdict-reason" style="margin-top:4px">${esc(step.verdictReason ?? '')}</div>
+        ${stdoutBlock}
       </div>
     </div>`;
 }
 
-function renderCollisionStep(step) {
-  if (!step) return '';
-  const tr = step.testRun;
-  const p  = tr?.parsed;
-  const cc = step.collisionCheck;
+// ---------------------------------------------------------------------------
+// Scenario renderers
+// ---------------------------------------------------------------------------
 
-  // Find the failing test
-  const failing = p?.tests?.find(t => !t.ok);
+function renderScenario1(steps) {
+  const parts = [];
 
-  const collisionHtml = cc?.ok && failing ? `
-    <div class="collision-box">
-      <div class="collision-label">⚠ Reproduced semantic collision — application test failure</div>
-      <div class="collision-test-name">${esc(failing.name)}</div>
-      <table class="diff-table">
-        <thead><tr><th>Field</th><th>Value</th></tr></thead>
-        <tbody>
-          <tr>
-            <td>actual</td>
-            <td class="diff-actual diff-null">null&nbsp;—&nbsp;profile was not returned</td>
-          </tr>
-          <tr>
-            <td>expected</td>
-            <td class="diff-expected">${
-              failing.expectedFields
-                ? Object.entries(failing.expectedFields)
-                    .map(([k,v]) => `<code>${esc(k)}: '${esc(v)}'</code>`)
-                    .join('<br>')
-                : 'Alice\'s profile object (u1)'
-            }</td>
-          </tr>
-          <tr>
-            <td>error code</td>
-            <td><code>${esc(failing.errorCode ?? 'ERR_ASSERTION')}</code></td>
-          </tr>
-        </tbody>
-      </table>
-      <div class="collision-caption">
-        <strong>Why it fails:</strong>
-        <code>loginAndLoadProfile('alice@example.com')</code> passes the email string to
-        <code>getProfileByUsername()</code>, which expects a username.
-        The profile is correctly cached under <code>'alice'</code> but the lookup key is
-        <code>'alice@example.com'</code> — so retrieval returns null.
-        This is the semantic collision: both branches passed their own tests independently,
-        and git reported no textual conflicts on merge.
-      </div>
-    </div>` : (cc && !cc.ok ? `
-    <div style="background:#fff0f0;border:1px solid #cf222e;border-radius:5px;padding:10px;font-size:.83rem;color:#82071e;">
-      Collision not confirmed: ${esc(cc.reason)}
-    </div>` : '');
+  // S1-A
+  parts.push(stepCard('S1-A — feature/email-auth', steps['S1-A']));
 
-  const countsHtml = p ? `
-    <div class="test-counts" style="margin-top:10px">
-      <span class="count-pass">✔ ${p.passed} other tests passed</span>
-      ${p.failed > 0 ? `<span class="count-fail">✖ ${p.failed} failed (expected)</span>` : ''}
-      <span class="duration">${fmtDuration(tr?.durationMs)}</span>
-    </div>` : '';
+  // S1-B + control check
+  const s1b = steps['S1-B'];
+  let s1bExtra = '';
+  if (s1b) {
+    const cc = s1b.controlCheckParsed;
+    const ok = cc?.ok === true;
+    s1bExtra = `
+      <div class="control-box ${ok ? 'ok' : 'err'}">
+        <strong>Control check</strong> — <code>loginAndLoadProfile('alice')</code>:
+        ${ok
+          ? `✔ PASS — returned <code>{ id:'${esc(cc.profile?.id)}', username:'${esc(cc.profile?.username)}' }</code>`
+          : '✖ FAIL'}
+      </div>`;
+  }
+  parts.push(stepCard('S1-B — feature/profile-cache-v2', s1b, s1bExtra));
 
-  const stdoutDetail = tr?.stdout ? detailsBlock('Show full test output', tr.stdout) : '';
+  // S1-M
+  parts.push(mergeCard('S1-M — Merge: email-auth → profile-cache-v2', steps['S1-M']));
 
-  return `
-    <div class="card" style="border-color:#fca5a5">
-      <div class="card-header" style="background:#fff5f5;border-bottom-color:#fca5a5">
-        <h2>Step 4 — Reproduced integration failure</h2>
-        <span class="badge badge-collision">COLLISION REPRODUCED</span>
-        ${badgeFor(step.verdict)}
-      </div>
-      <div class="card-body">
-        <div class="verdict-reason" style="margin-bottom:8px">
-          The original failing integration test (from commit
-          <span class="sha">f092166</span>) is injected into the merged tree.
-          No production code is modified. The test must fail with the exact
-          assertion: <em>actual null, expected Alice object, code ERR_ASSERTION.</em>
+  // S1-C
+  const s1c  = steps['S1-C'];
+  const cc1  = s1c?.collisionCheck;
+  const tr1  = s1c?.testRun;
+  const p1   = tr1?.parsed;
+  const f1   = p1?.tests?.find((t) => !t.ok && t.name === 'a successful email login loads the cached profile for the signed-in user');
+  let s1cExtra = '';
+  if (cc1?.ok && f1) {
+    s1cExtra = `
+      <div class="collision-box">
+        <div class="collision-label">⚠ Reproduced semantic collision — application test failure</div>
+        <div class="collision-test-name">${esc(f1.name)}</div>
+        <div class="diff-row"><span class="diff-label">actual</span><span class="diff-actual">null — profile not returned</span></div>
+        <div class="diff-row"><span class="diff-label">expected</span><span class="diff-expected">Alice { id:'u1', username:'alice', … }</span></div>
+        <div class="diff-row"><span class="diff-label">code</span><code>ERR_ASSERTION</code></div>
+        <div class="collision-caption">
+          <code>loginAndLoadProfile('alice@example.com')</code> calls <code>getProfileByUsername('alice@example.com')</code>
+          but the profile is cached under key <code>'alice'</code> (the username). The two branches changed the meaning of
+          the login identifier in incompatible ways. Git merged cleanly — no textual conflict — because the changes
+          are in different files.
         </div>
-        ${collisionHtml}
-        ${countsHtml}
-        <div class="verdict-reason" style="margin-top:6px">${esc(step.verdictReason ?? '')}</div>
-        ${stdoutDetail}
-      </div>
+      </div>`;
+  }
+  parts.push(stepCard('S1-C — Collision reproduction', s1c, s1cExtra, true));
+
+  // S1-F fix
+  const s1f = steps['S1-F'];
+  let s1fExtra = `
+    <div class="fix-box">
+      <div class="fix-label">✔ Fix implemented — fix/canonical-profile-identity</div>
+      <div class="fix-text">Key the profile cache by the immutable user ID (<code>user.id</code>) instead of the
+      login identifier. The profile is stored and retrieved by ID regardless of whether login used a username or email.</div>
     </div>`;
+  parts.push(stepCard('S1-F — fix/canonical-profile-identity', s1f, s1fExtra));
+
+  return parts.join('\n');
 }
 
-function renderCleanup(cleanup) {
-  if (!cleanup || !cleanup.length) return '';
-  const rows = cleanup.map(c => `
-    <tr>
-      <td class="${c.removeStatus === 0 ? 'cleanup-ok' : 'cleanup-fail'}">${c.removeStatus === 0 ? '✔' : '✖'}</td>
-      <td>${esc(c.dir.split(/[\\/]/).slice(-1)[0])}</td>
-      <td>${c.removeStatus ?? '—'}</td>
-      <td>${esc(c.removeError ?? '')}</td>
-    </tr>`).join('');
+function renderScenario2(steps) {
+  const parts = [];
+  parts.push(stepCard('S2-A — feature/price-object', steps['S2-A']));
+  parts.push(stepCard('S2-B — feature/cart', steps['S2-B']));
+  parts.push(mergeCard('S2-M — Merge: main → price-object → cart', steps['S2-M']));
 
-  const allOk = cleanup.every(c => c.removeStatus === 0);
+  const s2c = steps['S2-C'];
+  const cc2 = s2c?.collisionCheck;
+  const tr2 = s2c?.testRun;
+  const p2  = tr2?.parsed;
+  const f2  = p2?.tests?.find((t) => !t.ok && t.name.startsWith('COLLISION: cart total'));
+  let s2cExtra = '';
+  if (cc2?.ok && f2) {
+    s2cExtra = `
+      <div class="collision-box">
+        <div class="collision-label">⚠ Reproduced semantic collision — application test failure</div>
+        <div class="collision-test-name">${esc(f2.name)}</div>
+        <div class="diff-row"><span class="diff-label">actual</span><span class="diff-actual">NaN — object × number</span></div>
+        <div class="diff-row"><span class="diff-label">expected</span><span class="diff-expected">40 (numeric total)</span></div>
+        <div class="diff-row"><span class="diff-label">code</span><code>ERR_ASSERTION</code></div>
+        <div class="collision-caption">
+          <code>cart.getTotal()</code> computes <code>product.price * quantity</code>, but after merging,
+          <code>product.price</code> is <code>{ amount: 20, currency: 'USD' }</code>, not a number.
+          The result is silently <code>NaN</code>. Git merged cleanly — <code>catalog.js</code> and <code>cart.js</code>
+          are independent files with no syntactic overlap.
+        </div>
+      </div>`;
+  }
+  parts.push(stepCard('S2-C — Collision reproduction', s2c, s2cExtra, true));
+
+  const unimpl = `<div class="unimplemented-box">Fix not implemented for this scenario.</div>`;
+  parts.push(`<div class="card"><div class="card-header"><h2>S2-F — Fix</h2><span class="badge badge-skip">NOT IMPLEMENTED</span></div><div class="card-body">${unimpl}</div></div>`);
+
+  return parts.join('\n');
+}
+
+function renderScenario3(steps) {
+  const parts = [];
+  parts.push(stepCard('S3-A — feature/soft-delete', steps['S3-A']));
+  parts.push(stepCard('S3-B — feature/reporting', steps['S3-B']));
+
+  // S3-M — note: pre-collision unit failures are expected
+  const s3m = steps['S3-M'];
+  let s3mExtra = '';
+  if (s3m && s3m.testRun?.parsed?.failed > 0) {
+    s3mExtra = `
+      <div style="margin-top:8px;padding:8px 10px;background:#fff8f0;border:1px solid #fdba74;border-radius:5px;font-size:.8rem;color:#6a3500">
+        <strong>Note:</strong> ${s3m.testRun.parsed.failed} unit test failure(s) in the merged tree are <em>expected</em> —
+        <code>reporting.test.js</code> was written against the physical-delete contract and breaks when soft-delete is merged in.
+        This is early evidence of the collision, visible before the integration test is injected.
+      </div>`;
+  }
+  parts.push(mergeCard('S3-M — Merge: main → soft-delete → reporting', s3m, s3mExtra));
+
+  const s3c = steps['S3-C'];
+  const cc3 = s3c?.collisionCheck;
+  const tr3 = s3c?.testRun;
+  const p3  = tr3?.parsed;
+  const f3  = p3?.tests?.find((t) => !t.ok && t.name.startsWith('COLLISION: active user count'));
+  let s3cExtra = '';
+  if (cc3?.ok && f3) {
+    s3cExtra = `
+      <div class="collision-box">
+        <div class="collision-label">⚠ Reproduced semantic collision — application test failure</div>
+        <div class="collision-test-name">${esc(f3.name)}</div>
+        <div class="diff-row"><span class="diff-label">actual</span><span class="diff-actual">3 — soft-deleted user still counted</span></div>
+        <div class="diff-row"><span class="diff-label">expected</span><span class="diff-expected">2 (one user removed)</span></div>
+        <div class="diff-row"><span class="diff-label">code</span><code>ERR_ASSERTION</code></div>
+        <div class="collision-caption">
+          <code>getActiveUserCount()</code> calls <code>getAllUsers().length</code>, assuming physical delete keeps
+          only live records. After merging soft-delete, <code>getAllUsers()</code> returns all 3 records — including
+          soft-deleted ones. The count is permanently wrong. Git merged cleanly — <code>userStore.js</code> and
+          <code>reporting.js</code> are separate files.
+        </div>
+      </div>`;
+  }
+  parts.push(stepCard('S3-C — Collision reproduction', s3c, s3cExtra, true));
+
+  const unimpl = `<div class="unimplemented-box">Fix not implemented for this scenario.</div>`;
+  parts.push(`<div class="card"><div class="card-header"><h2>S3-F — Fix</h2><span class="badge badge-skip">NOT IMPLEMENTED</span></div><div class="card-body">${unimpl}</div></div>`);
+
+  return parts.join('\n');
+}
+
+// ---------------------------------------------------------------------------
+// Report renderer
+// ---------------------------------------------------------------------------
+function renderReport(report) {
+  const parts = [];
+
+  // Overall banner
+  const isPass = report.overallVerdict === 'PASS';
+  parts.push(`
+    <div class="overall ${isPass ? 'pass' : 'fail'}">
+      <div class="overall-icon">${isPass ? '✅' : '❌'}</div>
+      <div class="overall-body">
+        <div class="overall-title">Evidence run ${isPass ? 'completed successfully' : 'produced unexpected results'}</div>
+        <div class="overall-note">
+          ${isPass
+            ? 'All expected observations collected across 3 scenarios. '
+              + '<strong>Collision steps show intentional application test failures — not runner errors.</strong>'
+            : 'One or more steps did not produce the expected outcome. See details below.'}
+        </div>
+      </div>
+    </div>`);
+
+  // Meta
+  const ts = (report.runTimestamp ?? '').replace('T', ' ').replace(/-/g, ':').replace(/(\d{4}):(\d{2}):(\d{2})/, '$1-$2-$3');
+  parts.push(`
+    <div class="meta-grid">
+      <div class="meta-item"><label>Run timestamp</label><div class="val">${esc(ts)}</div></div>
+      <div class="meta-item"><label>Node</label><div class="val">${esc(report.nodeVersion ?? '—')}</div></div>
+    </div>`);
+
+  // Scenario summary chips
+  const scenarios = report.scenarios ?? {};
+  const chipHtml = Object.entries(scenarios).map(([k, sc]) => {
+    const steps = Object.values(sc.steps ?? {});
+    const allPass = steps.every((s) => s.verdict === 'PASS');
+    return `<span class="scenario-chip ${allPass ? 'chip-pass' : 'chip-fail'}">${esc(sc.title ?? k)}</span>`;
+  }).join('');
+  parts.push(`<div class="scenario-summary">${chipHtml}<span class="chip-note">Each scenario: Branch A · Branch B · Merge · Collision · Fix</span></div>`);
+
+  // Scenario tabs
+  const scenarioKeys = Object.keys(scenarios);
+  if (!scenarioKeys.length) {
+    parts.push('<div class="empty-state">No scenario data in this report.</div>');
+    return `<div class="report">${parts.join('\n')}</div>`;
+  }
+
+  const tabsHtml = scenarioKeys.map((k, i) => {
+    const sc    = scenarios[k];
+    const steps = Object.values(sc.steps ?? {});
+    const allPass = steps.every((s) => s.verdict === 'PASS');
+    return `<button class="tab-btn ${allPass ? 's-pass' : 's-fail'}${i === 0 ? ' active' : ''}" data-tab="${esc(k)}">${esc(sc.title ?? k)}</button>`;
+  }).join('');
+  parts.push(`<div class="scenario-tabs" id="scenarioTabs">${tabsHtml}</div>`);
+
+  const panelsHtml = scenarioKeys.map((k, i) => {
+    const sc    = scenarios[k];
+    const steps = sc.steps ?? {};
+    let content = '';
+    if (k === 'scenario1') content = renderScenario1(steps);
+    else if (k === 'scenario2') content = renderScenario2(steps);
+    else if (k === 'scenario3') content = renderScenario3(steps);
+    else content = '<div class="empty-state">Unknown scenario.</div>';
+    return `<div class="scenario-panel steps${i === 0 ? ' active' : ''}" data-panel="${esc(k)}">${content}</div>`;
+  }).join('');
+  parts.push(`<div>${panelsHtml}</div>`);
+
+  // Cleanup
+  const cleanup = report.cleanup ?? [];
+  if (cleanup.length) {
+    const allOk = cleanup.every((c) => c.removeStatus === 0);
+    const rows = cleanup.map((c) =>
+      `<tr><td class="${c.removeStatus === 0 ? 'cleanup-ok' : 'cleanup-fail'}">${c.removeStatus === 0 ? '✔' : '✖'}</td>
+       <td>${esc(c.dir.replace(/.*[/\\]/, ''))}</td><td>${c.removeStatus ?? '—'}</td></tr>`
+    ).join('');
+    parts.push(`
+      <div class="card" style="margin-top:14px">
+        <div class="card-header">
+          <h2>Worktree cleanup (${cleanup.length} worktrees)</h2>
+          <span class="badge ${allOk ? 'badge-pass' : 'badge-fail'}">${allOk ? 'OK' : 'ERRORS'}</span>
+        </div>
+        <div class="card-body">
+          <table class="cleanup-table"><tbody>${rows}</tbody></table>
+        </div>
+      </div>`);
+  }
+
+  return `<div class="report">${parts.join('\n')}</div>`;
+}
+
+// Override mergeCard to accept extra HTML (needed for S3-M warning)
+const _mergeCard = mergeCard;
+function mergeCard(title, step, extraHtml) {
+  if (!step) return '';
+  const mr1 = step.mergeResult1 ?? step.mergeResult;
+  const mr2 = step.mergeResult2;
+  const tr  = step.testRun;
+  const p   = tr?.parsed;
+  const noConflict = step.hasTextualConflicts === false;
+  const mergeHtml = `
+    <div class="merge-result">
+      <span class="${noConflict ? 'merge-ok' : 'merge-fail'}">
+        ${noConflict ? '✔ No textual conflicts' : '✖ Textual conflicts detected'}
+      </span>
+      ${mr1 ? `<span style="color:#57606a;font-size:.78rem">(${fmtMs(mr1.durationMs)})</span>` : ''}
+    </div>`;
+  const countsHtml = p ? `
+    <div class="test-counts">
+      <span class="count-pass">✔ ${p.passed}</span>
+      ${p.failed > 0 ? `<span class="count-fail">✖ ${p.failed}</span>` : ''}
+      <span class="count-total">/ ${p.planned ?? (p.passed + p.failed)}</span>
+      <span class="duration">${fmtMs(tr.durationMs)}</span>
+    </div>` : '';
+  const mergeDetail = (mr1?.stdout || mr2?.stdout)
+    ? detailBlock('Show merge output', [mr1?.stdout, mr2?.stdout].filter(Boolean).join('\n')) : '';
+  const stdoutBlock = tr?.stdout ? detailBlock('Show merged suite output', tr.stdout) : '';
   return `
     <div class="card">
-      <div class="card-header">
-        <h2>Cleanup</h2>
-        <span class="badge ${allOk ? 'badge-pass' : 'badge-fail'}">${allOk ? 'OK' : 'ERRORS'}</span>
-      </div>
+      <div class="card-header"><h2>${esc(title)}</h2>${badgeFor(step.verdict)}</div>
       <div class="card-body">
-        <table class="cleanup-table">
-          <tbody>${rows}</tbody>
-        </table>
+        ${mergeHtml}${mergeDetail}${countsHtml}
+        <div class="verdict-reason" style="margin-top:4px">${esc(step.verdictReason ?? '')}</div>
+        ${extraHtml ?? ''}${stdoutBlock}
       </div>
     </div>`;
 }
 
-// ─────────────────────────────────────────────────────────────────────────────
-// Report selector + loading
-// ─────────────────────────────────────────────────────────────────────────────
-const reportSelect  = document.getElementById('reportSelect');
-const reportArea    = document.getElementById('reportArea');
-const runBtn        = document.getElementById('runBtn');
-const progressWrap  = document.getElementById('progressWrap');
-const progressLog   = document.getElementById('progressLog');
-const progressStatus= document.getElementById('progressStatus');
+// ---------------------------------------------------------------------------
+// Tab switching
+// ---------------------------------------------------------------------------
+function attachTabs() {
+  document.getElementById('scenarioTabs')?.addEventListener('click', (e) => {
+    const btn = e.target.closest('.tab-btn');
+    if (!btn) return;
+    const key = btn.dataset.tab;
+    document.querySelectorAll('.tab-btn').forEach((b) => b.classList.remove('active'));
+    document.querySelectorAll('.scenario-panel').forEach((p) => p.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelector(`.scenario-panel[data-panel="${key}"]`)?.classList.add('active');
+  });
+}
+
+// ---------------------------------------------------------------------------
+// Report select + loading
+// ---------------------------------------------------------------------------
+const reportSelect   = document.getElementById('reportSelect');
+const reportArea     = document.getElementById('reportArea');
+const runBtn         = document.getElementById('runBtn');
+const progressWrap   = document.getElementById('progressWrap');
+const progressLog    = document.getElementById('progressLog');
+const progressStatus = document.getElementById('progressStatus');
 
 async function loadReportList() {
   try {
     const res  = await fetch('/api/reports');
     const list = await res.json();
     reportSelect.innerHTML = '';
-    if (!list.length) {
-      reportSelect.innerHTML = '<option value="">— no reports yet —</option>';
-      return;
-    }
+    if (!list.length) { reportSelect.innerHTML = '<option value="">— no reports yet —</option>'; return; }
     reportSelect.innerHTML = list.map((r, i) =>
       `<option value="${esc(r.filename)}"${i === 0 ? ' selected' : ''}>${esc(r.filename.replace('run-','').replace('.json',''))}</option>`
     ).join('');
     if (list.length) loadReport(list[0].filename);
-  } catch (e) {
-    reportSelect.innerHTML = '<option value="">— error loading reports —</option>';
-  }
+  } catch { reportSelect.innerHTML = '<option value="">— error loading reports —</option>'; }
 }
 
 async function loadReport(filename) {
   reportArea.innerHTML = '<div class="empty-state">Loading…</div>';
   try {
-    const res    = await fetch(`/api/report?f=${encodeURIComponent(filename)}`);
+    const res = await fetch(`/api/report?f=${encodeURIComponent(filename)}`);
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
     const report = await res.json();
     reportArea.innerHTML = renderReport(report);
+    attachTabs();
   } catch (e) {
-    reportArea.innerHTML = `<div class="empty-state" style="color:#cf222e">Error loading report: ${esc(e.message)}</div>`;
+    reportArea.innerHTML = `<div class="empty-state" style="color:#cf222e">Error: ${esc(e.message)}</div>`;
   }
 }
 
@@ -616,30 +672,19 @@ reportSelect.addEventListener('change', () => {
   if (reportSelect.value) loadReport(reportSelect.value);
 });
 
-// ─────────────────────────────────────────────────────────────────────────────
-// Run demo button
-// ─────────────────────────────────────────────────────────────────────────────
+// ---------------------------------------------------------------------------
+// Run button (SSE)
+// ---------------------------------------------------------------------------
 let isRunning = false;
-
-async function checkRunnerStatus() {
-  try {
-    const res = await fetch('/api/runner-status');
-    const { running } = await res.json();
-    return running;
-  } catch { return false; }
-}
 
 runBtn.addEventListener('click', async () => {
   if (isRunning) return;
+  try {
+    const st = await fetch('/api/runner-status');
+    if ((await st.json()).running) { alert('A run is already in progress.'); return; }
+  } catch { /* proceed */ }
 
-  const alreadyRunning = await checkRunnerStatus();
-  if (alreadyRunning) {
-    alert('A demo run is already in progress on the server.');
-    return;
-  }
-
-  isRunning = true;
-  runBtn.disabled = true;
+  isRunning = true; runBtn.disabled = true;
   progressWrap.classList.remove('hidden');
   progressLog.textContent = '';
   progressStatus.textContent = 'Starting…';
@@ -651,64 +696,47 @@ runBtn.addEventListener('click', async () => {
       const err = await res.json().catch(() => ({ error: `HTTP ${res.status}` }));
       throw new Error(err.error ?? `HTTP ${res.status}`);
     }
-
-    const reader   = res.body.getReader();
-    const decoder  = new TextDecoder();
-    let   buffer   = '';
-    let   exitCode = null;
+    const reader  = res.body.getReader();
+    const decoder = new TextDecoder();
+    let buffer = '', exitCode = null;
 
     while (true) {
       const { done, value } = await reader.read();
       if (done) break;
       buffer += decoder.decode(value, { stream: true });
       const events = buffer.split('\n\n');
-      buffer = events.pop(); // keep incomplete last chunk
+      buffer = events.pop();
       for (const block of events) {
-        const eventLine = block.match(/^event: (.+)/m)?.[1]?.trim();
-        const dataLine  = block.match(/^data: (.+)/m)?.[1]?.trim();
-        if (!dataLine) continue;
-        let payload;
-        try { payload = JSON.parse(dataLine); } catch { continue; }
-
-        if (eventLine === 'output' && payload.line) {
-          const line = document.createElement('div');
-          // Colour error/fail lines differently
-          const isErr = /^\s*(✖|FAIL|ERR|Error|fatal|FATAL)/.test(payload.line);
-          if (isErr) line.className = 'line-err';
-          line.textContent = payload.line;
-          progressLog.appendChild(line);
+        const ev   = block.match(/^event: (.+)/m)?.[1]?.trim();
+        const data = block.match(/^data: (.+)/m)?.[1]?.trim();
+        if (!data) continue;
+        let pl; try { pl = JSON.parse(data); } catch { continue; }
+        if (ev === 'output' && pl.line) {
+          const el = document.createElement('div');
+          if (/^\s*(✖|FAIL|ERR|Error|fatal)/.test(pl.line)) el.className = 'line-err';
+          el.textContent = pl.line;
+          progressLog.appendChild(el);
           progressLog.scrollTop = progressLog.scrollHeight;
-        } else if (eventLine === 'done') {
-          exitCode = payload.exitCode;
-        } else if (eventLine === 'error') {
-          progressStatus.textContent = `Runner error: ${payload.message}`;
-          progressStatus.className = 'progress-status err';
-        }
+        } else if (ev === 'done') { exitCode = pl.exitCode; }
+        else if (ev === 'error') { progressStatus.textContent = `Runner error: ${pl.message}`; progressStatus.className = 'progress-status err'; }
       }
     }
-
     if (exitCode === 0) {
       progressStatus.textContent = '✔ Run completed — all evidence collected as expected.';
       progressStatus.className = 'progress-status ok';
     } else if (exitCode !== null) {
-      progressStatus.textContent = `✖ Run finished with exit code ${exitCode} — one or more steps produced an unexpected result.`;
+      progressStatus.textContent = `✖ Exit ${exitCode} — one or more steps produced an unexpected result.`;
       progressStatus.className = 'progress-status err';
     }
   } catch (e) {
     progressStatus.textContent = `Error: ${e.message}`;
     progressStatus.className = 'progress-status err';
   } finally {
-    isRunning = false;
-    runBtn.disabled = false;
+    isRunning = false; runBtn.disabled = false;
   }
-
-  // Reload the report list and select the newest one
   await loadReportList();
 });
 
-// ─────────────────────────────────────────────────────────────────────────────
-// Init
-// ─────────────────────────────────────────────────────────────────────────────
 loadReportList();
 </script>
 </body>
