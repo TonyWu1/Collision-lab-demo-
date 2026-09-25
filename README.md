@@ -4,8 +4,31 @@ CollisionLab will detect hidden semantic conflicts between Git branches: each
 branch works independently and passes its tests, Git merges without a textual
 conflict, but the combined behavior breaks the application.
 
-This branch adds email authentication to the working baseline. IBM Bob
-integration, branch analysis, generated integration tests, and fixes are not implemented.
+This demo branch merges email authentication and username-based profile caching,
+then adds a controlled integration flow with an intentionally incompatible identity
+assumption. IBM Bob integration and collision fixes are not implemented.
+
+## Reproduce the controlled collision
+
+```sh
+npm test
+# Or run only the failing integration test:
+node --test tests/auth-profile.integration.test.js
+```
+
+The integration test intentionally fails. The existing 19 tests pass.
+`loginAndLoadProfile(loginIdentifier)` authenticates the user, caches the profile,
+then retrieves it using the original login identifier. It assumes that identifier
+is a username. Email authentication accepts `alice@example.com`, but the profile
+cache stores Alice under `alice`. Retrieval by email returns `null` even though
+authentication and caching both succeeded.
+
+Both feature branches pass independently and merge without textual conflicts.
+The features alone do not inherently conflict: looking up the profile by the
+returned user's username would be compatible. This demo introduces the stale
+identity assumption in `src/profileSession.js` on the combined branch; it was
+not already present in either original branch. The failing integration test
+exposes that explicit cross-feature assumption. The ID-based cache is unchanged.
 
 ## Run
 
