@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CollisionLab — Evidence Dashboard</title>
+<style>
+/* ── Reset & base ──────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 15px; }
+body {
+  font-family: -apple-system, "Segoe UI", system-ui, sans-serif;
+  background: #f7f8fa;
+  color: #1f2328;
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+/* ── Layout ────────────────────────────────────────────────────────────── */
+.page-wrap   { max-width: 900px; margin: 0 auto; padding: 24px 20px 60px; }
+.header      { border-bottom: 1px solid #e5e7eb; padding-bottom: 16px; margin-bottom: 24px; }
+.header h1   { font-size: 1.35rem; font-weight: 600; letter-spacing: -.01em; }
+.header .sub { font-size: .82rem; color: #57606a; margin-top: 3px; }
+
+/* ── Controls bar ──────────────────────────────────────────────────────── */
+.controls {
+  display: flex; align-items: center; gap: 10px;
+  margin-bottom: 22px; flex-wrap: wrap;
+}
+select {
+  flex: 1 1 260px; max-width: 340px;
+  padding: 6px 10px; border: 1px solid #d0d7de; border-radius: 6px;
+  background: #fff; font-size: .9rem; color: #1f2328;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M0 0l6 8 6-8z' fill='%2357606a'/%3E%3C/svg%3E");
+  background-repeat: no-repeat; background-position: right 10px center;
+  padding-right: 28px;
+}
+select:focus { outline: 2px solid #3b82d4; outline-offset: 1px; }
+.btn {
+  padding: 6px 16px; border-radius: 6px; border: 1px solid transparent;
+  font-size: .9rem; font-weight: 500; cursor: pointer; white-space: nowrap;
+  transition: background .12s, opacity .12s;
+}
+.btn-primary { background: #1f6feb; color: #fff; border-color: #1f6feb; }
+.btn-primary:hover:not(:disabled) { background: #1a5fca; }
+.btn-primary:disabled { opacity: .5; cursor: not-allowed; }
+
+/* ── Notice banner ─────────────────────────────────────────────────────── */
+.notice {
+  background: #fffbdd; border: 1px solid #d4a017; border-radius: 6px;
+  padding: 10px 14px; font-size: .83rem; color: #6a4c00;
+  margin-bottom: 20px; line-height: 1.5;
+}
+
+/* ── Progress log ──────────────────────────────────────────────────────── */
+.progress-wrap { margin-bottom: 20px; }
+.progress-wrap.hidden { display: none; }
+.progress-title { font-size: .83rem; font-weight: 600; color: #57606a; margin-bottom: 6px; text-transform: uppercase; letter-spacing: .05em; }
+.progress-log {
+  background: #0d1117; color: #c9d1d9; font-family: "SFMono-Regular", Consolas, monospace;
+  font-size: .78rem; line-height: 1.5; border-radius: 6px;
+  padding: 12px 14px; max-height: 240px; overflow-y: auto;
+  white-space: pre-wrap; word-break: break-all;
+}
+.progress-log .line-err { color: #f85149; }
+.progress-status { font-size: .83rem; margin-top: 8px; }
+.progress-status.ok  { color: #2da44e; }
+.progress-status.err { color: #cf222e; }
+.progress-status.running { color: #9a6700; }
+
+/* ── Empty / error state ───────────────────────────────────────────────── */
+.empty-state { color: #57606a; font-size: .92rem; padding: 32px 0; text-align: center; }
+
+/* ── Report container ──────────────────────────────────────────────────── */
+.report { display: flex; flex-direction: column; gap: 14px; }
+
+/* ── Overall verdict banner ────────────────────────────────────────────── */
+.overall {
+  border-radius: 8px; padding: 14px 18px;
+  display: flex; align-items: flex-start; gap: 12px;
+}
+.overall.pass  { background: #dafbe1; border: 1px solid #2da44e; }
+.overall.fail  { background: #fff0f0; border: 1px solid #cf222e; }
+.overall-icon  { font-size: 1.4rem; line-height: 1; flex-shrink: 0; margin-top: 1px; }
+.overall-body  { flex: 1; }
+.overall-title { font-size: 1rem; font-weight: 600; }
+.overall-note  { font-size: .82rem; margin-top: 4px; color: #57606a; }
+.overall.pass .overall-note { color: #1a7f37; }
+.overall.fail .overall-note { color: #82071e; }
+
+/* ── Meta row (timestamp, node, refs) ──────────────────────────────────── */
+.meta-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 8px 16px; background: #fff; border: 1px solid #e5e7eb;
+  border-radius: 8px; padding: 14px 16px;
+}
+.meta-item label { display: block; font-size: .73rem; font-weight: 600; color: #57606a; text-transform: uppercase; letter-spacing: .05em; }
+.meta-item .val  { font-size: .85rem; font-family: "SFMono-Regular", Consolas, monospace; word-break: break-all; }
+.meta-item .val a { color: #3b82d4; text-decoration: none; }
+.meta-item .val a:hover { text-decoration: underline; }
+
+/* ── Section card ──────────────────────────────────────────────────────── */
+.card {
+  background: #fff; border: 1px solid #e5e7eb; border-radius: 8px;
+  overflow: hidden;
+}
+.card-header {
+  display: flex; align-items: center; gap: 10px;
+  padding: 12px 16px; border-bottom: 1px solid #e5e7eb;
+  background: #f7f8fa;
+}
+.card-header h2  { font-size: .95rem; font-weight: 600; flex: 1; }
+.card-header .badge {
+  font-size: .72rem; font-weight: 600; padding: 2px 8px; border-radius: 20px;
+  white-space: nowrap;
+}
+.badge-pass    { background: #d1fae5; color: #065f46; }
+.badge-fail    { background: #fee2e2; color: #991b1b; }
+.badge-skip    { background: #f3f4f6; color: #374151; }
+.badge-error   { background: #fef3c7; color: #92400e; }
+.badge-collision { background: #fee2e2; color: #991b1b; border: 1px solid #fca5a5; }
+.card-body { padding: 14px 16px; font-size: .88rem; }
+
+/* ── Test count row ────────────────────────────────────────────────────── */
+.test-counts { display: flex; gap: 14px; align-items: center; margin-bottom: 10px; }
+.count-pass  { color: #1a7f37; font-weight: 600; }
+.count-fail  { color: #cf222e; font-weight: 600; }
+.count-total { color: #57606a; }
+.duration    { color: #57606a; font-size: .8rem; margin-left: auto; }
+
+/* ── Collision block ───────────────────────────────────────────────────── */
+.collision-box {
+  background: #fff5f5; border: 1px solid #fca5a5; border-radius: 6px;
+  padding: 12px 14px; margin-top: 4px;
+}
+.collision-label {
+  font-size: .73rem; font-weight: 700; text-transform: uppercase;
+  color: #cf222e; letter-spacing: .06em; margin-bottom: 8px;
+}
+.collision-test-name {
+  font-weight: 600; font-size: .88rem; margin-bottom: 10px; color: #1f2328;
+}
+.diff-table { width: 100%; border-collapse: collapse; font-family: "SFMono-Regular", Consolas, monospace; font-size: .8rem; }
+.diff-table th { text-align: left; padding: 4px 8px; font-size: .72rem; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; background: #f7f8fa; border-bottom: 1px solid #e5e7eb; }
+.diff-table td { padding: 6px 8px; vertical-align: top; border-bottom: 1px solid #f0f0f0; }
+.diff-actual   { color: #cf222e; }
+.diff-expected { color: #1a7f37; }
+.diff-null     { font-style: italic; color: #9a3412; }
+.collision-caption { font-size: .78rem; color: #57606a; margin-top: 8px; }
+
+/* ── Merge block ───────────────────────────────────────────────────────── */
+.merge-result {
+  font-size: .82rem; margin-bottom: 10px;
+  display: flex; align-items: center; gap: 8px;
+}
+.merge-ok   { color: #1a7f37; font-weight: 600; }
+.merge-fail { color: #cf222e; font-weight: 600; }
+
+/* ── Expandable detail ─────────────────────────────────────────────────── */
+details { margin-top: 8px; }
+details summary {
+  cursor: pointer; font-size: .8rem; color: #3b82d4; font-weight: 500;
+  user-select: none; list-style: none; display: flex; align-items: center; gap: 4px;
+}
+details summary::before { content: '▶'; font-size: .65rem; transition: transform .15s; }
+details[open] summary::before { transform: rotate(90deg); }
+details summary:hover { text-decoration: underline; }
+.detail-pre {
+  background: #0d1117; color: #c9d1d9;
+  font-family: "SFMono-Regular", Consolas, monospace;
+  font-size: .76rem; line-height: 1.5; border-radius: 5px;
+  padding: 10px 12px; max-height: 200px; overflow: auto;
+  margin-top: 6px; white-space: pre-wrap; word-break: break-all;
+}
+
+/* ── SHA chip ──────────────────────────────────────────────────────────── */
+.sha {
+  font-family: "SFMono-Regular", Consolas, monospace;
+  font-size: .76rem; background: #f0f6ff; color: #0550ae;
+  border: 1px solid #b6d4fe; border-radius: 4px; padding: 1px 6px;
+  white-space: nowrap;
+}
+
+/* ── Verdict note ──────────────────────────────────────────────────────── */
+.verdict-reason { font-size: .84rem; color: #57606a; }
+
+/* ── Test list ─────────────────────────────────────────────────────────── */
+.test-list { list-style: none; margin: 0; padding: 0; }
+.test-list li {
+  padding: 3px 0; font-size: .82rem; font-family: "SFMono-Regular", Consolas, monospace;
+  border-bottom: 1px solid #f7f8fa; display: flex; gap: 8px; align-items: baseline;
+}
+.test-list li:last-child { border-bottom: none; }
+.t-ok   { color: #1a7f37; flex-shrink: 0; }
+.t-fail { color: #cf222e; flex-shrink: 0; }
+.t-name { word-break: break-word; }
+.t-dur  { color: #57606a; font-size: .72rem; margin-left: auto; white-space: nowrap; }
+
+/* ── Cleanup table ─────────────────────────────────────────────────────── */
+.cleanup-table { width: 100%; border-collapse: collapse; font-size: .8rem; }
+.cleanup-table td { padding: 4px 8px; border-bottom: 1px solid #f0f0f0; font-family: "SFMono-Regular", Consolas, monospace; }
+.cleanup-table tr:last-child td { border-bottom: none; }
+.cleanup-ok   { color: #1a7f37; }
+.cleanup-fail { color: #cf222e; font-weight: 600; }
+</style>
+</head>
+<body>
+<div class="page-wrap">
+
+  <!-- Header -->
+  <div class="header">
+    <h1>CollisionLab — Evidence Dashboard</h1>
+    <div class="sub">
+      Known-scenario evidence viewer. Displays results of the pre-built demonstration only.
+      Does not automatically discover new conflicts or call external services.
+    </div>
+  </div>
+
+  <!-- Notice -->
+  <div class="notice">
+    <strong>What you are seeing:</strong> This dashboard loads results from <code>scripts/run-demo.mjs</code>,
+    a scripted evidence runner for a single known semantic collision scenario.
+    A green "Evidence run completed" banner means the runner collected all five expected observations —
+    it does <em>not</em> mean the merged application passed.
+    The integration test in Step&nbsp;4 is intentionally failing application code.
+  </div>
+
+  <!-- Controls -->
+  <div class="controls">
+    <select id="reportSelect" aria-label="Select a report">
+      <option value="">— loading reports —</option>
+    </select>
+    <button class="btn btn-primary" id="runBtn">Run demo now</button>
+  </div>
+
+  <!-- Progress -->
+  <div class="progress-wrap hidden" id="progressWrap">
+    <div class="progress-title">Runner output</div>
+    <div class="progress-log" id="progressLog"></div>
+    <div class="progress-status running" id="progressStatus">Running…</div>
+  </div>
+
+  <!-- Report area -->
+  <div id="reportArea">
+    <div class="empty-state">Select a report above, or click "Run demo now" to generate one.</div>
+  </div>
+
+</div><!-- /page-wrap -->
+
+<script>
+// ─────────────────────────────────────────────────────────────────────────────
+// Utilities
+// ─────────────────────────────────────────────────────────────────────────────
+const esc = (s) => String(s ?? '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+
+function shortSha(sha) {
+  return sha ? `<span class="sha">${esc(sha.slice(0,12))}</span>` : '—';
+}
+
+function fmtDuration(ms) {
+  if (ms == null) return '';
+  return ms < 1000 ? `${ms}ms` : `${(ms/1000).toFixed(1)}s`;
+}
+
+function badgeFor(verdict) {
+  const map = { PASS:'pass', FAIL:'fail', SKIP:'skip', ERROR:'error' };
+  const cls = map[verdict] ?? 'skip';
+  return `<span class="badge badge-${cls}">${esc(verdict)}</span>`;
+}
+
+function testListHtml(tests) {
+  if (!tests || !tests.length) return '';
+  return `<ul class="test-list">${tests.map(t => `
+    <li>
+      <span class="${t.ok ? 't-ok' : 't-fail'}">${t.ok ? '✔' : '✖'}</span>
+      <span class="t-name">${esc(t.name)}</span>
+    </li>`).join('')}</ul>`;
+}
+
+function detailsBlock(summary, content) {
+  return `<details><summary>${summary}</summary><pre class="detail-pre">${esc(content)}</pre></details>`;
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Report rendering
+// ─────────────────────────────────────────────────────────────────────────────
+function renderReport(report) {
+  const parts = [];
+
+  // 1 — Overall banner
+  const isRunnerPass = report.overallVerdict === 'PASS';
+  parts.push(`
+    <div class="overall ${isRunnerPass ? 'pass' : 'fail'}">
+      <div class="overall-icon">${isRunnerPass ? '✅' : '❌'}</div>
+      <div class="overall-body">
+        <div class="overall-title">
+          Evidence run ${isRunnerPass ? 'completed successfully' : 'produced unexpected results'}
+        </div>
+        <div class="overall-note">
+          ${isRunnerPass
+            ? 'All five observations were collected as expected. '
+              + '<strong>The Step&nbsp;4 integration test intentionally fails — '
+              + 'this is the reproduced semantic collision, not a runner error.</strong>'
+            : 'One or more steps did not produce the expected outcome. '
+              + 'See individual step results below.'}
+        </div>
+      </div>
+    </div>`);
+
+  // 2 — Run metadata
+  const ts = (report.runTimestamp ?? '').replace(/-/g,':').replace('T','\u00a0');
+  const refs = report.refs ?? {};
+  parts.push(`
+    <div class="meta-grid">
+      <div class="meta-item">
+        <label>Run timestamp</label>
+        <div class="val">${esc(ts)}</div>
+      </div>
+      <div class="meta-item">
+        <label>Node</label>
+        <div class="val">${esc(report.nodeVersion ?? '—')}</div>
+      </div>
+      ${Object.entries(refs).map(([k,v]) => `
+      <div class="meta-item">
+        <label>${esc(k)}</label>
+        <div class="val">${shortSha(v)}</div>
+      </div>`).join('')}
+    </div>`);
+
+  // 3 — Step 1: Branch A
+  parts.push(renderPassingStep('Step 1 — Branch A', 'feature/email-auth',
+    report.steps?.step1, 'Independent test suite; email authentication only.'));
+
+  // 4 — Step 2: Branch B
+  const s2 = report.steps?.step2;
+  parts.push(renderPassingStep('Step 2 — Branch B', 'feature/profile-cache-v2',
+    s2, 'Independent test suite + username-login control check.',
+    s2 ? renderControlCheck(s2) : ''));
+
+  // 5 — Step 3: Merge
+  parts.push(renderMergeStep(report.steps?.step3));
+
+  // 6 — Step 4: Collision reproduction
+  parts.push(renderCollisionStep(report.steps?.step4));
+
+  // 7 — Step 5: Fix branch
+  parts.push(renderPassingStep('Step 5 — Fix branch', 'fix/canonical-profile-identity',
+    report.steps?.step5,
+    'Full test suite on the identity-safe fix. All tests must pass.'));
+
+  // 8 — Cleanup
+  parts.push(renderCleanup(report.cleanup));
+
+  return `<div class="report">${parts.join('\n')}</div>`;
+}
+
+function renderPassingStep(title, branchName, step, description, extra = '') {
+  if (!step) return '';
+  const tr = step.testRun;
+  const p  = tr?.parsed;
+  const sha = step.sha ?? null;
+
+  const countsHtml = p ? `
+    <div class="test-counts">
+      <span class="count-pass">✔ ${p.passed} passed</span>
+      ${p.failed > 0 ? `<span class="count-fail">✖ ${p.failed} failed</span>` : ''}
+      <span class="count-total">/ ${(p.planned ?? p.passed + p.failed)}</span>
+      <span class="duration">${fmtDuration(tr?.durationMs)}</span>
+    </div>` : '';
+
+  const procHtml = tr ? `
+    <div class="verdict-reason">
+      Process: exit&nbsp;<code>${tr.exitCode ?? '?'}</code>
+      ${tr.signal ? `&nbsp;signal&nbsp;<code>${esc(tr.signal)}</code>` : ''}
+      ${tr.spawnError ? `&nbsp;<span style="color:#cf222e">spawn error: ${esc(tr.spawnError)}</span>` : ''}
+    </div>` : '';
+
+  const testsDetail = (p && p.tests?.length)
+    ? detailsBlock(`Show all ${p.tests.length} test results`, p.tests.map(t =>
+        `${t.ok ? '✔' : '✖'} ${t.name}`).join('\n'))
+    : '';
+
+  const stdoutDetail = tr?.stdout
+    ? detailsBlock('Show spec output', tr.stdout)
+    : '';
+
+  return `
+    <div class="card">
+      <div class="card-header">
+        <h2>${esc(title)} ${sha ? shortSha(sha) : ''}</h2>
+        ${badgeFor(step.verdict)}
+      </div>
+      <div class="card-body">
+        <div class="verdict-reason" style="margin-bottom:8px">${esc(description)}</div>
+        ${countsHtml}
+        ${procHtml}
+        <div class="verdict-reason" style="margin-top:6px">${esc(step.verdictReason ?? '')}</div>
+        ${extra}
+        ${testsDetail}
+        ${stdoutDetail}
+      </div>
+    </div>`;
+}
+
+function renderControlCheck(step) {
+  const cc = step.controlCheckParsed;
+  if (!cc) return '';
+  const ok = cc.ok === true;
+  return `
+    <div style="margin-top:10px;padding:8px 10px;background:${ok?'#dafbe1':'#fff0f0'};border:1px solid ${ok?'#2da44e':'#cf222e'};border-radius:5px;font-size:.83rem;">
+      <strong>Control check</strong> — <code>loginAndLoadProfile('alice')</code>:
+      ${ok
+        ? `<span style="color:#1a7f37">✔ PASS</span> — returned
+           <code>{ id: '${esc(cc.profile?.id)}', username: '${esc(cc.profile?.username)}' }</code>`
+        : `<span style="color:#cf222e">✖ FAIL</span>`}
+    </div>`;
+}
+
+function renderMergeStep(step) {
+  if (!step) return '';
+  const mr = step.mergeResult;
+  const tr = step.testRun;
+  const p  = tr?.parsed;
+  const noConflict = step.hasTextualConflicts === false;
+
+  const mergeHtml = `
+    <div class="merge-result">
+      <span class="${noConflict ? 'merge-ok' : 'merge-fail'}">
+        ${noConflict ? '✔ No textual conflicts' : '✖ Textual conflicts detected'}
+      </span>
+      ${mr ? `<span style="color:#57606a;font-size:.8rem">(exit&nbsp;${mr.status}, ${fmtDuration(mr.durationMs)})</span>` : ''}
+    </div>`;
+
+  const mergeDetail = mr?.stdout
+    ? detailsBlock('Show merge output', mr.stdout)
+    : '';
+
+  const countsHtml = p ? `
+    <div class="test-counts">
+      <span class="count-pass">✔ ${p.passed} passed</span>
+      ${p.failed > 0 ? `<span class="count-fail">✖ ${p.failed} failed</span>` : ''}
+      <span class="count-total">/ ${p.planned ?? p.passed + p.failed}</span>
+      <span class="duration">${fmtDuration(tr?.durationMs)}</span>
+    </div>` : '';
+
+  const stdoutDetail = tr?.stdout ? detailsBlock('Show merged suite output', tr.stdout) : '';
+
+  return `
+    <div class="card">
+      <div class="card-header">
+        <h2>Step 3 — Merge (feature/email-auth → feature/profile-cache-v2)</h2>
+        ${badgeFor(step.verdict)}
+      </div>
+      <div class="card-body">
+        <div class="verdict-reason" style="margin-bottom:8px">
+          Merges both feature branches. Textual conflicts must be absent.
+          Unit tests in the merged tree must all pass.
+        </div>
+        ${mergeHtml}
+        ${mergeDetail}
+        ${countsHtml}
+        <div class="verdict-reason" style="margin-top:6px">${esc(step.verdictReason ?? '')}</div>
+        ${stdoutDetail}
+      </div>
+    </div>`;
+}
+
+function renderCollisionStep(step) {
+  if (!step) return '';
+  const tr = step.testRun;
+  const p  = tr?.parsed;
+  const cc = step.collisionCheck;
+
+  // Find the failing test
+  const failing = p?.tests?.find(t => !t.ok);
+
+  const collisionHtml = cc?.ok && failing ? `
+    <div class="collision-box">
+      <div class="collision-label">⚠ Reproduced semantic collision — application test failure</div>
+      <div class="collision-test-name">${esc(failing.name)}</div>
+      <table class="diff-table">
+        <thead><tr><th>Field</th><th>Value</th></tr></thead>
+        <tbody>
+          <tr>
+            <td>actual</td>
+            <td class="diff-actual diff-null">null&nbsp;—&nbsp;profile was not returned</td>
+          </tr>
+          <tr>
+            <td>expected</td>
+            <td class="diff-expected">${
+              failing.expectedFields
+                ? Object.entries(failing.expectedFields)
+                    .map(([k,v]) => `<code>${esc(k)}: '${esc(v)}'</code>`)
+                    .join('<br>')
+                : 'Alice\'s profile object (u1)'
+            }</td>
+          </tr>
+          <tr>
+            <td>error code</td>
+            <td><code>${esc(failing.errorCode ?? 'ERR_ASSERTION')}</code></td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="collision-caption">
+        <strong>Why it fails:</strong>
+        <code>loginAndLoadProfile('alice@example.com')</code> passes the email string to
+        <code>getProfileByUsername()</code>, which expects a username.
+        The profile is correctly cached under <code>'alice'</code> but the lookup key is
+        <code>'alice@example.com'</code> — so retrieval returns null.
+        This is the semantic collision: both branches passed their own tests independently,
+        and git reported no textual conflicts on merge.
+      </div>
+    </div>` : (cc && !cc.ok ? `
+    <div style="background:#fff0f0;border:1px solid #cf222e;border-radius:5px;padding:10px;font-size:.83rem;color:#82071e;">
+      Collision not confirmed: ${esc(cc.reason)}
+    </div>` : '');
+
+  const countsHtml = p ? `
+    <div class="test-counts" style="margin-top:10px">
+      <span class="count-pass">✔ ${p.passed} other tests passed</span>
+      ${p.failed > 0 ? `<span class="count-fail">✖ ${p.failed} failed (expected)</span>` : ''}
+      <span class="duration">${fmtDuration(tr?.durationMs)}</span>
+    </div>` : '';
+
+  const stdoutDetail = tr?.stdout ? detailsBlock('Show full test output', tr.stdout) : '';
+
+  return `
+    <div class="card" style="border-color:#fca5a5">
+      <div class="card-header" style="background:#fff5f5;border-bottom-color:#fca5a5">
+        <h2>Step 4 — Reproduced integration failure</h2>
+        <span class="badge badge-collision">COLLISION REPRODUCED</span>
+        ${badgeFor(step.verdict)}
+      </div>
+      <div class="card-body">
+        <div class="verdict-reason" style="margin-bottom:8px">
+          The original failing integration test (from commit
+          <span class="sha">f092166</span>) is injected into the merged tree.
+          No production code is modified. The test must fail with the exact
+          assertion: <em>actual null, expected Alice object, code ERR_ASSERTION.</em>
+        </div>
+        ${collisionHtml}
+        ${countsHtml}
+        <div class="verdict-reason" style="margin-top:6px">${esc(step.verdictReason ?? '')}</div>
+        ${stdoutDetail}
+      </div>
+    </div>`;
+}
+
+function renderCleanup(cleanup) {
+  if (!cleanup || !cleanup.length) return '';
+  const rows = cleanup.map(c => `
+    <tr>
+      <td class="${c.removeStatus === 0 ? 'cleanup-ok' : 'cleanup-fail'}">${c.removeStatus === 0 ? '✔' : '✖'}</td>
+      <td>${esc(c.dir.split(/[\\/]/).slice(-1)[0])}</td>
+      <td>${c.removeStatus ?? '—'}</td>
+      <td>${esc(c.removeError ?? '')}</td>
+    </tr>`).join('');
+
+  const allOk = cleanup.every(c => c.removeStatus === 0);
+  return `
+    <div class="card">
+      <div class="card-header">
+        <h2>Cleanup</h2>
+        <span class="badge ${allOk ? 'badge-pass' : 'badge-fail'}">${allOk ? 'OK' : 'ERRORS'}</span>
+      </div>
+      <div class="card-body">
+        <table class="cleanup-table">
+          <tbody>${rows}</tbody>
+        </table>
+      </div>
+    </div>`;
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Report selector + loading
+// ─────────────────────────────────────────────────────────────────────────────
+const reportSelect  = document.getElementById('reportSelect');
+const reportArea    = document.getElementById('reportArea');
+const runBtn        = document.getElementById('runBtn');
+const progressWrap  = document.getElementById('progressWrap');
+const progressLog   = document.getElementById('progressLog');
+const progressStatus= document.getElementById('progressStatus');
+
+async function loadReportList() {
+  try {
+    const res  = await fetch('/api/reports');
+    const list = await res.json();
+    reportSelect.innerHTML = '';
+    if (!list.length) {
+      reportSelect.innerHTML = '<option value="">— no reports yet —</option>';
+      return;
+    }
+    reportSelect.innerHTML = list.map((r, i) =>
+      `<option value="${esc(r.filename)}"${i === 0 ? ' selected' : ''}>${esc(r.filename.replace('run-','').replace('.json',''))}</option>`
+    ).join('');
+    if (list.length) loadReport(list[0].filename);
+  } catch (e) {
+    reportSelect.innerHTML = '<option value="">— error loading reports —</option>';
+  }
+}
+
+async function loadReport(filename) {
+  reportArea.innerHTML = '<div class="empty-state">Loading…</div>';
+  try {
+    const res    = await fetch(`/api/report?f=${encodeURIComponent(filename)}`);
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const report = await res.json();
+    reportArea.innerHTML = renderReport(report);
+  } catch (e) {
+    reportArea.innerHTML = `<div class="empty-state" style="color:#cf222e">Error loading report: ${esc(e.message)}</div>`;
+  }
+}
+
+reportSelect.addEventListener('change', () => {
+  if (reportSelect.value) loadReport(reportSelect.value);
+});
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Run demo button
+// ─────────────────────────────────────────────────────────────────────────────
+let isRunning = false;
+
+async function checkRunnerStatus() {
+  try {
+    const res = await fetch('/api/runner-status');
+    const { running } = await res.json();
+    return running;
+  } catch { return false; }
+}
+
+runBtn.addEventListener('click', async () => {
+  if (isRunning) return;
+
+  const alreadyRunning = await checkRunnerStatus();
+  if (alreadyRunning) {
+    alert('A demo run is already in progress on the server.');
+    return;
+  }
+
+  isRunning = true;
+  runBtn.disabled = true;
+  progressWrap.classList.remove('hidden');
+  progressLog.textContent = '';
+  progressStatus.textContent = 'Starting…';
+  progressStatus.className = 'progress-status running';
+
+  try {
+    const res = await fetch('/api/run', { method: 'POST' });
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({ error: `HTTP ${res.status}` }));
+      throw new Error(err.error ?? `HTTP ${res.status}`);
+    }
+
+    const reader   = res.body.getReader();
+    const decoder  = new TextDecoder();
+    let   buffer   = '';
+    let   exitCode = null;
+
+    while (true) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      buffer += decoder.decode(value, { stream: true });
+      const events = buffer.split('\n\n');
+      buffer = events.pop(); // keep incomplete last chunk
+      for (const block of events) {
+        const eventLine = block.match(/^event: (.+)/m)?.[1]?.trim();
+        const dataLine  = block.match(/^data: (.+)/m)?.[1]?.trim();
+        if (!dataLine) continue;
+        let payload;
+        try { payload = JSON.parse(dataLine); } catch { continue; }
+
+        if (eventLine === 'output' && payload.line) {
+          const line = document.createElement('div');
+          // Colour error/fail lines differently
+          const isErr = /^\s*(✖|FAIL|ERR|Error|fatal|FATAL)/.test(payload.line);
+          if (isErr) line.className = 'line-err';
+          line.textContent = payload.line;
+          progressLog.appendChild(line);
+          progressLog.scrollTop = progressLog.scrollHeight;
+        } else if (eventLine === 'done') {
+          exitCode = payload.exitCode;
+        } else if (eventLine === 'error') {
+          progressStatus.textContent = `Runner error: ${payload.message}`;
+          progressStatus.className = 'progress-status err';
+        }
+      }
+    }
+
+    if (exitCode === 0) {
+      progressStatus.textContent = '✔ Run completed — all evidence collected as expected.';
+      progressStatus.className = 'progress-status ok';
+    } else if (exitCode !== null) {
+      progressStatus.textContent = `✖ Run finished with exit code ${exitCode} — one or more steps produced an unexpected result.`;
+      progressStatus.className = 'progress-status err';
+    }
+  } catch (e) {
+    progressStatus.textContent = `Error: ${e.message}`;
+    progressStatus.className = 'progress-status err';
+  } finally {
+    isRunning = false;
+    runBtn.disabled = false;
+  }
+
+  // Reload the report list and select the newest one
+  await loadReportList();
+});
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Init
+// ─────────────────────────────────────────────────────────────────────────────
+loadReportList();
+</script>
+</body>
+</html>

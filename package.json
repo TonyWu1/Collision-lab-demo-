@@ -7,7 +7,8 @@
   "scripts": {
     "start": "node src/app.js",
     "test": "node --test",
-    "demo": "node scripts/run-demo.mjs"
+    "demo": "node scripts/run-demo.mjs",
+    "dashboard": "node scripts/server.mjs"
   },
   "engines": {
     "node": ">=20"

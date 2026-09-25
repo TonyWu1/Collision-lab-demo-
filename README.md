@@ -4,8 +4,34 @@ CollisionLab will detect hidden semantic conflicts between Git branches: each
 branch works independently and passes its tests, Git merges without a textual
 conflict, but the combined behavior breaks the application.
 
-This project is the working baseline only. IBM Bob integration, branch analysis,
-generated integration tests, fixes, and feature branches are not implemented.
+## Evidence dashboard
+
+Requires Node.js 20 or newer. No dependencies to install.
+
+```sh
+cd collisionlab-demo
+node scripts/server.mjs        # or: npm run dashboard
+```
+
+Open **http://localhost:7432/** in a browser.
+
+The dashboard is a **known-scenario evidence viewer** for this specific demo.
+It does not automatically discover new conflicts or call external services.
+
+- **Select a report** from the dropdown to view a previously saved run.
+- **Click "Run demo now"** to invoke `scripts/run-demo.mjs`, stream its output
+  live, and load the new report when it finishes.
+- A green "Evidence run completed" banner means the runner collected all five
+  expected observations — it does **not** mean the merged application passed.
+  Step 4 intentionally shows a failing integration test (the semantic collision).
+
+## CLI commands
+
+```sh
+npm run demo        # run the evidence runner directly (no browser needed)
+npm test            # run the test suite for the current branch
+npm start           # run src/app.js
+```
 
 ## Run
 
