@@ -1,0 +1,14 @@
+{
+  "name": "collisionlab-demo",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Baseline demo for CollisionLab semantic conflict detection",
+  "type": "module",
+  "scripts": {
+    "start": "node src/app.js",
+    "test": "node --test"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
