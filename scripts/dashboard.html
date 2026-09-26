@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>CollisionLab — Evidence Dashboard</title>
+<!-- Phase 14: Bob Analyses view added -->
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { font-size: 15px; }
@@ -200,6 +201,131 @@ details summary:hover { text-decoration: underline; }
 .chip-pass { background: #d1fae5; color: #065f46; }
 .chip-fail { background: #fee2e2; color: #991b1b; }
 .chip-note { font-size: .76rem; color: #57606a; }
+
+/* ── View tabs (Demos / Bob Analyses) ── */
+.view-tabs {
+  display: flex; gap: 0; margin-bottom: 20px; border-bottom: 2px solid #e5e7eb;
+}
+.view-tab {
+  padding: 8px 20px; font-size: .9rem; font-weight: 500; cursor: pointer;
+  background: none; border: none; border-bottom: 2px solid transparent;
+  margin-bottom: -2px; color: #57606a;
+}
+.view-tab.active { border-bottom-color: #1f6feb; color: #1f6feb; font-weight: 600; }
+.view-tab:hover:not(.active) { color: #1f2328; }
+.view-section { display: none; }
+.view-section.active { display: block; }
+
+/* ── Bob Analyses: command builder ── */
+.cmd-builder {
+  background: #fff; border: 1px solid #e5e7eb; border-radius: 8px;
+  padding: 14px 16px; margin-bottom: 18px;
+}
+.cmd-builder h3 { font-size: .88rem; font-weight: 600; margin-bottom: 10px; }
+.cmd-row { display: flex; gap: 8px; align-items: flex-end; flex-wrap: wrap; margin-bottom: 8px; }
+.cmd-field { display: flex; flex-direction: column; gap: 3px; }
+.cmd-field label { font-size: .72rem; font-weight: 600; color: #57606a; text-transform: uppercase; letter-spacing: .04em; }
+.cmd-field select, .cmd-field input {
+  padding: 5px 8px; border: 1px solid #d0d7de; border-radius: 5px;
+  font-size: .85rem; background: #fff; color: #1f2328; min-width: 180px;
+}
+.cmd-field input { min-width: 240px; font-family: "SFMono-Regular", Consolas, monospace; font-size: .82rem; }
+.cmd-output {
+  font-family: "SFMono-Regular", Consolas, monospace; font-size: .84rem;
+  background: #f6f8fa; border: 1px solid #d0d7de; border-radius: 5px;
+  padding: 8px 12px; margin-bottom: 8px; word-break: break-all; color: #1f2328;
+}
+.cmd-note { font-size: .78rem; color: #57606a; line-height: 1.5; }
+.btn-secondary { background: #f6f8fa; color: #1f2328; border-color: #d0d7de; }
+.btn-secondary:hover { background: #eaecef; }
+.btn-copied { background: #2da44e !important; color: #fff !important; border-color: #2da44e !important; }
+
+/* ── Bob Analyses: evidence viewer ── */
+.analyses-controls {
+  display: flex; align-items: center; gap: 10px; margin-bottom: 18px; flex-wrap: wrap;
+}
+.analysis-select { flex: 1 1 260px; max-width: 420px; }
+.verdict-banner {
+  border-radius: 8px; padding: 12px 16px; margin-bottom: 16px;
+  display: flex; align-items: flex-start; gap: 10px;
+}
+.verdict-banner.confirmed  { background: #dafbe1; border: 1px solid #2da44e; }
+.verdict-banner.not-reproduced { background: #dafbe1; border: 1px solid #2da44e; }
+.verdict-banner.inconclusive { background: #fffbdd; border: 1px solid #d4a017; }
+.verdict-banner.error, .verdict-banner.incomplete { background: #fff0f0; border: 1px solid #cf222e; }
+.verdict-banner.textual-conflict { background: #fff0f0; border: 1px solid #cf222e; }
+.verdict-icon { font-size: 1.3rem; line-height: 1; flex-shrink: 0; margin-top: 1px; }
+.verdict-body { flex: 1; }
+.verdict-title { font-size: .98rem; font-weight: 600; }
+.verdict-sub   { font-size: .8rem; margin-top: 3px; color: #57606a; }
+
+.evidence-section { margin-bottom: 14px; }
+.evidence-section h3 {
+  font-size: .78rem; font-weight: 700; text-transform: uppercase; color: #57606a;
+  letter-spacing: .06em; margin-bottom: 6px;
+}
+.branch-chips { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+.branch-chip {
+  font-family: "SFMono-Regular", Consolas, monospace; font-size: .79rem;
+  background: #f0f6ff; color: #0550ae; border: 1px solid #b6d4fe;
+  border-radius: 4px; padding: 2px 7px; white-space: nowrap;
+}
+.branch-chip.base { background: #f6f8fa; color: #57606a; border-color: #d0d7de; }
+.run-table { width: 100%; border-collapse: collapse; font-size: .82rem; margin-top: 4px; }
+.run-table th {
+  text-align: left; font-size: .72rem; font-weight: 600; color: #57606a;
+  text-transform: uppercase; letter-spacing: .04em; padding: 4px 8px;
+  border-bottom: 1px solid #e5e7eb; background: #f7f8fa;
+}
+.run-table td { padding: 5px 8px; border-bottom: 1px solid #f0f0f0; vertical-align: top; }
+.run-table tr:last-child td { border-bottom: none; }
+.count-skipped { color: #9a6700; font-weight: 600; }
+.run-label { font-family: "SFMono-Regular", Consolas, monospace; font-size: .78rem; color: #57606a; }
+.helper-status {
+  display: inline-block; font-size: .72rem; font-weight: 700; text-transform: uppercase;
+  letter-spacing: .05em; padding: 2px 8px; border-radius: 3px;
+}
+.hs-failure { background: #fef3c7; color: #78350f; }
+.hs-reproduced { background: #d1fae5; color: #065f46; }
+.hs-error { background: #fee2e2; color: #991b1b; }
+.hs-conflict { background: #fee2e2; color: #991b1b; }
+.hs-other { background: #f3f4f6; color: #374151; }
+.file-status {
+  display: inline-flex; gap: 4px; flex-wrap: wrap; margin-top: 4px;
+}
+.fs-chip {
+  font-size: .68rem; padding: 1px 6px; border-radius: 10px; font-weight: 600;
+}
+.fs-ok { background: #d1fae5; color: #065f46; }
+.fs-missing { background: #fee2e2; color: #991b1b; }
+.fs-malformed { background: #fef3c7; color: #92400e; }
+.fs-absent { background: #f3f4f6; color: #374151; }
+.merge-badge {
+  display: inline-flex; align-items: center; gap: 5px; font-size: .82rem; padding: 4px 0; margin-bottom: 4px;
+}
+.timing-row { display: flex; gap: 16px; flex-wrap: wrap; font-size: .81rem; color: #57606a; margin-top: 4px; }
+.timing-item strong { color: #1f2328; }
+.collision-flag {
+  background: #fff5f5; border: 1px solid #fca5a5; border-radius: 6px;
+  padding: 8px 12px; margin-top: 8px; font-size: .82rem;
+}
+.collision-flag-label {
+  font-size: .71rem; font-weight: 700; text-transform: uppercase; color: #cf222e;
+  letter-spacing: .06em; margin-bottom: 4px;
+}
+.fix-suggestion {
+  background: #dafbe1; border: 1px solid #6ee7b7; border-radius: 6px;
+  padding: 8px 12px; margin-top: 8px; font-size: .82rem;
+}
+.fix-suggestion-label {
+  font-size: .71rem; font-weight: 700; text-transform: uppercase; color: #065f46;
+  letter-spacing: .06em; margin-bottom: 4px;
+}
+.incomplete-notice {
+  background: #fff0f0; border: 1px solid #fca5a5; border-radius: 6px;
+  padding: 10px 14px; font-size: .84rem; color: #82071e;
+  display: flex; align-items: flex-start; gap: 8px; margin-bottom: 12px;
+}
 </style>
 </head>
 <body>
@@ -207,33 +333,96 @@ details summary:hover { text-decoration: underline; }
 
   <div class="header">
     <h1>CollisionLab — Evidence Dashboard</h1>
-    <div class="sub">Known-scenario evidence viewer · Bob-assisted semantic collision analysis · Three scenarios</div>
+    <div class="sub">Known-scenario evidence viewer · Bob-assisted semantic collision analysis</div>
   </div>
 
-  <div class="notice">
-    <strong>What you are seeing:</strong> This dashboard loads results produced by <code>scripts/run-demo.mjs</code>,
-    a scripted evidence runner for three known semantic collision scenarios.
-    A green "Evidence run completed" banner means all expected observations were collected.
-    Application test failures in the collision steps are <em>intentional</em> — they are the reproduced semantic collisions, not runner errors.
-    A fix is shown only for Scenario 1; Scenarios 2 and 3 are marked "Fix not implemented."
+  <!-- View switcher -->
+  <div class="view-tabs">
+    <button class="view-tab active" id="tabDemos">Prepared Demos</button>
+    <button class="view-tab" id="tabAnalyses">Bob Analyses</button>
   </div>
 
-  <div class="controls">
-    <select id="reportSelect" aria-label="Select a report">
-      <option value="">— loading reports —</option>
-    </select>
-    <button class="btn btn-primary" id="runBtn">Run demo now</button>
-  </div>
+  <!-- ── Prepared Demos view (existing) ── -->
+  <div class="view-section active" id="sectionDemos">
 
-  <div class="progress-wrap hidden" id="progressWrap">
-    <div class="progress-title">Runner output</div>
-    <div class="progress-log" id="progressLog"></div>
-    <div class="progress-status running" id="progressStatus">Running…</div>
-  </div>
+    <div class="notice">
+      <strong>What you are seeing:</strong> This view loads results produced by <code>scripts/run-demo.mjs</code>,
+      a scripted evidence runner for three known semantic collision scenarios.
+      A green "Evidence run completed" banner means all expected observations were collected.
+      Application test failures in the collision steps are <em>intentional</em> — they are the reproduced semantic collisions, not runner errors.
+      A fix is shown only for Scenario 1; Scenarios 2 and 3 are marked "Fix not implemented."
+    </div>
 
-  <div id="reportArea">
-    <div class="empty-state">Select a report above, or click "Run demo now" to generate one.</div>
-  </div>
+    <div class="controls">
+      <select id="reportSelect" aria-label="Select a report">
+        <option value="">— loading reports —</option>
+      </select>
+      <button class="btn btn-primary" id="runBtn">Run demo now</button>
+    </div>
+
+    <div class="progress-wrap hidden" id="progressWrap">
+      <div class="progress-title">Runner output</div>
+      <div class="progress-log" id="progressLog"></div>
+      <div class="progress-status running" id="progressStatus">Running…</div>
+    </div>
+
+    <div id="reportArea">
+      <div class="empty-state">Select a report above, or click "Run demo now" to generate one.</div>
+    </div>
+
+  </div><!-- /sectionDemos -->
+
+  <!-- ── Bob Analyses view (Phase 14) ── -->
+  <div class="view-section" id="sectionAnalyses">
+
+    <div class="notice">
+      <strong>Bob Analyses view</strong> reads evidence from <code>scripts/reports/analysis-*/</code> directories
+      produced by the <code>/collision</code> workflow. Each directory contains a manifest, diffs, hypothesis,
+      generated test, execution results, and Bob's analysis.
+      <strong>This dashboard does not invoke Bob automatically.</strong>
+      Use the command builder below to copy a <code>/collision</code> command, then run it yourself in
+      <strong>IBM Bob Agent mode</strong> in this repository.
+    </div>
+
+    <!-- Command builder -->
+    <div class="cmd-builder">
+      <h3>Build a /collision command</h3>
+      <div class="cmd-row">
+        <div class="cmd-field">
+          <label>Branch A</label>
+          <select id="branchA" aria-label="Branch A"><option value="">— loading —</option></select>
+        </div>
+        <div class="cmd-field">
+          <label>Branch B</label>
+          <select id="branchB" aria-label="Branch B"><option value="">— loading —</option></select>
+        </div>
+        <div class="cmd-field">
+          <label>Requirements (ref:path, optional)</label>
+          <input type="text" id="requirementsRef" placeholder="e.g. demo/combined-auth-cache:requirements/auth.md" autocomplete="off">
+        </div>
+        <button class="btn btn-secondary" id="copyCmd" style="align-self:flex-end">Copy Bob command</button>
+      </div>
+      <div class="cmd-output" id="cmdPreview">/collision &lt;select branches above&gt;</div>
+      <div class="cmd-note">
+        Paste this command into <strong>IBM Bob Agent mode</strong> in this repository.
+        Bob will read the branches, write a hypothesis and generated test, run the helper, and produce evidence
+        in <code>scripts/reports/analysis-&lt;timestamp&gt;/</code>. Click Refresh below after Bob completes.
+      </div>
+    </div>
+
+    <!-- Analysis selector -->
+    <div class="analyses-controls">
+      <select id="analysisSelect" class="analysis-select" aria-label="Select a Bob analysis">
+        <option value="">— loading analyses —</option>
+      </select>
+      <button class="btn btn-secondary" id="refreshAnalyses">Refresh</button>
+    </div>
+
+    <div id="analysisArea">
+      <div class="empty-state">Select a Bob analysis above, or run <code>/collision</code> in Bob and click Refresh.</div>
+    </div>
+
+  </div><!-- /sectionAnalyses -->
 
 </div>
 
@@ -752,6 +941,726 @@ runBtn.addEventListener('click', async () => {
 });
 
 loadReportList();
+
+// =============================================================================
+// Phase 14 — Bob Analyses view
+// =============================================================================
+
+// ---------------------------------------------------------------------------
+// View tab switcher
+// ---------------------------------------------------------------------------
+document.getElementById('tabDemos').addEventListener('click', () => {
+  document.getElementById('tabDemos').classList.add('active');
+  document.getElementById('tabAnalyses').classList.remove('active');
+  document.getElementById('sectionDemos').classList.add('active');
+  document.getElementById('sectionAnalyses').classList.remove('active');
+});
+document.getElementById('tabAnalyses').addEventListener('click', () => {
+  document.getElementById('tabAnalyses').classList.add('active');
+  document.getElementById('tabDemos').classList.remove('active');
+  document.getElementById('sectionAnalyses').classList.add('active');
+  document.getElementById('sectionDemos').classList.remove('active');
+  if (!branchesLoaded) loadBranches();
+  if (!analysesLoaded) loadAnalysisList();
+});
+
+// ---------------------------------------------------------------------------
+// Branch selector loading
+// ---------------------------------------------------------------------------
+let branchesLoaded = false;
+async function loadBranches() {
+  try {
+    const res      = await fetch('/api/branches');
+    const branches = await res.json();
+    const makeOpts = () =>
+      ['', ...branches].map((b) =>
+        `<option value="${esc(b)}">${b ? esc(b) : '— select branch —'}</option>`
+      ).join('');
+    document.getElementById('branchA').innerHTML = makeOpts();
+    document.getElementById('branchB').innerHTML = makeOpts();
+    branchesLoaded = true;
+    updateCmdPreview();
+  } catch {
+    document.getElementById('branchA').innerHTML = '<option value="">— error —</option>';
+    document.getElementById('branchB').innerHTML = '<option value="">— error —</option>';
+  }
+}
+
+function updateCmdPreview() {
+  const a   = document.getElementById('branchA').value.trim();
+  const b   = document.getElementById('branchB').value.trim();
+  const req = document.getElementById('requirementsRef').value.trim();
+  let cmd = '/collision';
+  if (a && b) {
+    cmd += ` ${a} ${b}`;
+    if (req) cmd += ` ${req}`;
+  } else {
+    cmd += ' <select both branches above>';
+  }
+  document.getElementById('cmdPreview').textContent = cmd;
+}
+
+document.getElementById('branchA').addEventListener('change', updateCmdPreview);
+document.getElementById('branchB').addEventListener('change', updateCmdPreview);
+document.getElementById('requirementsRef').addEventListener('input', updateCmdPreview);
+
+document.getElementById('copyCmd').addEventListener('click', async () => {
+  const a = document.getElementById('branchA').value.trim();
+  const b = document.getElementById('branchB').value.trim();
+  if (!a || !b) { alert('Select both Branch A and Branch B first.'); return; }
+  const text = document.getElementById('cmdPreview').textContent;
+  const btn  = document.getElementById('copyCmd');
+  try {
+    await navigator.clipboard.writeText(text);
+    btn.textContent = '✔ Copied!';
+    btn.classList.add('btn-copied');
+    setTimeout(() => { btn.textContent = 'Copy Bob command'; btn.classList.remove('btn-copied'); }, 2000);
+  } catch {
+    prompt('Copy this command and paste it into Bob Agent mode:', text);
+  }
+});
+
+// ---------------------------------------------------------------------------
+// Analysis list loading
+// ---------------------------------------------------------------------------
+const analysisSelect = document.getElementById('analysisSelect');
+const analysisArea   = document.getElementById('analysisArea');
+let analysesLoaded   = false;
+
+async function loadAnalysisList() {
+  try {
+    const res  = await fetch('/api/analyses');
+    const list = await res.json();
+    analysisSelect.innerHTML = '';
+    if (!list.length) {
+      analysisSelect.innerHTML = '<option value="">— no analyses yet —</option>';
+      analysisArea.innerHTML = '<div class="empty-state">No analysis directories found in <code>scripts/reports/</code>. Run <code>/collision</code> in Bob Agent mode to create one.</div>';
+      return;
+    }
+    analysisSelect.innerHTML = list.map((a, i) => {
+      const label = a.branchA && a.branchB
+        ? `${a.dirname}  (${a.branchA} \u00d7 ${a.branchB}${a.verdict ? '  \u2192  ' + a.verdict : ''})`
+        : a.dirname;
+      return `<option value="${esc(a.dirname)}"${i === 0 ? ' selected' : ''}>${esc(label)}</option>`;
+    }).join('');
+    analysesLoaded = true;
+    loadAnalysis(list[0].dirname);
+  } catch {
+    analysisSelect.innerHTML = '<option value="">— error loading analyses —</option>';
+    analysisArea.innerHTML = '<div class="empty-state" style="color:#cf222e">Error loading analysis list.</div>';
+  }
+}
+
+document.getElementById('refreshAnalyses').addEventListener('click', () => {
+  analysesLoaded = false;
+  loadAnalysisList();
+});
+
+analysisSelect.addEventListener('change', () => {
+  if (analysisSelect.value) loadAnalysis(analysisSelect.value);
+});
+
+// ---------------------------------------------------------------------------
+// Single analysis loader + renderer
+// ---------------------------------------------------------------------------
+async function loadAnalysis(dirname) {
+  analysisArea.innerHTML = '<div class="empty-state">Loading\u2026</div>';
+  try {
+    const res  = await fetch(`/api/analysis?d=${encodeURIComponent(dirname)}`);
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const data = await res.json();
+    analysisArea.innerHTML = renderAnalysis(data);
+  } catch (e) {
+    analysisArea.innerHTML = `<div class="empty-state" style="color:#cf222e">Error loading analysis: ${esc(e.message)}</div>`;
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Analysis renderer
+// ---------------------------------------------------------------------------
+function renderAnalysis(data) {
+  const parts = [];
+  const { dirname, files, manifest, execution, analysisJson,
+          hypothesisMd, analysisMd, generatedTest, requirementsMd } = data;
+
+  // ── File status chips ────────────────────────────────────────────────────
+  const chipFor = (name, status) => {
+    const cls = status === 'ok' ? 'fs-ok' : status === 'missing' ? 'fs-missing'
+              : status === 'malformed' ? 'fs-malformed' : 'fs-absent';
+    return `<span class="fs-chip ${cls}">${esc(name)}: ${esc(status)}</span>`;
+  };
+  const fileChips = Object.entries(files).map(([n, s]) => chipFor(n, s)).join('');
+
+  // ── Incompleteness gate (critical files absent/malformed) ─────────────────
+  const criticalMissing = ['manifest.json', 'execution.json'].filter((f) => files[f] !== 'ok');
+  if (criticalMissing.length) {
+    parts.push(`
+      <div class="incomplete-notice">
+        <span style="font-size:1.2rem">&#9888;</span>
+        <div>
+          <strong>Incomplete evidence</strong> — the following critical files are
+          ${esc(criticalMissing.map((f) => files[f]).join(', '))}:
+          ${criticalMissing.map((f) => `<code>${esc(f)}</code>`).join(', ')}.
+          No verdict can be shown. Run the <code>/collision</code> workflow in Bob Agent mode to complete this analysis.
+          <div class="file-status" style="margin-top:6px">${fileChips}</div>
+        </div>
+      </div>`);
+    parts.push(`
+      <div class="card">
+        <div class="card-header"><h2>${esc(dirname)}</h2>
+          <span class="badge badge-error">Incomplete</span>
+        </div>
+        <div class="card-body">
+          <div class="verdict-reason">Evidence collection incomplete. No verdict available.</div>
+        </div>
+      </div>`);
+    return parts.join('\n');
+  }
+
+  // ── analysis.json absent/malformed → "Incomplete" verdict ────────────────
+  const analysisJsonMissing = files['analysis.json'] !== 'ok';
+
+  // ── Bob verdict ──────────────────────────────────────────────────────────
+  const bobVerdict   = analysisJson?.verdict ?? null;
+  const helperStatus = execution?.status ?? 'UNKNOWN';
+
+  // If analysis.json is missing/malformed, verdict must show Incomplete — never success
+  const effectiveVerdict = analysisJsonMissing ? null : bobVerdict;
+
+  const verdictClass = !effectiveVerdict ? 'incomplete'
+    : effectiveVerdict === 'CONFIRMED'        ? 'confirmed'
+    : effectiveVerdict === 'NOT_REPRODUCED'   ? 'not-reproduced'
+    : effectiveVerdict === 'INCONCLUSIVE'     ? 'inconclusive'
+    : effectiveVerdict === 'TEXTUAL_CONFLICT' ? 'textual-conflict'
+    : 'error';
+  const verdictIcon  = effectiveVerdict === 'CONFIRMED'      ? '&#9888;'
+    : effectiveVerdict === 'NOT_REPRODUCED'   ? '&#10003;'
+    : '&#9888;';
+  const verdictTitle = effectiveVerdict
+    ? `Bob&#8217;s verdict: ${effectiveVerdict}`
+    : analysisJsonMissing
+    ? `Bob&#8217;s verdict: Incomplete &#8212; analysis.json is ${esc(files['analysis.json'])}`
+    : `Bob&#8217;s verdict: unavailable (no verdict field in analysis.json)`;
+  const verdictSub   = analysisJson?.verdictRationale
+    ? esc(analysisJson.verdictRationale.slice(0, 320) +
+        (analysisJson.verdictRationale.length > 320 ? '\u2026' : ''))
+    : analysisJsonMissing
+    ? `analysis.json is ${esc(files['analysis.json'])}. No rationale available. Evidence collection may be incomplete.`
+    : 'No rationale recorded.';
+
+  parts.push(`
+    <div class="verdict-banner ${verdictClass}">
+      <div class="verdict-icon">${verdictIcon}</div>
+      <div class="verdict-body">
+        <div class="verdict-title">${verdictTitle}</div>
+        <div class="verdict-sub">${verdictSub}</div>
+      </div>
+    </div>`);
+
+  // ── File inventory ───────────────────────────────────────────────────────
+  parts.push(`
+    <div class="evidence-section">
+      <h3>Evidence files &#8212; ${esc(dirname)}</h3>
+      <div class="file-status">${fileChips}</div>
+    </div>`);
+
+  // ── Branches and merge base ──────────────────────────────────────────────
+  // Prefer analysis.json.branches when present (has both A/B as keys),
+  // fall back to manifest.branchA / manifest.branchB
+  const ajBranches = analysisJson?.branches;
+  const brA    = ajBranches?.A    ?? manifest?.branchA;
+  const brB    = ajBranches?.B    ?? manifest?.branchB;
+  const brBase = ajBranches?.mergeBase ?? manifest?.mergeBase;
+
+  // Requirements: prefer analysis.json.requirements, fall back to manifest
+  const reqInfo = analysisJson?.requirements ?? manifest?.requirements ?? null;
+
+  parts.push(`
+    <div class="evidence-section card">
+      <div class="card-header"><h2>Branches &amp; SHAs</h2></div>
+      <div class="card-body">
+        <div class="branch-chips">
+          <span><strong>A:</strong></span>
+          <span class="branch-chip">${esc(brA?.ref ?? '&#8212;')}</span>
+          ${brA?.sha ? `<span class="sha">${esc(brA.sha.slice(0, 12))}</span>` : ''}
+          <span style="color:#e5e7eb;margin:0 4px">|</span>
+          <span><strong>B:</strong></span>
+          <span class="branch-chip">${esc(brB?.ref ?? '&#8212;')}</span>
+          ${brB?.sha ? `<span class="sha">${esc(brB.sha.slice(0, 12))}</span>` : ''}
+          <span style="color:#e5e7eb;margin:0 4px">|</span>
+          <span class="branch-chip base">merge-base: ${esc(typeof brBase === 'string' ? brBase.slice(0, 12) : '&#8212;')}</span>
+        </div>
+        ${reqInfo
+          ? `<div style="margin-top:8px;font-size:.81rem">
+              <strong>Requirements:</strong>
+              <code>${esc(reqInfo.path ?? reqInfo.sha ?? '?')}</code>
+              ${reqInfo.sha ? `@ <span class="sha">${esc((reqInfo.sha ?? reqInfo.blobSha ?? '').slice(0, 12))}</span>` : ''}
+              ${Array.isArray(reqInfo.citations) && reqInfo.citations.length
+                ? `<span style="color:#57606a;margin-left:6px">citations: ${reqInfo.citations.map((c) => `<code>${esc(c)}</code>`).join(', ')}</span>`
+                : ''}
+            </div>`
+          : '<div style="margin-top:6px;font-size:.8rem;color:#57606a">No requirements file recorded for this analysis.</div>'}
+        ${requirementsMd ? detailBlock('Show requirements.md', requirementsMd) : ''}
+      </div>
+    </div>`);
+
+  // ── Helper status (separate from Bob's verdict) ──────────────────────────
+  const hsClass = helperStatus === 'FAILURE_REQUIRES_REVIEW' ? 'hs-failure'
+    : helperStatus === 'NOT_REPRODUCED'                ? 'hs-reproduced'
+    : (helperStatus.includes('ERROR') || helperStatus === 'BASELINE_FAILED') ? 'hs-error'
+    : helperStatus === 'TEXTUAL_CONFLICT'              ? 'hs-conflict' : 'hs-other';
+  const helperNote = helperStatus === 'FAILURE_REQUIRES_REVIEW'
+    ? 'Generated test failed on combined code. Bob must inspect assertions to determine if this is a semantic collision or a setup error.'
+    : helperStatus === 'NOT_REPRODUCED'
+    ? 'Generated test passed on combined code &#8212; no failure observed.'
+    : helperStatus === 'BASELINE_FAILED'
+    ? 'One or both independent branch suites failed before merging &#8212; collision test not reached.'
+    : helperStatus === 'TEXTUAL_CONFLICT'
+    ? 'Merge produced a textual conflict &#8212; automated merge impossible.'
+    : helperStatus.includes('ERROR')
+    ? 'Helper encountered an error during execution.'
+    : '';
+
+  const helperDuration = execution?.finishedAt && execution?.startedAt
+    ? Math.round(new Date(execution.finishedAt) - new Date(execution.startedAt))
+    : null;
+
+  // Recorded durations: analysis.json may use either .executionDurations or .durations
+  const durRecord = analysisJson?.executionDurations ?? analysisJson?.durations ?? null;
+
+  parts.push(`
+    <div class="evidence-section card">
+      <div class="card-header">
+        <h2>Helper status <span style="font-size:.76rem;font-weight:400;color:#57606a">(separate from Bob&#8217;s verdict)</span></h2>
+        <span class="helper-status ${hsClass}">${esc(helperStatus)}</span>
+      </div>
+      <div class="card-body">
+        <div style="font-size:.82rem;color:#57606a">${helperNote}</div>
+        ${helperDuration != null
+          ? `<div class="timing-row"><div class="timing-item"><strong>Helper verify total:</strong> ${fmtMs(helperDuration)}</div></div>`
+          : ''}
+        ${durRecord ? (() => {
+          // Normalise key names across both schema variants
+          const dMap = {
+            'Branch A': durRecord.branchA_ms   ?? durRecord.branchATestMs,
+            'Branch B': durRecord.branchB_ms   ?? durRecord.branchBTestMs,
+            'Merged suite': durRecord.merged_ms  ?? durRecord.mergedExistingTestMs,
+            'Control A': durRecord.controlA_ms  ?? durRecord.controlAMs,
+            'Control B': durRecord.controlB_ms  ?? durRecord.controlBMs,
+            'Combined': durRecord.combined_ms  ?? durRecord.combinedMs,
+            'Merge': durRecord.merge_ms     ?? null,
+            'Cleanup': durRecord.cleanup_ms  ?? null,
+          };
+          const items = Object.entries(dMap).filter(([, v]) => v != null && typeof v === 'number');
+          return items.length ? `
+            <div class="timing-row" style="margin-top:6px">
+              ${items.map(([k, v]) => `<div class="timing-item"><strong>${esc(k)}:</strong> ${fmtMs(v)}</div>`).join('')}
+            </div>` : '';
+        })() : ''}
+        ${analysisJson?.subagentsUsed != null
+          ? `<div style="font-size:.78rem;color:#57606a;margin-top:4px">Subagents used: <strong>${esc(String(analysisJson.subagentsUsed))}</strong></div>`
+          : ''}
+      </div>
+    </div>`);
+
+  // ── Independent branch suites ────────────────────────────────────────────
+  const runs = execution?.runs ?? {};
+  // Supplement execution summaries with richer notes from analysis.json.testResults
+  const ajTR = analysisJson?.testResults ?? {};
+
+  function runRow(label, run, notes) {
+    if (!run) return `<tr><td class="run-label">${esc(label)}</td><td colspan="5" style="color:#cf222e;font-size:.78rem">not recorded</td></tr>`;
+    const s = run.summary;
+    const exitBadge = run.exitCode === 0
+      ? `<span style="color:#1a7f37">exit 0</span>`
+      : `<span style="color:#cf222e">exit ${esc(String(run.exitCode ?? '?'))}</span>`;
+    const notesHtml = notes ? `<div style="font-size:.76rem;color:#57606a;margin-top:2px">${esc(notes)}</div>` : '';
+    return `<tr>
+      <td class="run-label">${esc(label)}${notesHtml}</td>
+      <td class="count-pass">${s ? `&#10004;&nbsp;${s.passed}` : '&#8212;'}</td>
+      <td class="count-fail">${s?.failed > 0 ? `<span class="count-fail">&#10006;&nbsp;${s.failed}</span>` : (s ? '0' : '&#8212;')}</td>
+      <td class="count-skipped">${s ? (s.skipped != null ? s.skipped : '0') : '&#8212;'}</td>
+      <td>${exitBadge}${run.durationMs != null ? ` <span class="duration">${fmtMs(run.durationMs)}</span>` : ''}</td>
+    </tr>`;
+  }
+
+  parts.push(`
+    <div class="evidence-section card">
+      <div class="card-header"><h2>Independent branch suites</h2></div>
+      <div class="card-body">
+        <table class="run-table">
+          <thead><tr><th>Suite</th><th>Pass</th><th>Fail</th><th>Skip</th><th>Exit / Duration</th></tr></thead>
+          <tbody>
+            ${runRow('Branch A — ' + esc(brA?.ref ?? 'A'), runs.branchA, ajTR.branchA_existing?.notes)}
+            ${runRow('Branch B — ' + esc(brB?.ref ?? 'B'), runs.branchB, ajTR.branchB_existing?.notes)}
+          </tbody>
+        </table>
+        ${runs.branchA?.stdout ? detailBlock('Show Branch A output', runs.branchA.stdout) : ''}
+        ${runs.branchB?.stdout ? detailBlock('Show Branch B output', runs.branchB.stdout) : ''}
+      </div>
+    </div>`);
+
+  // ── Merge result + existing merged suite ─────────────────────────────────
+  const merge        = execution?.merge;
+  const unmerged     = execution?.unmergedPaths?.stdout?.trim();
+  const hasConflict  = execution?.status === 'TEXTUAL_CONFLICT' || Boolean(unmerged?.length);
+  const mergeClean   = merge?.exitCode === 0 && !hasConflict;
+  const mergedSuite  = runs.mergedExisting;
+  const mergedFailed = (mergedSuite?.summary?.failed ?? 0) > 0;
+
+  // Early detection noted in analysis.json
+  const ajMergedDetected = analysisJson?.mergedExistingTestsCollisionDetected
+    ?? analysisJson?.testResults?.mergedExistingCollisionDetected ?? false;
+  const ajMergedFailingTests = analysisJson?.testResults?.mergedExistingFailingTests ?? [];
+  const ajMergedNote = ajTR.merged_existing?.notes ?? null;
+
+  parts.push(`
+    <div class="evidence-section card">
+      <div class="card-header">
+        <h2>Merge &amp; existing merged suite</h2>
+        <span class="badge ${mergeClean ? 'badge-pass' : 'badge-fail'}">${mergeClean ? 'Clean' : hasConflict ? 'Conflict' : 'Error'}</span>
+      </div>
+      <div class="card-body">
+        <div class="merge-badge">
+          <span class="${mergeClean ? 'merge-ok' : 'merge-fail'}">
+            ${mergeClean ? '&#10004; No textual conflicts' : hasConflict ? '&#10006; Textual conflicts' : '&#10006; Merge failed'}
+          </span>
+          ${merge?.durationMs ? `<span style="color:#57606a;font-size:.78rem">(${fmtMs(merge.durationMs)})</span>` : ''}
+        </div>
+        ${merge?.stdout ? detailBlock('Show merge output', merge.stdout) : ''}
+        ${mergedSuite ? `
+          <div style="margin-top:10px">
+            <strong style="font-size:.82rem">Existing merged suite:</strong>
+            <table class="run-table" style="margin-top:4px">
+              <thead><tr><th>Suite</th><th>Pass</th><th>Fail</th><th>Skip</th><th>Exit / Duration</th></tr></thead>
+              <tbody>${runRow('mergedExisting', mergedSuite, ajMergedNote)}</tbody>
+            </table>
+            ${(mergedFailed || ajMergedDetected) ? `
+              <div class="collision-flag">
+                <div class="collision-flag-label">&#9888; Collision detected by existing merged tests</div>
+                <div>The existing test suite produced ${mergedSuite?.summary?.failed ?? '?'} failure(s) on merged code.</div>
+                ${ajMergedFailingTests.length ? `<ul style="margin:4px 0 0 16px;font-size:.78rem">
+                  ${ajMergedFailingTests.map((t) => `<li><code>${esc(t)}</code></li>`).join('')}
+                </ul>` : ''}
+                ${mergedSuite.stdout ? detailBlock('Show failing output', mergedSuite.stdout) : ''}
+              </div>` : `
+              <div style="font-size:.8rem;color:#57606a;margin-top:4px">
+                ${ajMergedNote ? esc(ajMergedNote) : 'No collision detected by existing merged suite.'}
+              </div>`}
+          </div>` : '<div style="font-size:.8rem;color:#57606a;margin-top:6px">Merged suite not recorded in execution.json.</div>'}
+      </div>
+    </div>`);
+
+  // ── Generated test controls ───────────────────────────────────────────────
+  const ctrlA    = runs.controlA;
+  const ctrlB    = runs.controlB;
+  const combined = runs.combined;
+  const testSha  = execution?.testSha256;
+
+  // Rich notes from analysis.json.testResults
+  const ajCtrlA    = ajTR.controlA_generated   ?? {};
+  const ajCtrlB    = ajTR.controlB_generated   ?? {};
+  const ajCombined = ajTR.combined_generated   ?? {};
+
+  function controlBadge(run, role) {
+    if (!run) return `<span class="badge badge-error">not recorded</span>`;
+    const s = run.summary;
+    if (!s) return `<span class="badge badge-error">no summary</span>`;
+    if (role === 'combined') {
+      return s.failed > 0
+        ? `<span class="badge badge-collision">${s.passed}p ${s.skipped ?? 0}sk ${s.failed}f</span>`
+        : `<span class="badge badge-pass">${s.passed}p ${s.skipped ?? 0}sk 0f &#8212; no failure</span>`;
+    }
+    return s.failed === 0
+      ? `<span class="badge badge-pass">${s.passed}p ${s.skipped ?? 0}sk 0f</span>`
+      : `<span class="badge badge-fail">${s.passed}p ${s.skipped ?? 0}sk ${s.failed}f</span>`;
+  }
+
+  function extractFailures(run) {
+    if (!run?.stdout) return [];
+    const matches = [...run.stdout.matchAll(/error: ['"]?([\s\S]*?)['"]?\n/g)].map((m) => m[1].trim()).filter(Boolean);
+    if (matches.length) return matches.slice(0, 3);
+    return run.stdout.split('\n').filter((l) => l.startsWith('not ok')).slice(0, 3);
+  }
+
+  const combinedFailures = extractFailures(combined);
+  const isSetupError = combinedFailures.some((m) =>
+    m.includes('ERR_UNSUPPORTED_ESM_URL_SCHEME') ||
+    m.includes('ERR_MODULE_NOT_FOUND') ||
+    m.includes('SyntaxError'));
+  const combinedIsSemantic = (combined?.exitCode === 1) && !combined?.signal && !combined?.error
+    && (combined?.summary?.failed ?? 0) > 0 && !isSetupError;
+
+  // controlPattern from analysis.json (analyses 2 & 3)
+  const cp = analysisJson?.controlPattern;
+
+  parts.push(`
+    <div class="evidence-section card">
+      <div class="card-header">
+        <h2>Generated test controls</h2>
+        ${testSha ? `<span class="sha" title="SHA-256 of generated test">${esc(testSha.slice(0, 16))}&hellip;</span>` : ''}
+      </div>
+      <div class="card-body">
+        <table class="run-table">
+          <thead><tr><th>Run</th><th>Pass</th><th>Fail</th><th>Skip</th><th>Exit / ms</th><th>Result</th></tr></thead>
+          <tbody>
+            <tr>
+              <td class="run-label">
+                Control A (${esc(brA?.ref ?? 'A')})
+                ${ajCtrlA.verdict ? `<div style="font-size:.74rem;color:#57606a;margin-top:2px">${esc(ajCtrlA.verdict)}</div>` : ''}
+              </td>
+              <td class="count-pass">${ctrlA?.summary?.passed ?? '&#8212;'}</td>
+              <td class="count-fail">${(ctrlA?.summary?.failed ?? 0) > 0 ? `<span class="count-fail">&#10006;&nbsp;${ctrlA.summary.failed}</span>` : (ctrlA ? '0' : '&#8212;')}</td>
+              <td class="count-skipped">${ctrlA?.summary?.skipped ?? '&#8212;'}</td>
+              <td>${ctrlA ? `<span style="color:${ctrlA.exitCode===0?'#1a7f37':'#cf222e'}">exit ${ctrlA.exitCode??'?'}</span> ${fmtMs(ctrlA.durationMs)}` : '&#8212;'}</td>
+              <td>${controlBadge(ctrlA, 'A')}</td>
+            </tr>
+            <tr>
+              <td class="run-label">
+                Control B (${esc(brB?.ref ?? 'B')})
+                ${ajCtrlB.controlVerdict ? `<div style="font-size:.74rem;color:#57606a;margin-top:2px">${esc(ajCtrlB.controlVerdict)}</div>` : ''}
+              </td>
+              <td class="count-pass">${ctrlB?.summary?.passed ?? '&#8212;'}</td>
+              <td class="count-fail">${(ctrlB?.summary?.failed ?? 0) > 0 ? `<span class="count-fail">&#10006;&nbsp;${ctrlB.summary.failed}</span>` : (ctrlB ? '0' : '&#8212;')}</td>
+              <td class="count-skipped">${ctrlB?.summary?.skipped ?? '&#8212;'}</td>
+              <td>${ctrlB ? `<span style="color:${ctrlB.exitCode===0?'#1a7f37':'#cf222e'}">exit ${ctrlB.exitCode??'?'}</span> ${fmtMs(ctrlB.durationMs)}` : '&#8212;'}</td>
+              <td>${controlBadge(ctrlB, 'B')}</td>
+            </tr>
+            <tr>
+              <td class="run-label">
+                Combined (merged)
+                ${ajCombined.controlVerdict ? `<div style="font-size:.74rem;color:#57606a;margin-top:2px">${esc(ajCombined.controlVerdict)}</div>` : ''}
+              </td>
+              <td class="count-pass">${combined?.summary?.passed ?? '&#8212;'}</td>
+              <td class="count-fail">${(combined?.summary?.failed ?? 0) > 0 ? `<span class="count-fail">&#10006;&nbsp;${combined.summary.failed}</span>` : (combined ? '0' : '&#8212;')}</td>
+              <td class="count-skipped">${combined?.summary?.skipped ?? '&#8212;'}</td>
+              <td>${combined ? `<span style="color:${combined.exitCode===0?'#1a7f37':'#cf222e'}">exit ${combined.exitCode??'?'}</span> ${fmtMs(combined.durationMs)}` : '&#8212;'}</td>
+              <td>${controlBadge(combined, 'combined')}</td>
+            </tr>
+          </tbody>
+        </table>
+
+        ${cp ? `
+          <div style="margin-top:8px;font-size:.78rem;background:#f6f8fa;border:1px solid #e5e7eb;border-radius:5px;padding:7px 10px">
+            <strong>Control pattern:</strong>
+            <span style="font-family:monospace;margin-left:4px">${esc(cp.expected ?? '')}</span>
+            <span style="margin:0 6px;color:#57606a">&#8594; actual:</span>
+            <span style="font-family:monospace">${esc(cp.actual ?? '')}</span>
+            ${cp.matches === true
+              ? `<span style="color:#1a7f37;margin-left:6px">&#10004; matches</span>`
+              : `<span style="color:#cf222e;margin-left:6px">&#10006; mismatch</span>`}
+          </div>` : ''}
+
+        ${combinedFailures.length ? `
+          <div class="collision-flag" style="margin-top:10px">
+            <div class="collision-flag-label">
+              ${combinedIsSemantic
+                ? '&#9888; Semantic assertion failure(s) on combined run'
+                : '&#9888; Failure(s) on combined run (may include setup errors)'}
+            </div>
+            ${!combinedIsSemantic && isSetupError
+              ? '<div style="font-size:.8rem;color:#cf222e;margin-bottom:4px">One or more failures appear to be import/setup errors, not semantic assertion failures. Inspect full output.</div>'
+              : '<div style="font-size:.8rem;color:#57606a;margin-bottom:4px">ERR_ASSERTION: the assertion logic executed and the returned value was wrong.</div>'}
+            ${combinedFailures.map((m) =>
+              `<div style="font-family:monospace;font-size:.76rem;margin-bottom:3px;word-break:break-all">${esc(m.slice(0, 300))}</div>`
+            ).join('')}
+            ${combined?.stdout ? detailBlock('Show full combined output', combined.stdout) : ''}
+          </div>` : (combined?.summary?.failed === 0 && combined ? `
+          <div style="font-size:.8rem;color:#57606a;margin-top:8px">Generated test passed on combined code &#8212; no collision reproduced by this test.</div>` : '')}
+
+        ${ctrlA?.stdout ? detailBlock('Show Control A output', ctrlA.stdout) : ''}
+        ${ctrlB?.stdout ? detailBlock('Show Control B output', ctrlB.stdout) : ''}
+      </div>
+    </div>`);
+
+  // ── Hypothesis ────────────────────────────────────────────────────────────
+  // Show summary fields from analysis.json.hypothesis inline, then full file
+  const ajHypo = analysisJson?.hypothesis ?? null;
+  if (hypothesisMd) {
+    const hypoInline = ajHypo ? `
+      <div style="margin-bottom:8px;font-size:.82rem">
+        ${ajHypo.summary ? `<div style="margin-bottom:4px"><strong>Summary:</strong> ${esc(ajHypo.summary)}</div>` : ''}
+        ${ajHypo.incompatibleAssumption ? `<div style="margin-bottom:4px"><strong>Incompatible assumption:</strong> ${esc(ajHypo.incompatibleAssumption)}</div>` : ''}
+        ${ajHypo.assertionThatCouldDisprove ? `<div style="margin-bottom:4px"><strong>Falsifying assertion:</strong> ${esc(ajHypo.assertionThatCouldDisprove)}</div>` : ''}
+        ${ajHypo.fixtureDisclosure ? `<div style="font-size:.76rem;color:#57606a"><em>Fixture disclosure: ${esc(ajHypo.fixtureDisclosure)}</em></div>` : ''}
+        ${ajHypo.classification ? `<div style="font-size:.76rem;color:#57606a;margin-top:2px">Classification: ${esc(ajHypo.classification)}</div>` : ''}
+      </div>` : '';
+    parts.push(`
+      <div class="card">
+        <div class="card-header"><h2>Bob&#8217;s hypothesis</h2></div>
+        <div class="card-body">
+          ${hypoInline}
+          ${detailBlock('Show full hypothesis.md', hypothesisMd)}
+        </div>
+      </div>`);
+  } else {
+    parts.push(`
+      <div class="card">
+        <div class="card-header"><h2>Bob&#8217;s hypothesis</h2><span class="badge badge-error">Missing</span></div>
+        <div class="card-body">
+          <div class="incomplete-notice"><span>&#9888;</span> hypothesis.md not found in this analysis directory.</div>
+          ${ajHypo?.summary ? `<div style="margin-top:8px;font-size:.82rem"><strong>Summary from analysis.json:</strong> ${esc(ajHypo.summary)}</div>` : ''}
+        </div>
+      </div>`);
+  }
+
+  // ── Requirement violations ────────────────────────────────────────────────
+  const reqViolations = analysisJson?.requirementViolations ?? [];
+  if (reqViolations.length) {
+    parts.push(`
+      <div class="card">
+        <div class="card-header"><h2>Requirement violations</h2>
+          <span class="badge badge-collision">${reqViolations.length}</span>
+        </div>
+        <div class="card-body">
+          <table class="run-table">
+            <thead><tr><th>ID</th><th>Requirement</th><th>Violation</th></tr></thead>
+            <tbody>
+              ${reqViolations.map((v) => `
+                <tr>
+                  <td class="run-label" style="white-space:nowrap">${esc(v.id ?? '?')}</td>
+                  <td style="font-size:.78rem">${esc(v.text ?? '')}</td>
+                  <td style="font-size:.78rem;color:#cf222e">${esc(v.violation ?? '')}</td>
+                </tr>`).join('')}
+            </tbody>
+          </table>
+        </div>
+      </div>`);
+  }
+
+  // ── Analysis narrative ────────────────────────────────────────────────────
+  if (analysisMd) {
+    parts.push(`
+      <div class="card">
+        <div class="card-header"><h2>Bob&#8217;s analysis narrative</h2></div>
+        <div class="card-body">${detailBlock('Show analysis.md', analysisMd)}</div>
+      </div>`);
+  }
+
+  // ── Generated test source ─────────────────────────────────────────────────
+  const gtMeta = analysisJson?.generatedTest ?? {};
+  if (generatedTest) {
+    parts.push(`
+      <div class="card">
+        <div class="card-header">
+          <h2>Generated test source</h2>
+          ${testSha ? `<span class="sha">${esc(testSha.slice(0, 16))}&hellip;</span>` : ''}
+        </div>
+        <div class="card-body">
+          ${gtMeta.keyAssertion ? `<div style="font-size:.82rem;margin-bottom:6px"><strong>Key assertion:</strong> ${esc(gtMeta.keyAssertion)}</div>` : ''}
+          ${gtMeta.copiedFromExisting === true
+            ? `<div style="font-size:.78rem;color:#9a6700;margin-bottom:6px">&#9888; Test was copied from an existing test file — not independently generated.</div>`
+            : (gtMeta.copiedFromExisting === false ? `<div style="font-size:.78rem;color:#57606a;margin-bottom:4px">Independently generated (not copied from existing tests).</div>` : '')}
+          ${gtMeta.note ? `<div style="font-size:.76rem;color:#57606a;margin-bottom:6px">${esc(gtMeta.note)}</div>` : ''}
+          ${detailBlock('Show generated.test.mjs', generatedTest)}
+        </div>
+      </div>`);
+  } else {
+    parts.push(`
+      <div class="card">
+        <div class="card-header"><h2>Generated test source</h2><span class="badge badge-error">Missing</span></div>
+        <div class="card-body">
+          <div class="incomplete-notice"><span>&#9888;</span> generated.test.mjs not found.</div>
+        </div>
+      </div>`);
+  }
+
+  // ── Suggested fix ─────────────────────────────────────────────────────────
+  const fix = analysisJson?.suggestedFix;
+  if (fix) {
+    parts.push(`
+      <div class="card">
+        <div class="card-header">
+          <h2>Suggested fix</h2>
+          <span class="badge ${fix.applied ? 'badge-fix' : 'badge-skip'}">${fix.applied ? 'Applied' : 'Not applied'}</span>
+        </div>
+        <div class="card-body">
+          <div class="fix-suggestion">
+            <div class="fix-suggestion-label">Suggestion</div>
+            <div>${esc(fix.description ?? '')}</div>
+          </div>
+          ${Array.isArray(fix.files) && fix.files.length
+            ? `<div style="font-size:.78rem;color:#57606a;margin-top:5px">Files: ${fix.files.map((f) => `<code>${esc(f)}</code>`).join(', ')}</div>`
+            : ''}
+          ${fix.existingImplementation
+            ? `<div style="font-size:.8rem;margin-top:6px;color:#57606a">Existing implementation: <code>${esc(fix.existingImplementation)}</code></div>`
+            : ''}
+        </div>
+      </div>`);
+  }
+
+  // ── Cleanup ───────────────────────────────────────────────────────────────
+  const cleanup = execution?.cleanup ?? [];
+  // Also check analysis.json.cleanup for a summary when execution cleanup is absent
+  const ajCleanup = analysisJson?.cleanup ?? null;
+  if (cleanup.length) {
+    const allOk = execution?.cleanupOk !== false;
+    const rows  = cleanup.map((c) => {
+      const ok = c.result === null || c.result?.exitCode === 0;
+      return `<tr>
+        <td class="${ok ? 'cleanup-ok' : 'cleanup-fail'}">${ok ? '&#10004;' : '&#10006;'}</td>
+        <td>${esc(c.path?.replace(/.*[/\\]/, '') ?? '&#8212;')}</td>
+        <td>${esc(c.result?.exitCode != null ? String(c.result.exitCode) : 'null')}</td>
+      </tr>`;
+    }).join('');
+    parts.push(`
+      <div class="card" style="margin-top:14px">
+        <div class="card-header">
+          <h2>Worktree cleanup (${cleanup.length})</h2>
+          <span class="badge ${allOk ? 'badge-pass' : 'badge-fail'}">${allOk ? 'OK' : 'ERRORS'}</span>
+        </div>
+        <div class="card-body">
+          <table class="cleanup-table"><tbody>${rows}</tbody></table>
+        </div>
+      </div>`);
+  } else if (ajCleanup) {
+    // Compact summary from analysis.json
+    const cleanOk = ajCleanup.ok === true && ajCleanup.allExitCode0 === true;
+    parts.push(`
+      <div class="card" style="margin-top:14px">
+        <div class="card-header">
+          <h2>Worktree cleanup</h2>
+          <span class="badge ${cleanOk ? 'badge-pass' : 'badge-fail'}">${cleanOk ? 'OK' : 'ERRORS'}</span>
+        </div>
+        <div class="card-body">
+          <div style="font-size:.82rem">
+            ${cleanOk ? '&#10004;' : '&#10006;'}
+            ${esc(String(ajCleanup.worktreesRemoved ?? 0))} worktree(s) removed.
+            All exit code 0: <strong>${esc(String(ajCleanup.allExitCode0 ?? false))}</strong>.
+          </div>
+        </div>
+      </div>`);
+  }
+
+  // ── Limitations and notes ─────────────────────────────────────────────────
+  const limitations = [];
+  // controlLimitations array (analysis-1)
+  if (Array.isArray(analysisJson?.controlLimitations)) {
+    for (const l of analysisJson.controlLimitations) limitations.push(esc(l));
+  }
+  if (analysisJson?.subagentsUsed === false && !limitations.some((l) => l.includes('Subagent')))
+    limitations.push('Subagents not dispatched &#8212; sequential analysis by Bob only.');
+  if (analysisJson?.subagentsNote && !limitations.some((l) => l.includes('subagent')))
+    limitations.push(esc(analysisJson.subagentsNote));
+  if (analysisJson?.priorAttempt)
+    limitations.push(`Prior attempt: <code>${esc(analysisJson.priorAttempt.directory)}</code> &#8212; ${esc(analysisJson.priorAttempt.reason)}`);
+  if (ajCleanup && !cleanup.length && ajCleanup.ok)
+    limitations.push('Cleanup detail not recorded in execution.json; summary from analysis.json only.');
+
+  if (limitations.length) {
+    parts.push(`
+      <div class="card">
+        <div class="card-header"><h2>Limitations and notes</h2></div>
+        <div class="card-body">
+          <ul style="margin:0 0 0 16px;font-size:.82rem;color:#57606a;line-height:1.7">
+            ${limitations.map((l) => `<li>${l}</li>`).join('')}
+          </ul>
+        </div>
+      </div>`);
+  }
+
+  return `<div class="analysis-report">${parts.join('\n')}</div>`;
+}
 </script>
 </body>
 </html>
