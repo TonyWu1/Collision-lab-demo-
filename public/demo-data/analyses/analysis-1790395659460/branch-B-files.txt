@@ -1,0 +1,15 @@
+.gitignore
+README.md
+package.json
+src/app.js
+src/auth.js
+src/cache.js
+src/cart.js
+src/catalog.js
+src/userStore.js
+src/users.js
+tests/auth.test.js
+tests/cache.test.js
+tests/cart.test.js
+tests/users.test.js
+

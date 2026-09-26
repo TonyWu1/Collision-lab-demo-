@@ -1,0 +1,2745 @@
+{
+  "runTimestamp": "2026-09-26T00-24-41-216Z",
+  "repoRoot": "<redacted>",
+  "nodeVersion": "v24.21.0",
+  "refs": {
+    "feature/email-auth": "2fa36c016fee2b361148c6614b3a7f7ba3a2e55a",
+    "feature/profile-cache-v2": "ed7e486eb785d0e2dc3edd6ef8c63bbcb7b6b0f9",
+    "fix/canonical-profile-identity": "7d46687cda0a5825b4a6cb084d8507863ea7e5fd",
+    "feature/price-object-v2": "0f23c69f74ecb313f4609c889f248e057fab9d2b",
+    "feature/cart": "bd96dff65b0b68b90676566a09f808f43ed1f09d",
+    "feature/soft-delete": "5e3c257785113367595d5507bfbde678ba5d2c3c",
+    "feature/reporting": "dbbbbfdae587f50f666123799f6c581e281cf5e9",
+    "s1-integration-test-source": "f0921664867a141ae148d77e83722e4998c6ebb0",
+    "s2-integration-test-source": "a87d6459b49e3d5e1c4e88c8cd81be8b43f5e0a0",
+    "s3-integration-test-source": "dadc2ca5e2c7f5b3e8d9e1f6c4a7b0d2e3f4a5b6"
+  },
+  "scenarios": {
+    "scenario1": {
+      "id": "scenario1",
+      "title": "Auth identity / profile cache",
+      "steps": {
+        "S1-A": {
+          "id": "S1-A",
+          "branch": "feature/email-auth",
+          "sha": "2fa36c016fee2b361148c6614b3a7f7ba3a2e55a",
+          "worktreeDir": "<tmp>",
+          "testRun": {
+            "label": "S1-A feature/email-auth",
+            "dir": "<tmp>",
+            "durationMs": 3048,
+            "exitCode": 0,
+            "signal": null,
+            "spawnError": null,
+            "stdout": "✔ logs in with a valid email (0.61ms)\n✔ returns null for a nonexistent email (0.0974ms)\n✔ username is not accepted as an email (0.1094ms)\n✔ caches and retrieves a user by ID (0.9695ms)\n✔ retrieves multiple users independently (0.8242ms)\n✔ returns null for a cache miss (0.144ms)\n✔ clears all cached users (0.1254ms)\n✔ looks up a user by ID with all model fields (1.016ms)\n✔ looks up a user by username (0.155ms)\n✔ looks up a user by email (0.1243ms)\n✔ unknown lookups return null (0.7918ms)\n✔ user IDs are immutable (0.3817ms)\nℹ tests 12\nℹ suites 0\nℹ pass 12\nℹ fail 0\nℹ cancelled 0\nℹ skipped 0\nℹ todo 0\nℹ duration_ms 2273.4842\n",
+            "stderr": "",
+            "tapRaw": "TAP version 13\n# Subtest: logs in with a valid email\nok 1 - logs in with a valid email\n  ---\n  duration_ms: 0.61\n  type: 'test'\n  ...\n# Subtest: returns null for a nonexistent email\nok 2 - returns null for a nonexistent email\n  ---\n  duration_ms: 0.0974\n  type: 'test'\n  ...\n# Subtest: username is not accepted as an email\nok 3 - username is not accepted as an email\n  ---\n  duration_ms: 0.1094\n  type: 'test'\n  ...\n# Subtest: caches and retrieves a user by ID\nok 4 - caches and retrieves a user by ID\n  ---\n  duration_ms: 0.9695\n  type: 'test'\n  ...\n# Subtest: retrieves multiple users independently\nok 5 - retrieves multiple users independently\n  ---\n  duration_ms: 0.8242\n  type: 'test'\n  ...\n# Subtest: returns null for a cache miss\nok 6 - returns null for a cache miss\n  ---\n  duration_ms: 0.144\n  type: 'test'\n  ...\n# Subtest: clears all cached users\nok 7 - clears all cached users\n  ---\n  duration_ms: 0.1254\n  type: 'test'\n  ...\n# Subtest: looks up a user by ID with all model fields\nok 8 - looks up a user by ID with all model fields\n  ---\n  duration_ms: 1.016\n  type: 'test'\n  ...\n# Subtest: looks up a user by username\nok 9 - looks up a user by username\n  ---\n  duration_ms: 0.155\n  type: 'test'\n  ...\n# Subtest: looks up a user by email\nok 10 - looks up a user by email\n  ---\n  duration_ms: 0.1243\n  type: 'test'\n  ...\n# Subtest: unknown lookups return null\nok 11 - unknown lookups return null\n  ---\n  duration_ms: 0.7918\n  type: 'test'\n  ...\n# Subtest: user IDs are immutable\nok 12 - user IDs are immutable\n  ---\n  duration_ms: 0.3817\n  type: 'test'\n  ...\n1..12\n# tests 12\n# suites 0\n# pass 12\n# fail 0\n# cancelled 0\n# skipped 0\n# todo 0\n# duration_ms 2273.4842\n",
+            "parsed": {
+              "ok": true,
+              "passed": 12,
+              "failed": 0,
+              "planned": 12,
+              "tests": [
+                {
+                  "number": 1,
+                  "ok": true,
+                  "name": "logs in with a valid email",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 0.61\n  type: 'test'"
+                },
+                {
+                  "number": 2,
+                  "ok": true,
+                  "name": "returns null for a nonexistent email",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 0.0974\n  type: 'test'"
+                },
+                {
+                  "number": 3,
+                  "ok": true,
+                  "name": "username is not accepted as an email",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 0.1094\n  type: 'test'"
+                },
+                {
+                  "number": 4,
+                  "ok": true,
+                  "name": "caches and retrieves a user by ID",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 0.9695\n  type: 'test'"
+                },
+                {
+                  "number": 5,
+                  "ok": true,
+                  "name": "retrieves multiple users independently",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 0.8242\n  type: 'test'"
+                },
+                {
+                  "number": 6,
+                  "ok": true,
+                  "name": "returns null for a cache miss",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 0.144\n  type: 'test'"
+                },
+                {
+                  "number": 7,
+                  "ok": true,
+                  "name": "clears all cached users",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 0.1254\n  type: 'test'"
+                },
+                {
+                  "number": 8,
+                  "ok": true,
+                  "name": "looks up a user by ID with all model fields",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 1.016\n  type: 'test'"
+                },
+                {
+                  "number": 9,
+                  "ok": true,
+                  "name": "looks up a user by username",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 0.155\n  type: 'test'"
+                },
+                {
+                  "number": 10,
+                  "ok": true,
+                  "name": "looks up a user by email",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 0.1243\n  type: 'test'"
+                },
+                {
+                  "number": 11,
+                  "ok": true,
+                  "name": "unknown lookups return null",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 0.7918\n  type: 'test'"
+                },
+                {
+                  "number": 12,
+                  "ok": true,
+                  "name": "user IDs are immutable",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 0.3817\n  type: 'test'"
+                }
+              ]
+            }
+          },
+          "verdict": "PASS",
+          "verdictReason": "12 tests passed"
+        },
+        "S1-B": {
+          "id": "S1-B",
+          "branch": "feature/profile-cache-v2",
+          "sha": "ed7e486eb785d0e2dc3edd6ef8c63bbcb7b6b0f9",
+          "worktreeDir": "<tmp>",
+          "testRun": {
+            "label": "S1-B feature/profile-cache-v2",
+            "dir": "<tmp>",
+            "durationMs": 3774,
+            "exitCode": 0,
+            "signal": null,
+            "spawnError": null,
+            "stdout": "✔ logs in with a valid username (0.6107ms)\n✔ returns null for a nonexistent username (0.0953ms)\n✔ email is not accepted as a username (0.0855ms)\n✔ caches and retrieves a user by ID (1.0653ms)\n✔ retrieves multiple users independently (0.8959ms)\n✔ returns null for a cache miss (0.1352ms)\n✔ clears all cached users (0.1957ms)\n✔ caches and retrieves a profile by username (1.7455ms)\n✔ uses username rather than ID or email as the lookup identity (0.3329ms)\n✔ returns null for an uncached username (0.1744ms)\n✔ retrieves multiple profiles independently (0.2513ms)\n✔ replaces a cached profile for the same username (0.1881ms)\n✔ clears all cached profiles (0.1931ms)\n✔ profile and ID-based caches store and clear independently (0.2354ms)\n✔ looks up a user by ID with all model fields (1.0201ms)\n✔ looks up a user by username (0.1343ms)\n✔ looks up a user by email (0.0952ms)\n✔ unknown lookups return null (0.8876ms)\n✔ user IDs are immutable (0.6404ms)\nℹ tests 19\nℹ suites 0\nℹ pass 19\nℹ fail 0\nℹ cancelled 0\nℹ skipped 0\nℹ todo 0\nℹ duration_ms 2989.0132\n",
+            "stderr": "",
+            "tapRaw": "TAP version 13\n# Subtest: logs in with a valid username\nok 1 - logs in with a valid username\n  ---\n  duration_ms: 0.6107\n  type: 'test'\n  ...\n# Subtest: returns null for a nonexistent username\nok 2 - returns null for a nonexistent username\n  ---\n  duration_ms: 0.0953\n  type: 'test'\n  ...\n# Subtest: email is not accepted as a username\nok 3 - email is not accepted as a username\n  ---\n  duration_ms: 0.0855\n  type: 'test'\n  ...\n# Subtest: caches and retrieves a user by ID\nok 4 - caches and retrieves a user by ID\n  ---\n  duration_ms: 1.0653\n  type: 'test'\n  ...\n# Subtest: retrieves multiple users independently\nok 5 - retrieves multiple users independently\n  ---\n  duration_ms: 0.8959\n  type: 'test'\n  ...\n# Subtest: returns null for a cache miss\nok 6 - returns null for a cache miss\n  ---\n  duration_ms: 0.1352\n  type: 'test'\n  ...\n# Subtest: clears all cached users\nok 7 - clears all cached users\n  ---\n  duration_ms: 0.1957\n  type: 'test'\n  ...\n# Subtest: caches and retrieves a profile by username\nok 8 - caches and retrieves a profile by username\n  ---\n  duration_ms: 1.7455\n  type: 'test'\n  ...\n# Subtest: uses username rather than ID or email as the lookup identity\nok 9 - uses username rather than ID or email as the lookup identity\n  ---\n  duration_ms: 0.3329\n  type: 'test'\n  ...\n# Subtest: returns null for an uncached username\nok 10 - returns null for an uncached username\n  ---\n  duration_ms: 0.1744\n  type: 'test'\n  ...\n# Subtest: retrieves multiple profiles independently\nok 11 - retrieves multiple profiles independently\n  ---\n  duration_ms: 0.2513\n  type: 'test'\n  ...\n# Subtest: replaces a cached profile for the same username\nok 12 - replaces a cached profile for the same username\n  ---\n  duration_ms: 0.1881\n  type: 'test'\n  ...\n# Subtest: clears all cached profiles\nok 13 - clears all cached profiles\n  ---\n  duration_ms: 0.1931\n  type: 'test'\n  ...\n# Subtest: profile and ID-based caches store and clear independently\nok 14 - profile and ID-based caches store and clear independently\n  ---\n  duration_ms: 0.2354\n  type: 'test'\n  ...\n# Subtest: looks up a user by ID with all model fields\nok 15 - looks up a user by ID with all model fields\n  ---\n  duration_ms: 1.0201\n  type: 'test'\n  ...\n# Subtest: looks up a user by username\nok 16 - looks up a user by username\n  ---\n  duration_ms: 0.1343\n  type: 'test'\n  ...\n# Subtest: looks up a user by email\nok 17 - looks up a user by email\n  ---\n  duration_ms: 0.0952\n  type: 'test'\n  ...\n# Subtest: unknown lookups return null\nok 18 - unknown lookups return null\n  ---\n  duration_ms: 0.8876\n  type: 'test'\n  ...\n# Subtest: user IDs are immutable\nok 19 - user IDs are immutable\n  ---\n  duration_ms: 0.6404\n  type: 'test'\n  ...\n1..19\n# tests 19\n# suites 0\n# pass 19\n# fail 0\n# cancelled 0\n# skipped 0\n# todo 0\n# duration_ms 2989.0132\n",
+            "parsed": {
+              "ok": true,
+              "passed": 19,
+              "failed": 0,
+              "planned": 19,
+              "tests": [
+                {
+                  "number": 1,
+                  "ok": true,
+                  "name": "logs in with a valid username",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 0.6107\n  type: 'test'"
+                },
+                {
+                  "number": 2,
+                  "ok": true,
+                  "name": "returns null for a nonexistent username",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 0.0953\n  type: 'test'"
+                },
+                {
+                  "number": 3,
+                  "ok": true,
+                  "name": "email is not accepted as a username",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 0.0855\n  type: 'test'"
+                },
+                {
+                  "number": 4,
+                  "ok": true,
+                  "name": "caches and retrieves a user by ID",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 1.0653\n  type: 'test'"
+                },
+                {
+                  "number": 5,
+                  "ok": true,
+                  "name": "retrieves multiple users independently",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 0.8959\n  type: 'test'"
+                },
+                {
+                  "number": 6,
+                  "ok": true,
+                  "name": "returns null for a cache miss",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 0.1352\n  type: 'test'"
+                },
+                {
+                  "number": 7,
+                  "ok": true,
+                  "name": "clears all cached users",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 0.1957\n  type: 'test'"
+                },
+                {
+                  "number": 8,
+                  "ok": true,
+                  "name": "caches and retrieves a profile by username",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 1.7455\n  type: 'test'"
+                },
+                {
+                  "number": 9,
+                  "ok": true,
+                  "name": "uses username rather than ID or email as the lookup identity",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 0.3329\n  type: 'test'"
+                },
+                {
+                  "number": 10,
+                  "ok": true,
+                  "name": "returns null for an uncached username",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 0.1744\n  type: 'test'"
+                },
+                {
+                  "number": 11,
+                  "ok": true,
+                  "name": "retrieves multiple profiles independently",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 0.2513\n  type: 'test'"
+                },
+                {
+                  "number": 12,
+                  "ok": true,
+                  "name": "replaces a cached profile for the same username",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 0.1881\n  type: 'test'"
+                },
+                {
+                  "number": 13,
+                  "ok": true,
+                  "name": "clears all cached profiles",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 0.1931\n  type: 'test'"
+                },
+                {
+                  "number": 14,
+                  "ok": true,
+                  "name": "profile and ID-based caches store and clear independently",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 0.2354\n  type: 'test'"
+                },
+                {
+                  "number": 15,
+                  "ok": true,
+                  "name": "looks up a user by ID with all model fields",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 1.0201\n  type: 'test'"
+                },
+                {
+                  "number": 16,
+                  "ok": true,
+                  "name": "looks up a user by username",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 0.1343\n  type: 'test'"
+                },
+                {
+                  "number": 17,
+                  "ok": true,
+                  "name": "looks up a user by email",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 0.0952\n  type: 'test'"
+                },
+                {
+                  "number": 18,
+                  "ok": true,
+                  "name": "unknown lookups return null",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 0.8876\n  type: 'test'"
+                },
+                {
+                  "number": 19,
+                  "ok": true,
+                  "name": "user IDs are immutable",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 0.6404\n  type: 'test'"
+                }
+              ]
+            }
+          },
+          "controlCheck": {
+            "cmd": "C:\\Program Files\\nodejs\\node.exe",
+            "args": [
+              "_control_check.mjs"
+            ],
+            "cwd": "<tmp>",
+            "stdout": "{\"ok\":true,\"profile\":{\"id\":\"u1\",\"username\":\"alice\",\"email\":\"alice@example.com\",\"displayName\":\"Alice Chen\"}}\n",
+            "stderr": "",
+            "status": 0,
+            "signal": null,
+            "error": null,
+            "durationMs": 784
+          },
+          "controlCheckParsed": {
+            "ok": true,
+            "profile": {
+              "id": "u1",
+              "username": "alice",
+              "email": "alice@example.com",
+              "displayName": "Alice Chen"
+            }
+          },
+          "verdict": "PASS",
+          "verdictReason": "19 tests passed; control check PASS"
+        },
+        "S1-M": {
+          "id": "S1-M",
+          "description": "merge feature/email-auth into feature/profile-cache-v2",
+          "worktreeDir": "<tmp>",
+          "mergeResult": {
+            "cmd": "git",
+            "args": [
+              "-c",
+              "user.email=demo@collisionlab.local",
+              "-c",
+              "user.name=CollisionLab",
+              "merge",
+              "--no-edit",
+              "2fa36c016fee2b361148c6614b3a7f7ba3a2e55a"
+            ],
+            "cwd": "<tmp>",
+            "stdout": "Merge made by the 'ort' strategy.\n README.md          | 10 +++++-----\n src/app.js         |  4 ++--\n src/auth.js        |  6 +++---\n tests/auth.test.js | 14 +++++++-------\n 4 files changed, 17 insertions(+), 17 deletions(-)\n",
+            "stderr": "",
+            "status": 0,
+            "signal": null,
+            "error": null,
+            "durationMs": 247
+          },
+          "hasTextualConflicts": false,
+          "testRun": {
+            "label": "S1-M merged unit tests",
+            "dir": "<tmp>",
+            "durationMs": 3779,
+            "exitCode": 0,
+            "signal": null,
+            "spawnError": null,
+            "stdout": "✔ logs in with a valid email (0.6671ms)\n✔ returns null for a nonexistent email (0.103ms)\n✔ username is not accepted as an email (0.1227ms)\n✔ caches and retrieves a user by ID (1.2879ms)\n✔ retrieves multiple users independently (0.8014ms)\n✔ returns null for a cache miss (0.1303ms)\n✔ clears all cached users (0.1182ms)\n✔ caches and retrieves a profile by username (1.7462ms)\n✔ uses username rather than ID or email as the lookup identity (0.2454ms)\n✔ returns null for an uncached username (0.1862ms)\n✔ retrieves multiple profiles independently (0.2647ms)\n✔ replaces a cached profile for the same username (0.2003ms)\n✔ clears all cached profiles (0.1921ms)\n✔ profile and ID-based caches store and clear independently (0.2759ms)\n✔ looks up a user by ID with all model fields (1.0202ms)\n✔ looks up a user by username (0.1349ms)\n✔ looks up a user by email (0.1128ms)\n✔ unknown lookups return null (0.7532ms)\n✔ user IDs are immutable (0.3696ms)\nℹ tests 19\nℹ suites 0\nℹ pass 19\nℹ fail 0\nℹ cancelled 0\nℹ skipped 0\nℹ todo 0\nℹ duration_ms 2987.9513\n",
+            "stderr": "",
+            "tapRaw": "TAP version 13\n# Subtest: logs in with a valid email\nok 1 - logs in with a valid email\n  ---\n  duration_ms: 0.6671\n  type: 'test'\n  ...\n# Subtest: returns null for a nonexistent email\nok 2 - returns null for a nonexistent email\n  ---\n  duration_ms: 0.103\n  type: 'test'\n  ...\n# Subtest: username is not accepted as an email\nok 3 - username is not accepted as an email\n  ---\n  duration_ms: 0.1227\n  type: 'test'\n  ...\n# Subtest: caches and retrieves a user by ID\nok 4 - caches and retrieves a user by ID\n  ---\n  duration_ms: 1.2879\n  type: 'test'\n  ...\n# Subtest: retrieves multiple users independently\nok 5 - retrieves multiple users independently\n  ---\n  duration_ms: 0.8014\n  type: 'test'\n  ...\n# Subtest: returns null for a cache miss\nok 6 - returns null for a cache miss\n  ---\n  duration_ms: 0.1303\n  type: 'test'\n  ...\n# Subtest: clears all cached users\nok 7 - clears all cached users\n  ---\n  duration_ms: 0.1182\n  type: 'test'\n  ...\n# Subtest: caches and retrieves a profile by username\nok 8 - caches and retrieves a profile by username\n  ---\n  duration_ms: 1.7462\n  type: 'test'\n  ...\n# Subtest: uses username rather than ID or email as the lookup identity\nok 9 - uses username rather than ID or email as the lookup identity\n  ---\n  duration_ms: 0.2454\n  type: 'test'\n  ...\n# Subtest: returns null for an uncached username\nok 10 - returns null for an uncached username\n  ---\n  duration_ms: 0.1862\n  type: 'test'\n  ...\n# Subtest: retrieves multiple profiles independently\nok 11 - retrieves multiple profiles independently\n  ---\n  duration_ms: 0.2647\n  type: 'test'\n  ...\n# Subtest: replaces a cached profile for the same username\nok 12 - replaces a cached profile for the same username\n  ---\n  duration_ms: 0.2003\n  type: 'test'\n  ...\n# Subtest: clears all cached profiles\nok 13 - clears all cached profiles\n  ---\n  duration_ms: 0.1921\n  type: 'test'\n  ...\n# Subtest: profile and ID-based caches store and clear independently\nok 14 - profile and ID-based caches store and clear independently\n  ---\n  duration_ms: 0.2759\n  type: 'test'\n  ...\n# Subtest: looks up a user by ID with all model fields\nok 15 - looks up a user by ID with all model fields\n  ---\n  duration_ms: 1.0202\n  type: 'test'\n  ...\n# Subtest: looks up a user by username\nok 16 - looks up a user by username\n  ---\n  duration_ms: 0.1349\n  type: 'test'\n  ...\n# Subtest: looks up a user by email\nok 17 - looks up a user by email\n  ---\n  duration_ms: 0.1128\n  type: 'test'\n  ...\n# Subtest: unknown lookups return null\nok 18 - unknown lookups return null\n  ---\n  duration_ms: 0.7532\n  type: 'test'\n  ...\n# Subtest: user IDs are immutable\nok 19 - user IDs are immutable\n  ---\n  duration_ms: 0.3696\n  type: 'test'\n  ...\n1..19\n# tests 19\n# suites 0\n# pass 19\n# fail 0\n# cancelled 0\n# skipped 0\n# todo 0\n# duration_ms 2987.9513\n",
+            "parsed": {
+              "ok": true,
+              "passed": 19,
+              "failed": 0,
+              "planned": 19,
+              "tests": [
+                {
+                  "number": 1,
+                  "ok": true,
+                  "name": "logs in with a valid email",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 0.6671\n  type: 'test'"
+                },
+                {
+                  "number": 2,
+                  "ok": true,
+                  "name": "returns null for a nonexistent email",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 0.103\n  type: 'test'"
+                },
+                {
+                  "number": 3,
+                  "ok": true,
+                  "name": "username is not accepted as an email",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 0.1227\n  type: 'test'"
+                },
+                {
+                  "number": 4,
+                  "ok": true,
+                  "name": "caches and retrieves a user by ID",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 1.2879\n  type: 'test'"
+                },
+                {
+                  "number": 5,
+                  "ok": true,
+                  "name": "retrieves multiple users independently",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 0.8014\n  type: 'test'"
+                },
+                {
+                  "number": 6,
+                  "ok": true,
+                  "name": "returns null for a cache miss",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 0.1303\n  type: 'test'"
+                },
+                {
+                  "number": 7,
+                  "ok": true,
+                  "name": "clears all cached users",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 0.1182\n  type: 'test'"
+                },
+                {
+                  "number": 8,
+                  "ok": true,
+                  "name": "caches and retrieves a profile by username",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 1.7462\n  type: 'test'"
+                },
+                {
+                  "number": 9,
+                  "ok": true,
+                  "name": "uses username rather than ID or email as the lookup identity",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 0.2454\n  type: 'test'"
+                },
+                {
+                  "number": 10,
+                  "ok": true,
+                  "name": "returns null for an uncached username",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 0.1862\n  type: 'test'"
+                },
+                {
+                  "number": 11,
+                  "ok": true,
+                  "name": "retrieves multiple profiles independently",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 0.2647\n  type: 'test'"
+                },
+                {
+                  "number": 12,
+                  "ok": true,
+                  "name": "replaces a cached profile for the same username",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 0.2003\n  type: 'test'"
+                },
+                {
+                  "number": 13,
+                  "ok": true,
+                  "name": "clears all cached profiles",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 0.1921\n  type: 'test'"
+                },
+                {
+                  "number": 14,
+                  "ok": true,
+                  "name": "profile and ID-based caches store and clear independently",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 0.2759\n  type: 'test'"
+                },
+                {
+                  "number": 15,
+                  "ok": true,
+                  "name": "looks up a user by ID with all model fields",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 1.0202\n  type: 'test'"
+                },
+                {
+                  "number": 16,
+                  "ok": true,
+                  "name": "looks up a user by username",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 0.1349\n  type: 'test'"
+                },
+                {
+                  "number": 17,
+                  "ok": true,
+                  "name": "looks up a user by email",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 0.1128\n  type: 'test'"
+                },
+                {
+                  "number": 18,
+                  "ok": true,
+                  "name": "unknown lookups return null",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 0.7532\n  type: 'test'"
+                },
+                {
+                  "number": 19,
+                  "ok": true,
+                  "name": "user IDs are immutable",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 0.3696\n  type: 'test'"
+                }
+              ]
+            }
+          },
+          "verdict": "PASS",
+          "verdictReason": "No conflicts; 19 tests passed"
+        },
+        "S1-C": {
+          "id": "S1-C",
+          "description": "inject failing integration test into S1 merged worktree",
+          "injectedFile": "<tmp>",
+          "testRun": {
+            "label": "S1-C collision test",
+            "dir": "<tmp>",
+            "durationMs": 4504,
+            "exitCode": 1,
+            "signal": null,
+            "spawnError": null,
+            "stdout": "✖ a successful email login loads the cached profile for the signed-in user (3.0282ms)\n✔ logs in with a valid email (0.6365ms)\n✔ returns null for a nonexistent email (0.1014ms)\n✔ username is not accepted as an email (0.0838ms)\n✔ caches and retrieves a user by ID (1.0206ms)\n✔ retrieves multiple users independently (1.0159ms)\n✔ returns null for a cache miss (0.1361ms)\n✔ clears all cached users (0.1328ms)\n✔ caches and retrieves a profile by username (1.9267ms)\n✔ uses username rather than ID or email as the lookup identity (0.2807ms)\n✔ returns null for an uncached username (0.1786ms)\n✔ retrieves multiple profiles independently (0.3709ms)\n✔ replaces a cached profile for the same username (0.1861ms)\n✔ clears all cached profiles (0.2426ms)\n✔ profile and ID-based caches store and clear independently (0.3911ms)\n✔ looks up a user by ID with all model fields (1.2651ms)\n✔ looks up a user by username (0.1512ms)\n✔ looks up a user by email (0.1079ms)\n✔ unknown lookups return null (0.8249ms)\n✔ user IDs are immutable (0.362ms)\nℹ tests 20\nℹ suites 0\nℹ pass 19\nℹ fail 1\nℹ cancelled 0\nℹ skipped 0\nℹ todo 0\nℹ duration_ms 3719.367\n\n✖ failing tests:\n\ntest at tests\\auth-profile.integration.test.js:10:1\n✖ a successful email login loads the cached profile for the signed-in user (3.0282ms)\n  AssertionError [ERR_ASSERTION]: Successful login should load the profile, but the email is not the username cache key\n  + actual - expected\n  \n  + null\n  - {\n  -   displayName: 'Alice Chen',\n  -   email: 'alice@example.com',\n  -   id: 'u1',\n  -   username: 'alice'\n  - }\n  \n      at TestContext.<anonymous> (file:///<tmp>/tests/auth-profile.integration.test.js:18:10)\n      at Test.runInAsyncScope (node:async_hooks:227:14)\n      at Test.run (node:internal/test_runner/test:1402:25)\n      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {\n    generatedMessage: false,\n    code: 'ERR_ASSERTION',\n    actual: null,\n    expected: { id: 'u1', username: 'alice', email: 'alice@example.com', displayName: 'Alice Chen' },\n    operator: 'deepStrictEqual',\n    diff: 'simple'\n  }\n",
+            "stderr": "",
+            "tapRaw": "TAP version 13\n# Subtest: a successful email login loads the cached profile for the signed-in user\nnot ok 1 - a successful email login loads the cached profile for the signed-in user\n  ---\n  duration_ms: 3.0282\n  type: 'test'\n  location: 'C:<tmp>/tests\\\\auth-profile.integration.test.js:10:1'\n  failureType: 'testCodeFailure'\n  error: |-\n    Successful login should load the profile, but the email is not the username cache key\n    + actual - expected\n    \n    + null\n    - {\n    -   displayName: 'Alice Chen',\n    -   email: 'alice@example.com',\n    -   id: 'u1',\n    -   username: 'alice'\n    - }\n    \n  code: 'ERR_ASSERTION'\n  name: 'AssertionError'\n  expected:\n    id: 'u1'\n    username: 'alice'\n    email: 'alice@example.com'\n    displayName: 'Alice Chen'\n  actual: ~\n  operator: 'deepStrictEqual'\n  stack: |-\n    TestContext.<anonymous> (file:///<tmp>/tests/auth-profile.integration.test.js:18:10)\n    Test.runInAsyncScope (node:async_hooks:227:14)\n    Test.run (node:internal/test_runner/test:1402:25)\n    async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3)\n  ...\n# Subtest: logs in with a valid email\nok 2 - logs in with a valid email\n  ---\n  duration_ms: 0.6365\n  type: 'test'\n  ...\n# Subtest: returns null for a nonexistent email\nok 3 - returns null for a nonexistent email\n  ---\n  duration_ms: 0.1014\n  type: 'test'\n  ...\n# Subtest: username is not accepted as an email\nok 4 - username is not accepted as an email\n  ---\n  duration_ms: 0.0838\n  type: 'test'\n  ...\n# Subtest: caches and retrieves a user by ID\nok 5 - caches and retrieves a user by ID\n  ---\n  duration_ms: 1.0206\n  type: 'test'\n  ...\n# Subtest: retrieves multiple users independently\nok 6 - retrieves multiple users independently\n  ---\n  duration_ms: 1.0159\n  type: 'test'\n  ...\n# Subtest: returns null for a cache miss\nok 7 - returns null for a cache miss\n  ---\n  duration_ms: 0.1361\n  type: 'test'\n  ...\n# Subtest: clears all cached users\nok 8 - clears all cached users\n  ---\n  duration_ms: 0.1328\n  type: 'test'\n  ...\n# Subtest: caches and retrieves a profile by username\nok 9 - caches and retrieves a profile by username\n  ---\n  duration_ms: 1.9267\n  type: 'test'\n  ...\n# Subtest: uses username rather than ID or email as the lookup identity\nok 10 - uses username rather than ID or email as the lookup identity\n  ---\n  duration_ms: 0.2807\n  type: 'test'\n  ...\n# Subtest: returns null for an uncached username\nok 11 - returns null for an uncached username\n  ---\n  duration_ms: 0.1786\n  type: 'test'\n  ...\n# Subtest: retrieves multiple profiles independently\nok 12 - retrieves multiple profiles independently\n  ---\n  duration_ms: 0.3709\n  type: 'test'\n  ...\n# Subtest: replaces a cached profile for the same username\nok 13 - replaces a cached profile for the same username\n  ---\n  duration_ms: 0.1861\n  type: 'test'\n  ...\n# Subtest: clears all cached profiles\nok 14 - clears all cached profiles\n  ---\n  duration_ms: 0.2426\n  type: 'test'\n  ...\n# Subtest: profile and ID-based caches store and clear independently\nok 15 - profile and ID-based caches store and clear independently\n  ---\n  duration_ms: 0.3911\n  type: 'test'\n  ...\n# Subtest: looks up a user by ID with all model fields\nok 16 - looks up a user by ID with all model fields\n  ---\n  duration_ms: 1.2651\n  type: 'test'\n  ...\n# Subtest: looks up a user by username\nok 17 - looks up a user by username\n  ---\n  duration_ms: 0.1512\n  type: 'test'\n  ...\n# Subtest: looks up a user by email\nok 18 - looks up a user by email\n  ---\n  duration_ms: 0.1079\n  type: 'test'\n  ...\n# Subtest: unknown lookups return null\nok 19 - unknown lookups return null\n  ---\n  duration_ms: 0.8249\n  type: 'test'\n  ...\n# Subtest: user IDs are immutable\nok 20 - user IDs are immutable\n  ---\n  duration_ms: 0.362\n  type: 'test'\n  ...\n1..20\n# tests 20\n# suites 0\n# pass 19\n# fail 1\n# cancelled 0\n# skipped 0\n# todo 0\n# duration_ms 3719.367\n",
+            "parsed": {
+              "ok": false,
+              "passed": 19,
+              "failed": 1,
+              "planned": 20,
+              "tests": [
+                {
+                  "number": 1,
+                  "ok": false,
+                  "name": "a successful email login loads the cached profile for the signed-in user",
+                  "actualIsNull": true,
+                  "expectedFields": {
+                    "id": "u1",
+                    "username": "alice",
+                    "email": "alice@example.com",
+                    "displayName": "Alice Chen"
+                  },
+                  "errorCode": "ERR_ASSERTION",
+                  "diagnosticYaml": "  duration_ms: 3.0282\n  type: 'test'\n  location: 'C:<tmp>/tests\\\\auth-profile.integration.test.js:10:1'\n  failureType: 'testCodeFailure'\n  error: |-\n    Successful login should load the profile, but the email is not the username cache key\n    + actual - expected\n    \n    + null\n    - {\n    -   displayName: 'Alice Chen',\n    -   email: 'alice@example.com',\n    -   id: 'u1',\n    -   username: 'alice'\n    - }\n    \n  code: 'ERR_ASSERTION'\n  name: 'AssertionError'\n  expected:\n    id: 'u1'\n    username: 'alice'\n    email: 'alice@example.com'\n    displayName: 'Alice Chen'\n  actual: ~\n  operator: 'deepStrictEqual'\n  stack: |-\n    TestContext.<anonymous> (file:///<tmp>/tests/auth-profile.integration.test.js:18:10)\n    Test.runInAsyncScope (node:async_hooks:227:14)\n    Test.run (node:internal/test_runner/test:1402:25)\n    async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3)"
+                },
+                {
+                  "number": 2,
+                  "ok": true,
+                  "name": "logs in with a valid email",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 0.6365\n  type: 'test'"
+                },
+                {
+                  "number": 3,
+                  "ok": true,
+                  "name": "returns null for a nonexistent email",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 0.1014\n  type: 'test'"
+                },
+                {
+                  "number": 4,
+                  "ok": true,
+                  "name": "username is not accepted as an email",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 0.0838\n  type: 'test'"
+                },
+                {
+                  "number": 5,
+                  "ok": true,
+                  "name": "caches and retrieves a user by ID",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 1.0206\n  type: 'test'"
+                },
+                {
+                  "number": 6,
+                  "ok": true,
+                  "name": "retrieves multiple users independently",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 1.0159\n  type: 'test'"
+                },
+                {
+                  "number": 7,
+                  "ok": true,
+                  "name": "returns null for a cache miss",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 0.1361\n  type: 'test'"
+                },
+                {
+                  "number": 8,
+                  "ok": true,
+                  "name": "clears all cached users",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 0.1328\n  type: 'test'"
+                },
+                {
+                  "number": 9,
+                  "ok": true,
+                  "name": "caches and retrieves a profile by username",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 1.9267\n  type: 'test'"
+                },
+                {
+                  "number": 10,
+                  "ok": true,
+                  "name": "uses username rather than ID or email as the lookup identity",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 0.2807\n  type: 'test'"
+                },
+                {
+                  "number": 11,
+                  "ok": true,
+                  "name": "returns null for an uncached username",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 0.1786\n  type: 'test'"
+                },
+                {
+                  "number": 12,
+                  "ok": true,
+                  "name": "retrieves multiple profiles independently",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 0.3709\n  type: 'test'"
+                },
+                {
+                  "number": 13,
+                  "ok": true,
+                  "name": "replaces a cached profile for the same username",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 0.1861\n  type: 'test'"
+                },
+                {
+                  "number": 14,
+                  "ok": true,
+                  "name": "clears all cached profiles",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 0.2426\n  type: 'test'"
+                },
+                {
+                  "number": 15,
+                  "ok": true,
+                  "name": "profile and ID-based caches store and clear independently",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 0.3911\n  type: 'test'"
+                },
+                {
+                  "number": 16,
+                  "ok": true,
+                  "name": "looks up a user by ID with all model fields",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 1.2651\n  type: 'test'"
+                },
+                {
+                  "number": 17,
+                  "ok": true,
+                  "name": "looks up a user by username",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 0.1512\n  type: 'test'"
+                },
+                {
+                  "number": 18,
+                  "ok": true,
+                  "name": "looks up a user by email",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 0.1079\n  type: 'test'"
+                },
+                {
+                  "number": 19,
+                  "ok": true,
+                  "name": "unknown lookups return null",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 0.8249\n  type: 'test'"
+                },
+                {
+                  "number": 20,
+                  "ok": true,
+                  "name": "user IDs are immutable",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 0.362\n  type: 'test'"
+                }
+              ]
+            }
+          },
+          "collisionCheck": {
+            "ok": true,
+            "reason": "all conditions met: actual=null, expected=Alice, ERR_ASSERTION"
+          },
+          "verdict": "PASS",
+          "verdictReason": "Confirmed: actual=null, expected=Alice, ERR_ASSERTION; 19 other tests passed"
+        },
+        "S1-F": {
+          "id": "S1-F",
+          "branch": "fix/canonical-profile-identity",
+          "sha": "7d46687cda0a5825b4a6cb084d8507863ea7e5fd",
+          "worktreeDir": "<tmp>",
+          "testRun": {
+            "label": "S1-F fix/canonical-profile-identity",
+            "dir": "<tmp>",
+            "durationMs": 4569,
+            "exitCode": 0,
+            "signal": null,
+            "spawnError": null,
+            "stdout": "✔ a successful email login loads the cached profile for the signed-in user (2.1303ms)\n✔ logs in with a valid email (1.1541ms)\n✔ returns null for a nonexistent email (0.1724ms)\n✔ username is not accepted as an email (0.0986ms)\n✔ caches and retrieves a user by ID (0.9532ms)\n✔ retrieves multiple users independently (0.8964ms)\n✔ returns null for a cache miss (0.1394ms)\n✔ clears all cached users (0.5844ms)\n✔ caches and retrieves a profile by ID (1.1807ms)\n✔ uses immutable user ID rather than username or email as the lookup identity (0.4815ms)\n✔ returns null for an uncached ID (0.9724ms)\n✔ retrieves multiple profiles independently (0.456ms)\n✔ replaces a cached profile for the same ID (0.2449ms)\n✔ clears all cached profiles (0.2013ms)\n✔ profile and ID-based caches store and clear independently (0.3223ms)\n✔ profile retrieval is unaffected when username or email changes (0.2547ms)\n✔ looks up a user by ID with all model fields (1.0188ms)\n✔ looks up a user by username (0.1345ms)\n✔ looks up a user by email (0.0993ms)\n✔ unknown lookups return null (0.7697ms)\n✔ user IDs are immutable (0.3747ms)\nℹ tests 21\nℹ suites 0\nℹ pass 21\nℹ fail 0\nℹ cancelled 0\nℹ skipped 0\nℹ todo 0\nℹ duration_ms 3755.0018\n",
+            "stderr": "",
+            "tapRaw": "TAP version 13\n# Subtest: a successful email login loads the cached profile for the signed-in user\nok 1 - a successful email login loads the cached profile for the signed-in user\n  ---\n  duration_ms: 2.1303\n  type: 'test'\n  ...\n# Subtest: logs in with a valid email\nok 2 - logs in with a valid email\n  ---\n  duration_ms: 1.1541\n  type: 'test'\n  ...\n# Subtest: returns null for a nonexistent email\nok 3 - returns null for a nonexistent email\n  ---\n  duration_ms: 0.1724\n  type: 'test'\n  ...\n# Subtest: username is not accepted as an email\nok 4 - username is not accepted as an email\n  ---\n  duration_ms: 0.0986\n  type: 'test'\n  ...\n# Subtest: caches and retrieves a user by ID\nok 5 - caches and retrieves a user by ID\n  ---\n  duration_ms: 0.9532\n  type: 'test'\n  ...\n# Subtest: retrieves multiple users independently\nok 6 - retrieves multiple users independently\n  ---\n  duration_ms: 0.8964\n  type: 'test'\n  ...\n# Subtest: returns null for a cache miss\nok 7 - returns null for a cache miss\n  ---\n  duration_ms: 0.1394\n  type: 'test'\n  ...\n# Subtest: clears all cached users\nok 8 - clears all cached users\n  ---\n  duration_ms: 0.5844\n  type: 'test'\n  ...\n# Subtest: caches and retrieves a profile by ID\nok 9 - caches and retrieves a profile by ID\n  ---\n  duration_ms: 1.1807\n  type: 'test'\n  ...\n# Subtest: uses immutable user ID rather than username or email as the lookup identity\nok 10 - uses immutable user ID rather than username or email as the lookup identity\n  ---\n  duration_ms: 0.4815\n  type: 'test'\n  ...\n# Subtest: returns null for an uncached ID\nok 11 - returns null for an uncached ID\n  ---\n  duration_ms: 0.9724\n  type: 'test'\n  ...\n# Subtest: retrieves multiple profiles independently\nok 12 - retrieves multiple profiles independently\n  ---\n  duration_ms: 0.456\n  type: 'test'\n  ...\n# Subtest: replaces a cached profile for the same ID\nok 13 - replaces a cached profile for the same ID\n  ---\n  duration_ms: 0.2449\n  type: 'test'\n  ...\n# Subtest: clears all cached profiles\nok 14 - clears all cached profiles\n  ---\n  duration_ms: 0.2013\n  type: 'test'\n  ...\n# Subtest: profile and ID-based caches store and clear independently\nok 15 - profile and ID-based caches store and clear independently\n  ---\n  duration_ms: 0.3223\n  type: 'test'\n  ...\n# Subtest: profile retrieval is unaffected when username or email changes\nok 16 - profile retrieval is unaffected when username or email changes\n  ---\n  duration_ms: 0.2547\n  type: 'test'\n  ...\n# Subtest: looks up a user by ID with all model fields\nok 17 - looks up a user by ID with all model fields\n  ---\n  duration_ms: 1.0188\n  type: 'test'\n  ...\n# Subtest: looks up a user by username\nok 18 - looks up a user by username\n  ---\n  duration_ms: 0.1345\n  type: 'test'\n  ...\n# Subtest: looks up a user by email\nok 19 - looks up a user by email\n  ---\n  duration_ms: 0.0993\n  type: 'test'\n  ...\n# Subtest: unknown lookups return null\nok 20 - unknown lookups return null\n  ---\n  duration_ms: 0.7697\n  type: 'test'\n  ...\n# Subtest: user IDs are immutable\nok 21 - user IDs are immutable\n  ---\n  duration_ms: 0.3747\n  type: 'test'\n  ...\n1..21\n# tests 21\n# suites 0\n# pass 21\n# fail 0\n# cancelled 0\n# skipped 0\n# todo 0\n# duration_ms 3755.0018\n",
+            "parsed": {
+              "ok": true,
+              "passed": 21,
+              "failed": 0,
+              "planned": 21,
+              "tests": [
+                {
+                  "number": 1,
+                  "ok": true,
+                  "name": "a successful email login loads the cached profile for the signed-in user",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 2.1303\n  type: 'test'"
+                },
+                {
+                  "number": 2,
+                  "ok": true,
+                  "name": "logs in with a valid email",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 1.1541\n  type: 'test'"
+                },
+                {
+                  "number": 3,
+                  "ok": true,
+                  "name": "returns null for a nonexistent email",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 0.1724\n  type: 'test'"
+                },
+                {
+                  "number": 4,
+                  "ok": true,
+                  "name": "username is not accepted as an email",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 0.0986\n  type: 'test'"
+                },
+                {
+                  "number": 5,
+                  "ok": true,
+                  "name": "caches and retrieves a user by ID",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 0.9532\n  type: 'test'"
+                },
+                {
+                  "number": 6,
+                  "ok": true,
+                  "name": "retrieves multiple users independently",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 0.8964\n  type: 'test'"
+                },
+                {
+                  "number": 7,
+                  "ok": true,
+                  "name": "returns null for a cache miss",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 0.1394\n  type: 'test'"
+                },
+                {
+                  "number": 8,
+                  "ok": true,
+                  "name": "clears all cached users",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 0.5844\n  type: 'test'"
+                },
+                {
+                  "number": 9,
+                  "ok": true,
+                  "name": "caches and retrieves a profile by ID",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 1.1807\n  type: 'test'"
+                },
+                {
+                  "number": 10,
+                  "ok": true,
+                  "name": "uses immutable user ID rather than username or email as the lookup identity",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 0.4815\n  type: 'test'"
+                },
+                {
+                  "number": 11,
+                  "ok": true,
+                  "name": "returns null for an uncached ID",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 0.9724\n  type: 'test'"
+                },
+                {
+                  "number": 12,
+                  "ok": true,
+                  "name": "retrieves multiple profiles independently",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 0.456\n  type: 'test'"
+                },
+                {
+                  "number": 13,
+                  "ok": true,
+                  "name": "replaces a cached profile for the same ID",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 0.2449\n  type: 'test'"
+                },
+                {
+                  "number": 14,
+                  "ok": true,
+                  "name": "clears all cached profiles",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 0.2013\n  type: 'test'"
+                },
+                {
+                  "number": 15,
+                  "ok": true,
+                  "name": "profile and ID-based caches store and clear independently",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 0.3223\n  type: 'test'"
+                },
+                {
+                  "number": 16,
+                  "ok": true,
+                  "name": "profile retrieval is unaffected when username or email changes",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 0.2547\n  type: 'test'"
+                },
+                {
+                  "number": 17,
+                  "ok": true,
+                  "name": "looks up a user by ID with all model fields",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 1.0188\n  type: 'test'"
+                },
+                {
+                  "number": 18,
+                  "ok": true,
+                  "name": "looks up a user by username",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 0.1345\n  type: 'test'"
+                },
+                {
+                  "number": 19,
+                  "ok": true,
+                  "name": "looks up a user by email",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 0.0993\n  type: 'test'"
+                },
+                {
+                  "number": 20,
+                  "ok": true,
+                  "name": "unknown lookups return null",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 0.7697\n  type: 'test'"
+                },
+                {
+                  "number": 21,
+                  "ok": true,
+                  "name": "user IDs are immutable",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 0.3747\n  type: 'test'"
+                }
+              ]
+            }
+          },
+          "verdict": "PASS",
+          "verdictReason": "21 tests passed"
+        }
+      }
+    },
+    "scenario2": {
+      "id": "scenario2",
+      "title": "Price format / cart total",
+      "steps": {
+        "S2-A": {
+          "id": "S2-A",
+          "branch": "feature/price-object-v2",
+          "sha": "0f23c69f74ecb313f4609c889f248e057fab9d2b",
+          "worktreeDir": "<tmp>",
+          "testRun": {
+            "label": "S2-A feature/price-object-v2",
+            "dir": "<tmp>",
+            "durationMs": 3829,
+            "exitCode": 0,
+            "signal": null,
+            "spawnError": null,
+            "stdout": "✔ logs in with a valid username (0.6403ms)\n✔ returns null for a nonexistent username (0.1081ms)\n✔ email is not accepted as a username (0.0919ms)\n✔ caches and retrieves a user by ID (1.0082ms)\n✔ retrieves multiple users independently (0.8041ms)\n✔ returns null for a cache miss (0.134ms)\n✔ clears all cached users (0.1369ms)\n✔ getProduct returns null for unknown id (0.6133ms)\n✔ getProduct returns a product with the new price object shape (0.1124ms)\n✔ listProducts returns all products (0.1509ms)\n✔ looks up a user by ID with all model fields (1.0591ms)\n✔ looks up a user by username (0.1415ms)\n✔ looks up a user by email (0.1134ms)\n✔ unknown lookups return null (0.8668ms)\n✔ user IDs are immutable (0.3662ms)\nℹ tests 15\nℹ suites 0\nℹ pass 15\nℹ fail 0\nℹ cancelled 0\nℹ skipped 0\nℹ todo 0\nℹ duration_ms 3055.7103\n",
+            "stderr": "",
+            "tapRaw": "TAP version 13\n# Subtest: logs in with a valid username\nok 1 - logs in with a valid username\n  ---\n  duration_ms: 0.6403\n  type: 'test'\n  ...\n# Subtest: returns null for a nonexistent username\nok 2 - returns null for a nonexistent username\n  ---\n  duration_ms: 0.1081\n  type: 'test'\n  ...\n# Subtest: email is not accepted as a username\nok 3 - email is not accepted as a username\n  ---\n  duration_ms: 0.0919\n  type: 'test'\n  ...\n# Subtest: caches and retrieves a user by ID\nok 4 - caches and retrieves a user by ID\n  ---\n  duration_ms: 1.0082\n  type: 'test'\n  ...\n# Subtest: retrieves multiple users independently\nok 5 - retrieves multiple users independently\n  ---\n  duration_ms: 0.8041\n  type: 'test'\n  ...\n# Subtest: returns null for a cache miss\nok 6 - returns null for a cache miss\n  ---\n  duration_ms: 0.134\n  type: 'test'\n  ...\n# Subtest: clears all cached users\nok 7 - clears all cached users\n  ---\n  duration_ms: 0.1369\n  type: 'test'\n  ...\n# Subtest: getProduct returns null for unknown id\nok 8 - getProduct returns null for unknown id\n  ---\n  duration_ms: 0.6133\n  type: 'test'\n  ...\n# Subtest: getProduct returns a product with the new price object shape\nok 9 - getProduct returns a product with the new price object shape\n  ---\n  duration_ms: 0.1124\n  type: 'test'\n  ...\n# Subtest: listProducts returns all products\nok 10 - listProducts returns all products\n  ---\n  duration_ms: 0.1509\n  type: 'test'\n  ...\n# Subtest: looks up a user by ID with all model fields\nok 11 - looks up a user by ID with all model fields\n  ---\n  duration_ms: 1.0591\n  type: 'test'\n  ...\n# Subtest: looks up a user by username\nok 12 - looks up a user by username\n  ---\n  duration_ms: 0.1415\n  type: 'test'\n  ...\n# Subtest: looks up a user by email\nok 13 - looks up a user by email\n  ---\n  duration_ms: 0.1134\n  type: 'test'\n  ...\n# Subtest: unknown lookups return null\nok 14 - unknown lookups return null\n  ---\n  duration_ms: 0.8668\n  type: 'test'\n  ...\n# Subtest: user IDs are immutable\nok 15 - user IDs are immutable\n  ---\n  duration_ms: 0.3662\n  type: 'test'\n  ...\n1..15\n# tests 15\n# suites 0\n# pass 15\n# fail 0\n# cancelled 0\n# skipped 0\n# todo 0\n# duration_ms 3055.7103\n",
+            "parsed": {
+              "ok": true,
+              "passed": 15,
+              "failed": 0,
+              "planned": 15,
+              "tests": [
+                {
+                  "number": 1,
+                  "ok": true,
+                  "name": "logs in with a valid username",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 0.6403\n  type: 'test'"
+                },
+                {
+                  "number": 2,
+                  "ok": true,
+                  "name": "returns null for a nonexistent username",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 0.1081\n  type: 'test'"
+                },
+                {
+                  "number": 3,
+                  "ok": true,
+                  "name": "email is not accepted as a username",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 0.0919\n  type: 'test'"
+                },
+                {
+                  "number": 4,
+                  "ok": true,
+                  "name": "caches and retrieves a user by ID",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 1.0082\n  type: 'test'"
+                },
+                {
+                  "number": 5,
+                  "ok": true,
+                  "name": "retrieves multiple users independently",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 0.8041\n  type: 'test'"
+                },
+                {
+                  "number": 6,
+                  "ok": true,
+                  "name": "returns null for a cache miss",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 0.134\n  type: 'test'"
+                },
+                {
+                  "number": 7,
+                  "ok": true,
+                  "name": "clears all cached users",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 0.1369\n  type: 'test'"
+                },
+                {
+                  "number": 8,
+                  "ok": true,
+                  "name": "getProduct returns null for unknown id",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 0.6133\n  type: 'test'"
+                },
+                {
+                  "number": 9,
+                  "ok": true,
+                  "name": "getProduct returns a product with the new price object shape",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 0.1124\n  type: 'test'"
+                },
+                {
+                  "number": 10,
+                  "ok": true,
+                  "name": "listProducts returns all products",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 0.1509\n  type: 'test'"
+                },
+                {
+                  "number": 11,
+                  "ok": true,
+                  "name": "looks up a user by ID with all model fields",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 1.0591\n  type: 'test'"
+                },
+                {
+                  "number": 12,
+                  "ok": true,
+                  "name": "looks up a user by username",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 0.1415\n  type: 'test'"
+                },
+                {
+                  "number": 13,
+                  "ok": true,
+                  "name": "looks up a user by email",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 0.1134\n  type: 'test'"
+                },
+                {
+                  "number": 14,
+                  "ok": true,
+                  "name": "unknown lookups return null",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 0.8668\n  type: 'test'"
+                },
+                {
+                  "number": 15,
+                  "ok": true,
+                  "name": "user IDs are immutable",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 0.3662\n  type: 'test'"
+                }
+              ]
+            }
+          },
+          "verdict": "PASS",
+          "verdictReason": "15 tests passed"
+        },
+        "S2-B": {
+          "id": "S2-B",
+          "branch": "feature/cart",
+          "sha": "bd96dff65b0b68b90676566a09f808f43ed1f09d",
+          "worktreeDir": "<tmp>",
+          "testRun": {
+            "label": "S2-B feature/cart",
+            "dir": "<tmp>",
+            "durationMs": 3774,
+            "exitCode": 0,
+            "signal": null,
+            "spawnError": null,
+            "stdout": "✔ logs in with a valid username (0.612ms)\n✔ returns null for a nonexistent username (0.0959ms)\n✔ email is not accepted as a username (0.0806ms)\n✔ caches and retrieves a user by ID (1.0885ms)\n✔ retrieves multiple users independently (1.3595ms)\n✔ returns null for a cache miss (0.2107ms)\n✔ clears all cached users (0.1795ms)\n✔ empty cart has zero total (0.638ms)\n✔ addItem increases total by price × quantity (0.1363ms)\n✔ multiple distinct products sum correctly (0.0963ms)\n✔ addItem on existing product accumulates quantity (0.8209ms)\n✔ removeItem brings total back to zero (0.1748ms)\n✔ looks up a user by ID with all model fields (1.1018ms)\n✔ looks up a user by username (0.1526ms)\n✔ looks up a user by email (0.1115ms)\n✔ unknown lookups return null (0.646ms)\n✔ user IDs are immutable (0.5128ms)\nℹ tests 17\nℹ suites 0\nℹ pass 17\nℹ fail 0\nℹ cancelled 0\nℹ skipped 0\nℹ todo 0\nℹ duration_ms 2976.7443\n",
+            "stderr": "",
+            "tapRaw": "TAP version 13\n# Subtest: logs in with a valid username\nok 1 - logs in with a valid username\n  ---\n  duration_ms: 0.612\n  type: 'test'\n  ...\n# Subtest: returns null for a nonexistent username\nok 2 - returns null for a nonexistent username\n  ---\n  duration_ms: 0.0959\n  type: 'test'\n  ...\n# Subtest: email is not accepted as a username\nok 3 - email is not accepted as a username\n  ---\n  duration_ms: 0.0806\n  type: 'test'\n  ...\n# Subtest: caches and retrieves a user by ID\nok 4 - caches and retrieves a user by ID\n  ---\n  duration_ms: 1.0885\n  type: 'test'\n  ...\n# Subtest: retrieves multiple users independently\nok 5 - retrieves multiple users independently\n  ---\n  duration_ms: 1.3595\n  type: 'test'\n  ...\n# Subtest: returns null for a cache miss\nok 6 - returns null for a cache miss\n  ---\n  duration_ms: 0.2107\n  type: 'test'\n  ...\n# Subtest: clears all cached users\nok 7 - clears all cached users\n  ---\n  duration_ms: 0.1795\n  type: 'test'\n  ...\n# Subtest: empty cart has zero total\nok 8 - empty cart has zero total\n  ---\n  duration_ms: 0.638\n  type: 'test'\n  ...\n# Subtest: addItem increases total by price × quantity\nok 9 - addItem increases total by price × quantity\n  ---\n  duration_ms: 0.1363\n  type: 'test'\n  ...\n# Subtest: multiple distinct products sum correctly\nok 10 - multiple distinct products sum correctly\n  ---\n  duration_ms: 0.0963\n  type: 'test'\n  ...\n# Subtest: addItem on existing product accumulates quantity\nok 11 - addItem on existing product accumulates quantity\n  ---\n  duration_ms: 0.8209\n  type: 'test'\n  ...\n# Subtest: removeItem brings total back to zero\nok 12 - removeItem brings total back to zero\n  ---\n  duration_ms: 0.1748\n  type: 'test'\n  ...\n# Subtest: looks up a user by ID with all model fields\nok 13 - looks up a user by ID with all model fields\n  ---\n  duration_ms: 1.1018\n  type: 'test'\n  ...\n# Subtest: looks up a user by username\nok 14 - looks up a user by username\n  ---\n  duration_ms: 0.1526\n  type: 'test'\n  ...\n# Subtest: looks up a user by email\nok 15 - looks up a user by email\n  ---\n  duration_ms: 0.1115\n  type: 'test'\n  ...\n# Subtest: unknown lookups return null\nok 16 - unknown lookups return null\n  ---\n  duration_ms: 0.646\n  type: 'test'\n  ...\n# Subtest: user IDs are immutable\nok 17 - user IDs are immutable\n  ---\n  duration_ms: 0.5128\n  type: 'test'\n  ...\n1..17\n# tests 17\n# suites 0\n# pass 17\n# fail 0\n# cancelled 0\n# skipped 0\n# todo 0\n# duration_ms 2976.7443\n",
+            "parsed": {
+              "ok": true,
+              "passed": 17,
+              "failed": 0,
+              "planned": 17,
+              "tests": [
+                {
+                  "number": 1,
+                  "ok": true,
+                  "name": "logs in with a valid username",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 0.612\n  type: 'test'"
+                },
+                {
+                  "number": 2,
+                  "ok": true,
+                  "name": "returns null for a nonexistent username",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 0.0959\n  type: 'test'"
+                },
+                {
+                  "number": 3,
+                  "ok": true,
+                  "name": "email is not accepted as a username",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 0.0806\n  type: 'test'"
+                },
+                {
+                  "number": 4,
+                  "ok": true,
+                  "name": "caches and retrieves a user by ID",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 1.0885\n  type: 'test'"
+                },
+                {
+                  "number": 5,
+                  "ok": true,
+                  "name": "retrieves multiple users independently",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 1.3595\n  type: 'test'"
+                },
+                {
+                  "number": 6,
+                  "ok": true,
+                  "name": "returns null for a cache miss",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 0.2107\n  type: 'test'"
+                },
+                {
+                  "number": 7,
+                  "ok": true,
+                  "name": "clears all cached users",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 0.1795\n  type: 'test'"
+                },
+                {
+                  "number": 8,
+                  "ok": true,
+                  "name": "empty cart has zero total",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 0.638\n  type: 'test'"
+                },
+                {
+                  "number": 9,
+                  "ok": true,
+                  "name": "addItem increases total by price × quantity",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 0.1363\n  type: 'test'"
+                },
+                {
+                  "number": 10,
+                  "ok": true,
+                  "name": "multiple distinct products sum correctly",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 0.0963\n  type: 'test'"
+                },
+                {
+                  "number": 11,
+                  "ok": true,
+                  "name": "addItem on existing product accumulates quantity",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 0.8209\n  type: 'test'"
+                },
+                {
+                  "number": 12,
+                  "ok": true,
+                  "name": "removeItem brings total back to zero",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 0.1748\n  type: 'test'"
+                },
+                {
+                  "number": 13,
+                  "ok": true,
+                  "name": "looks up a user by ID with all model fields",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 1.1018\n  type: 'test'"
+                },
+                {
+                  "number": 14,
+                  "ok": true,
+                  "name": "looks up a user by username",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 0.1526\n  type: 'test'"
+                },
+                {
+                  "number": 15,
+                  "ok": true,
+                  "name": "looks up a user by email",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 0.1115\n  type: 'test'"
+                },
+                {
+                  "number": 16,
+                  "ok": true,
+                  "name": "unknown lookups return null",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 0.646\n  type: 'test'"
+                },
+                {
+                  "number": 17,
+                  "ok": true,
+                  "name": "user IDs are immutable",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 0.5128\n  type: 'test'"
+                }
+              ]
+            }
+          },
+          "verdict": "PASS",
+          "verdictReason": "17 tests passed"
+        },
+        "S2-M": {
+          "id": "S2-M",
+          "description": "merge feature/price-object-v2 into feature/cart; common ancestor 2333e05",
+          "worktreeDir": "<tmp>",
+          "mergeResult1": {
+            "cmd": "git",
+            "args": [
+              "-c",
+              "user.email=demo@collisionlab.local",
+              "-c",
+              "user.name=CollisionLab",
+              "merge",
+              "--no-edit",
+              "0f23c69f74ecb313f4609c889f248e057fab9d2b"
+            ],
+            "cwd": "<tmp>",
+            "stdout": "Merge made by the 'ort' strategy.\n src/catalog.js        | 10 ++++++----\n tests/catalog.test.js | 22 ++++++++++++++++++++++\n 2 files changed, 28 insertions(+), 4 deletions(-)\n create mode 100644 tests/catalog.test.js\n",
+            "stderr": "",
+            "status": 0,
+            "signal": null,
+            "error": null,
+            "durationMs": 254
+          },
+          "hasTextualConflicts": false,
+          "testRun": {
+            "label": "S2-M merged unit tests",
+            "dir": "<tmp>",
+            "durationMs": 4459,
+            "exitCode": 0,
+            "signal": null,
+            "spawnError": null,
+            "stdout": "✔ logs in with a valid username (0.6853ms)\n✔ returns null for a nonexistent username (0.0998ms)\n✔ email is not accepted as a username (0.1124ms)\n✔ caches and retrieves a user by ID (0.9336ms)\n✔ retrieves multiple users independently (0.926ms)\n✔ returns null for a cache miss (0.1333ms)\n✔ clears all cached users (0.1241ms)\n✔ empty cart has zero total (0.6411ms)\n✔ addItem increases total by price × quantity (0.1393ms)\n✔ multiple distinct products sum correctly (0.1079ms)\n✔ addItem on existing product accumulates quantity (0.8461ms)\n✔ removeItem brings total back to zero (0.6503ms)\n✔ getProduct returns null for unknown id (0.5997ms)\n✔ getProduct returns a product with the new price object shape (0.1129ms)\n✔ listProducts returns all products (0.1749ms)\n✔ looks up a user by ID with all model fields (1.1131ms)\n✔ looks up a user by username (0.1496ms)\n✔ looks up a user by email (0.0967ms)\n✔ unknown lookups return null (0.7714ms)\n✔ user IDs are immutable (0.3679ms)\nℹ tests 20\nℹ suites 0\nℹ pass 20\nℹ fail 0\nℹ cancelled 0\nℹ skipped 0\nℹ todo 0\nℹ duration_ms 3675.0662\n",
+            "stderr": "",
+            "tapRaw": "TAP version 13\n# Subtest: logs in with a valid username\nok 1 - logs in with a valid username\n  ---\n  duration_ms: 0.6853\n  type: 'test'\n  ...\n# Subtest: returns null for a nonexistent username\nok 2 - returns null for a nonexistent username\n  ---\n  duration_ms: 0.0998\n  type: 'test'\n  ...\n# Subtest: email is not accepted as a username\nok 3 - email is not accepted as a username\n  ---\n  duration_ms: 0.1124\n  type: 'test'\n  ...\n# Subtest: caches and retrieves a user by ID\nok 4 - caches and retrieves a user by ID\n  ---\n  duration_ms: 0.9336\n  type: 'test'\n  ...\n# Subtest: retrieves multiple users independently\nok 5 - retrieves multiple users independently\n  ---\n  duration_ms: 0.926\n  type: 'test'\n  ...\n# Subtest: returns null for a cache miss\nok 6 - returns null for a cache miss\n  ---\n  duration_ms: 0.1333\n  type: 'test'\n  ...\n# Subtest: clears all cached users\nok 7 - clears all cached users\n  ---\n  duration_ms: 0.1241\n  type: 'test'\n  ...\n# Subtest: empty cart has zero total\nok 8 - empty cart has zero total\n  ---\n  duration_ms: 0.6411\n  type: 'test'\n  ...\n# Subtest: addItem increases total by price × quantity\nok 9 - addItem increases total by price × quantity\n  ---\n  duration_ms: 0.1393\n  type: 'test'\n  ...\n# Subtest: multiple distinct products sum correctly\nok 10 - multiple distinct products sum correctly\n  ---\n  duration_ms: 0.1079\n  type: 'test'\n  ...\n# Subtest: addItem on existing product accumulates quantity\nok 11 - addItem on existing product accumulates quantity\n  ---\n  duration_ms: 0.8461\n  type: 'test'\n  ...\n# Subtest: removeItem brings total back to zero\nok 12 - removeItem brings total back to zero\n  ---\n  duration_ms: 0.6503\n  type: 'test'\n  ...\n# Subtest: getProduct returns null for unknown id\nok 13 - getProduct returns null for unknown id\n  ---\n  duration_ms: 0.5997\n  type: 'test'\n  ...\n# Subtest: getProduct returns a product with the new price object shape\nok 14 - getProduct returns a product with the new price object shape\n  ---\n  duration_ms: 0.1129\n  type: 'test'\n  ...\n# Subtest: listProducts returns all products\nok 15 - listProducts returns all products\n  ---\n  duration_ms: 0.1749\n  type: 'test'\n  ...\n# Subtest: looks up a user by ID with all model fields\nok 16 - looks up a user by ID with all model fields\n  ---\n  duration_ms: 1.1131\n  type: 'test'\n  ...\n# Subtest: looks up a user by username\nok 17 - looks up a user by username\n  ---\n  duration_ms: 0.1496\n  type: 'test'\n  ...\n# Subtest: looks up a user by email\nok 18 - looks up a user by email\n  ---\n  duration_ms: 0.0967\n  type: 'test'\n  ...\n# Subtest: unknown lookups return null\nok 19 - unknown lookups return null\n  ---\n  duration_ms: 0.7714\n  type: 'test'\n  ...\n# Subtest: user IDs are immutable\nok 20 - user IDs are immutable\n  ---\n  duration_ms: 0.3679\n  type: 'test'\n  ...\n1..20\n# tests 20\n# suites 0\n# pass 20\n# fail 0\n# cancelled 0\n# skipped 0\n# todo 0\n# duration_ms 3675.0662\n",
+            "parsed": {
+              "ok": true,
+              "passed": 20,
+              "failed": 0,
+              "planned": 20,
+              "tests": [
+                {
+                  "number": 1,
+                  "ok": true,
+                  "name": "logs in with a valid username",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 0.6853\n  type: 'test'"
+                },
+                {
+                  "number": 2,
+                  "ok": true,
+                  "name": "returns null for a nonexistent username",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 0.0998\n  type: 'test'"
+                },
+                {
+                  "number": 3,
+                  "ok": true,
+                  "name": "email is not accepted as a username",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 0.1124\n  type: 'test'"
+                },
+                {
+                  "number": 4,
+                  "ok": true,
+                  "name": "caches and retrieves a user by ID",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 0.9336\n  type: 'test'"
+                },
+                {
+                  "number": 5,
+                  "ok": true,
+                  "name": "retrieves multiple users independently",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 0.926\n  type: 'test'"
+                },
+                {
+                  "number": 6,
+                  "ok": true,
+                  "name": "returns null for a cache miss",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 0.1333\n  type: 'test'"
+                },
+                {
+                  "number": 7,
+                  "ok": true,
+                  "name": "clears all cached users",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 0.1241\n  type: 'test'"
+                },
+                {
+                  "number": 8,
+                  "ok": true,
+                  "name": "empty cart has zero total",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 0.6411\n  type: 'test'"
+                },
+                {
+                  "number": 9,
+                  "ok": true,
+                  "name": "addItem increases total by price × quantity",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 0.1393\n  type: 'test'"
+                },
+                {
+                  "number": 10,
+                  "ok": true,
+                  "name": "multiple distinct products sum correctly",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 0.1079\n  type: 'test'"
+                },
+                {
+                  "number": 11,
+                  "ok": true,
+                  "name": "addItem on existing product accumulates quantity",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 0.8461\n  type: 'test'"
+                },
+                {
+                  "number": 12,
+                  "ok": true,
+                  "name": "removeItem brings total back to zero",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 0.6503\n  type: 'test'"
+                },
+                {
+                  "number": 13,
+                  "ok": true,
+                  "name": "getProduct returns null for unknown id",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 0.5997\n  type: 'test'"
+                },
+                {
+                  "number": 14,
+                  "ok": true,
+                  "name": "getProduct returns a product with the new price object shape",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 0.1129\n  type: 'test'"
+                },
+                {
+                  "number": 15,
+                  "ok": true,
+                  "name": "listProducts returns all products",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 0.1749\n  type: 'test'"
+                },
+                {
+                  "number": 16,
+                  "ok": true,
+                  "name": "looks up a user by ID with all model fields",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 1.1131\n  type: 'test'"
+                },
+                {
+                  "number": 17,
+                  "ok": true,
+                  "name": "looks up a user by username",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 0.1496\n  type: 'test'"
+                },
+                {
+                  "number": 18,
+                  "ok": true,
+                  "name": "looks up a user by email",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 0.0967\n  type: 'test'"
+                },
+                {
+                  "number": 19,
+                  "ok": true,
+                  "name": "unknown lookups return null",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 0.7714\n  type: 'test'"
+                },
+                {
+                  "number": 20,
+                  "ok": true,
+                  "name": "user IDs are immutable",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 0.3679\n  type: 'test'"
+                }
+              ]
+            }
+          },
+          "verdict": "PASS",
+          "verdictReason": "No conflicts; 20 tests passed"
+        },
+        "S2-C": {
+          "id": "S2-C",
+          "description": "inject cart-total collision test into S2 merged worktree",
+          "injectedFile": "<tmp>",
+          "testRun": {
+            "label": "S2-C collision test",
+            "dir": "<tmp>",
+            "durationMs": 5204,
+            "exitCode": 1,
+            "signal": null,
+            "spawnError": null,
+            "stdout": "✔ logs in with a valid username (0.8316ms)\n✔ returns null for a nonexistent username (0.1192ms)\n✔ email is not accepted as a username (0.0873ms)\n✔ caches and retrieves a user by ID (1.5731ms)\n✔ retrieves multiple users independently (1.0928ms)\n✔ returns null for a cache miss (0.2027ms)\n✔ clears all cached users (0.1683ms)\n✔ empty cart has zero total (0.6601ms)\n✔ addItem increases total by price × quantity (0.2383ms)\n✔ multiple distinct products sum correctly (0.1552ms)\n✔ addItem on existing product accumulates quantity (0.7885ms)\n✔ removeItem brings total back to zero (0.2096ms)\n✔ getProduct returns null for unknown id (0.8074ms)\n✔ getProduct returns a product with the new price object shape (0.153ms)\n✔ listProducts returns all products (0.1899ms)\n✖ COLLISION: cart total is NaN when catalog returns price objects (1.3059ms)\n✔ COLLISION evidence: getTotal returns NaN with object prices (0.3899ms)\n✔ looks up a user by ID with all model fields (0.9971ms)\n✔ looks up a user by username (0.1372ms)\n✔ looks up a user by email (0.1249ms)\n✔ unknown lookups return null (0.7079ms)\n✔ user IDs are immutable (0.3641ms)\nℹ tests 22\nℹ suites 0\nℹ pass 21\nℹ fail 1\nℹ cancelled 0\nℹ skipped 0\nℹ todo 0\nℹ duration_ms 4390.5661\n\n✖ failing tests:\n\ntest at tests\\price-cart-collision.test.js:6:1\n✖ COLLISION: cart total is NaN when catalog returns price objects (1.3059ms)\n  AssertionError [ERR_ASSERTION]: Expected numeric total 40 but got NaN — cart.getTotal() multiplied an object price, yielding NaN\n  \n  NaN !== 40\n  \n      at TestContext.<anonymous> (file:///<tmp>/tests/price-cart-collision.test.js:11:10)\n      at Test.runInAsyncScope (node:async_hooks:227:14)\n      at Test.run (node:internal/test_runner/test:1402:25)\n      at Test.start (node:internal/test_runner/test:1262:17)\n      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {\n    generatedMessage: false,\n    code: 'ERR_ASSERTION',\n    actual: NaN,\n    expected: 40,\n    operator: 'strictEqual',\n    diff: 'simple'\n  }\n",
+            "stderr": "",
+            "tapRaw": "TAP version 13\n# Subtest: logs in with a valid username\nok 1 - logs in with a valid username\n  ---\n  duration_ms: 0.8316\n  type: 'test'\n  ...\n# Subtest: returns null for a nonexistent username\nok 2 - returns null for a nonexistent username\n  ---\n  duration_ms: 0.1192\n  type: 'test'\n  ...\n# Subtest: email is not accepted as a username\nok 3 - email is not accepted as a username\n  ---\n  duration_ms: 0.0873\n  type: 'test'\n  ...\n# Subtest: caches and retrieves a user by ID\nok 4 - caches and retrieves a user by ID\n  ---\n  duration_ms: 1.5731\n  type: 'test'\n  ...\n# Subtest: retrieves multiple users independently\nok 5 - retrieves multiple users independently\n  ---\n  duration_ms: 1.0928\n  type: 'test'\n  ...\n# Subtest: returns null for a cache miss\nok 6 - returns null for a cache miss\n  ---\n  duration_ms: 0.2027\n  type: 'test'\n  ...\n# Subtest: clears all cached users\nok 7 - clears all cached users\n  ---\n  duration_ms: 0.1683\n  type: 'test'\n  ...\n# Subtest: empty cart has zero total\nok 8 - empty cart has zero total\n  ---\n  duration_ms: 0.6601\n  type: 'test'\n  ...\n# Subtest: addItem increases total by price × quantity\nok 9 - addItem increases total by price × quantity\n  ---\n  duration_ms: 0.2383\n  type: 'test'\n  ...\n# Subtest: multiple distinct products sum correctly\nok 10 - multiple distinct products sum correctly\n  ---\n  duration_ms: 0.1552\n  type: 'test'\n  ...\n# Subtest: addItem on existing product accumulates quantity\nok 11 - addItem on existing product accumulates quantity\n  ---\n  duration_ms: 0.7885\n  type: 'test'\n  ...\n# Subtest: removeItem brings total back to zero\nok 12 - removeItem brings total back to zero\n  ---\n  duration_ms: 0.2096\n  type: 'test'\n  ...\n# Subtest: getProduct returns null for unknown id\nok 13 - getProduct returns null for unknown id\n  ---\n  duration_ms: 0.8074\n  type: 'test'\n  ...\n# Subtest: getProduct returns a product with the new price object shape\nok 14 - getProduct returns a product with the new price object shape\n  ---\n  duration_ms: 0.153\n  type: 'test'\n  ...\n# Subtest: listProducts returns all products\nok 15 - listProducts returns all products\n  ---\n  duration_ms: 0.1899\n  type: 'test'\n  ...\n# Subtest: COLLISION: cart total is NaN when catalog returns price objects\nnot ok 16 - COLLISION: cart total is NaN when catalog returns price objects\n  ---\n  duration_ms: 1.3059\n  type: 'test'\n  location: '<tmp>",
+            "parsed": {
+              "ok": false,
+              "passed": 21,
+              "failed": 1,
+              "planned": 22,
+              "tests": [
+                {
+                  "number": 1,
+                  "ok": true,
+                  "name": "logs in with a valid username",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 0.8316\n  type: 'test'"
+                },
+                {
+                  "number": 2,
+                  "ok": true,
+                  "name": "returns null for a nonexistent username",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 0.1192\n  type: 'test'"
+                },
+                {
+                  "number": 3,
+                  "ok": true,
+                  "name": "email is not accepted as a username",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 0.0873\n  type: 'test'"
+                },
+                {
+                  "number": 4,
+                  "ok": true,
+                  "name": "caches and retrieves a user by ID",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 1.5731\n  type: 'test'"
+                },
+                {
+                  "number": 5,
+                  "ok": true,
+                  "name": "retrieves multiple users independently",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 1.0928\n  type: 'test'"
+                },
+                {
+                  "number": 6,
+                  "ok": true,
+                  "name": "returns null for a cache miss",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 0.2027\n  type: 'test'"
+                },
+                {
+                  "number": 7,
+                  "ok": true,
+                  "name": "clears all cached users",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 0.1683\n  type: 'test'"
+                },
+                {
+                  "number": 8,
+                  "ok": true,
+                  "name": "empty cart has zero total",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 0.6601\n  type: 'test'"
+                },
+                {
+                  "number": 9,
+                  "ok": true,
+                  "name": "addItem increases total by price × quantity",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 0.2383\n  type: 'test'"
+                },
+                {
+                  "number": 10,
+                  "ok": true,
+                  "name": "multiple distinct products sum correctly",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 0.1552\n  type: 'test'"
+                },
+                {
+                  "number": 11,
+                  "ok": true,
+                  "name": "addItem on existing product accumulates quantity",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 0.7885\n  type: 'test'"
+                },
+                {
+                  "number": 12,
+                  "ok": true,
+                  "name": "removeItem brings total back to zero",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 0.2096\n  type: 'test'"
+                },
+                {
+                  "number": 13,
+                  "ok": true,
+                  "name": "getProduct returns null for unknown id",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 0.8074\n  type: 'test'"
+                },
+                {
+                  "number": 14,
+                  "ok": true,
+                  "name": "getProduct returns a product with the new price object shape",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 0.153\n  type: 'test'"
+                },
+                {
+                  "number": 15,
+                  "ok": true,
+                  "name": "listProducts returns all products",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 0.1899\n  type: 'test'"
+                },
+                {
+                  "number": 16,
+                  "ok": false,
+                  "name": "COLLISION: cart total is NaN when catalog returns price objects",
+                  "actualIsNull": false,
+                  "actualValue": "NaN",
+                  "expectedFields": null,
+                  "errorCode": "ERR_ASSERTION",
+                  "diagnosticYaml": "  duration_ms: 1.3059\n  type: 'test'\n  location: '<tmp>",
+                  "expectedValue": "40"
+                },
+                {
+                  "number": 17,
+                  "ok": true,
+                  "name": "COLLISION evidence: getTotal returns NaN with object prices",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 0.3899\n  type: 'test'"
+                },
+                {
+                  "number": 18,
+                  "ok": true,
+                  "name": "looks up a user by ID with all model fields",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 0.9971\n  type: 'test'"
+                },
+                {
+                  "number": 19,
+                  "ok": true,
+                  "name": "looks up a user by username",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 0.1372\n  type: 'test'"
+                },
+                {
+                  "number": 20,
+                  "ok": true,
+                  "name": "looks up a user by email",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 0.1249\n  type: 'test'"
+                },
+                {
+                  "number": 21,
+                  "ok": true,
+                  "name": "unknown lookups return null",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 0.7079\n  type: 'test'"
+                },
+                {
+                  "number": 22,
+                  "ok": true,
+                  "name": "user IDs are immutable",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 0.3641\n  type: 'test'"
+                }
+              ]
+            }
+          },
+          "collisionCheck": {
+            "ok": true,
+            "reason": "all conditions met: actual=NaN, expected=40, ERR_ASSERTION"
+          },
+          "verdict": "PASS",
+          "verdictReason": "Confirmed: getTotal()=NaN, ERR_ASSERTION; 21 other tests passed"
+        }
+      }
+    },
+    "scenario3": {
+      "id": "scenario3",
+      "title": "Soft delete / active-user reporting",
+      "steps": {
+        "S3-A": {
+          "id": "S3-A",
+          "branch": "feature/soft-delete",
+          "sha": "5e3c257785113367595d5507bfbde678ba5d2c3c",
+          "worktreeDir": "<tmp>",
+          "testRun": {
+            "label": "S3-A feature/soft-delete",
+            "dir": "<tmp>",
+            "durationMs": 3746,
+            "exitCode": 0,
+            "signal": null,
+            "spawnError": null,
+            "stdout": "✔ logs in with a valid username (0.6109ms)\n✔ returns null for a nonexistent username (0.0949ms)\n✔ email is not accepted as a username (0.0844ms)\n✔ caches and retrieves a user by ID (1.3194ms)\n✔ retrieves multiple users independently (0.8775ms)\n✔ returns null for a cache miss (0.1479ms)\n✔ clears all cached users (0.1351ms)\n✔ getAllUsers returns all three users initially (1.0798ms)\n✔ getUserById returns correct user (0.8083ms)\n✔ removeUser soft-deletes: record still exists with deleted flag (0.227ms)\n✔ removeUser does not change total count in getAllUsers (0.134ms)\n✔ resetUsers clears deleted flags (0.184ms)\n✔ looks up a user by ID with all model fields (1.0638ms)\n✔ looks up a user by username (0.1509ms)\n✔ looks up a user by email (0.097ms)\n✔ unknown lookups return null (0.8971ms)\n✔ user IDs are immutable (0.4448ms)\nℹ tests 17\nℹ suites 0\nℹ pass 17\nℹ fail 0\nℹ cancelled 0\nℹ skipped 0\nℹ todo 0\nℹ duration_ms 2979.9779\n",
+            "stderr": "",
+            "tapRaw": "TAP version 13\n# Subtest: logs in with a valid username\nok 1 - logs in with a valid username\n  ---\n  duration_ms: 0.6109\n  type: 'test'\n  ...\n# Subtest: returns null for a nonexistent username\nok 2 - returns null for a nonexistent username\n  ---\n  duration_ms: 0.0949\n  type: 'test'\n  ...\n# Subtest: email is not accepted as a username\nok 3 - email is not accepted as a username\n  ---\n  duration_ms: 0.0844\n  type: 'test'\n  ...\n# Subtest: caches and retrieves a user by ID\nok 4 - caches and retrieves a user by ID\n  ---\n  duration_ms: 1.3194\n  type: 'test'\n  ...\n# Subtest: retrieves multiple users independently\nok 5 - retrieves multiple users independently\n  ---\n  duration_ms: 0.8775\n  type: 'test'\n  ...\n# Subtest: returns null for a cache miss\nok 6 - returns null for a cache miss\n  ---\n  duration_ms: 0.1479\n  type: 'test'\n  ...\n# Subtest: clears all cached users\nok 7 - clears all cached users\n  ---\n  duration_ms: 0.1351\n  type: 'test'\n  ...\n# Subtest: getAllUsers returns all three users initially\nok 8 - getAllUsers returns all three users initially\n  ---\n  duration_ms: 1.0798\n  type: 'test'\n  ...\n# Subtest: getUserById returns correct user\nok 9 - getUserById returns correct user\n  ---\n  duration_ms: 0.8083\n  type: 'test'\n  ...\n# Subtest: removeUser soft-deletes: record still exists with deleted flag\nok 10 - removeUser soft-deletes: record still exists with deleted flag\n  ---\n  duration_ms: 0.227\n  type: 'test'\n  ...\n# Subtest: removeUser does not change total count in getAllUsers\nok 11 - removeUser does not change total count in getAllUsers\n  ---\n  duration_ms: 0.134\n  type: 'test'\n  ...\n# Subtest: resetUsers clears deleted flags\nok 12 - resetUsers clears deleted flags\n  ---\n  duration_ms: 0.184\n  type: 'test'\n  ...\n# Subtest: looks up a user by ID with all model fields\nok 13 - looks up a user by ID with all model fields\n  ---\n  duration_ms: 1.0638\n  type: 'test'\n  ...\n# Subtest: looks up a user by username\nok 14 - looks up a user by username\n  ---\n  duration_ms: 0.1509\n  type: 'test'\n  ...\n# Subtest: looks up a user by email\nok 15 - looks up a user by email\n  ---\n  duration_ms: 0.097\n  type: 'test'\n  ...\n# Subtest: unknown lookups return null\nok 16 - unknown lookups return null\n  ---\n  duration_ms: 0.8971\n  type: 'test'\n  ...\n# Subtest: user IDs are immutable\nok 17 - user IDs are immutable\n  ---\n  duration_ms: 0.4448\n  type: 'test'\n  ...\n1..17\n# tests 17\n# suites 0\n# pass 17\n# fail 0\n# cancelled 0\n# skipped 0\n# todo 0\n# duration_ms 2979.9779\n",
+            "parsed": {
+              "ok": true,
+              "passed": 17,
+              "failed": 0,
+              "planned": 17,
+              "tests": [
+                {
+                  "number": 1,
+                  "ok": true,
+                  "name": "logs in with a valid username",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 0.6109\n  type: 'test'"
+                },
+                {
+                  "number": 2,
+                  "ok": true,
+                  "name": "returns null for a nonexistent username",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 0.0949\n  type: 'test'"
+                },
+                {
+                  "number": 3,
+                  "ok": true,
+                  "name": "email is not accepted as a username",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 0.0844\n  type: 'test'"
+                },
+                {
+                  "number": 4,
+                  "ok": true,
+                  "name": "caches and retrieves a user by ID",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 1.3194\n  type: 'test'"
+                },
+                {
+                  "number": 5,
+                  "ok": true,
+                  "name": "retrieves multiple users independently",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 0.8775\n  type: 'test'"
+                },
+                {
+                  "number": 6,
+                  "ok": true,
+                  "name": "returns null for a cache miss",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 0.1479\n  type: 'test'"
+                },
+                {
+                  "number": 7,
+                  "ok": true,
+                  "name": "clears all cached users",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 0.1351\n  type: 'test'"
+                },
+                {
+                  "number": 8,
+                  "ok": true,
+                  "name": "getAllUsers returns all three users initially",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 1.0798\n  type: 'test'"
+                },
+                {
+                  "number": 9,
+                  "ok": true,
+                  "name": "getUserById returns correct user",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 0.8083\n  type: 'test'"
+                },
+                {
+                  "number": 10,
+                  "ok": true,
+                  "name": "removeUser soft-deletes: record still exists with deleted flag",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 0.227\n  type: 'test'"
+                },
+                {
+                  "number": 11,
+                  "ok": true,
+                  "name": "removeUser does not change total count in getAllUsers",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 0.134\n  type: 'test'"
+                },
+                {
+                  "number": 12,
+                  "ok": true,
+                  "name": "resetUsers clears deleted flags",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 0.184\n  type: 'test'"
+                },
+                {
+                  "number": 13,
+                  "ok": true,
+                  "name": "looks up a user by ID with all model fields",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 1.0638\n  type: 'test'"
+                },
+                {
+                  "number": 14,
+                  "ok": true,
+                  "name": "looks up a user by username",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 0.1509\n  type: 'test'"
+                },
+                {
+                  "number": 15,
+                  "ok": true,
+                  "name": "looks up a user by email",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 0.097\n  type: 'test'"
+                },
+                {
+                  "number": 16,
+                  "ok": true,
+                  "name": "unknown lookups return null",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 0.8971\n  type: 'test'"
+                },
+                {
+                  "number": 17,
+                  "ok": true,
+                  "name": "user IDs are immutable",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 0.4448\n  type: 'test'"
+                }
+              ]
+            }
+          },
+          "verdict": "PASS",
+          "verdictReason": "17 tests passed"
+        },
+        "S3-B": {
+          "id": "S3-B",
+          "branch": "feature/reporting",
+          "sha": "dbbbbfdae587f50f666123799f6c581e281cf5e9",
+          "worktreeDir": "<tmp>",
+          "testRun": {
+            "label": "S3-B feature/reporting",
+            "dir": "<tmp>",
+            "durationMs": 3833,
+            "exitCode": 0,
+            "signal": null,
+            "spawnError": null,
+            "stdout": "✔ logs in with a valid username (0.7564ms)\n✔ returns null for a nonexistent username (0.1169ms)\n✔ email is not accepted as a username (0.0882ms)\n✔ caches and retrieves a user by ID (1.2711ms)\n✔ retrieves multiple users independently (1.1945ms)\n✔ returns null for a cache miss (0.1391ms)\n✔ clears all cached users (0.1278ms)\n✔ getActiveUserCount returns 3 with no deletions (0.9282ms)\n✔ getActiveUserCount decrements after a user is removed (0.2167ms)\n✔ getUserSummary lists all active usernames (0.9089ms)\n✔ getUserSummary excludes removed users (0.3693ms)\n✔ looks up a user by ID with all model fields (1.0204ms)\n✔ looks up a user by username (0.1323ms)\n✔ looks up a user by email (0.0956ms)\n✔ unknown lookups return null (0.9122ms)\n✔ user IDs are immutable (0.3876ms)\nℹ tests 16\nℹ suites 0\nℹ pass 16\nℹ fail 0\nℹ cancelled 0\nℹ skipped 0\nℹ todo 0\nℹ duration_ms 3064.425\n",
+            "stderr": "",
+            "tapRaw": "TAP version 13\n# Subtest: logs in with a valid username\nok 1 - logs in with a valid username\n  ---\n  duration_ms: 0.7564\n  type: 'test'\n  ...\n# Subtest: returns null for a nonexistent username\nok 2 - returns null for a nonexistent username\n  ---\n  duration_ms: 0.1169\n  type: 'test'\n  ...\n# Subtest: email is not accepted as a username\nok 3 - email is not accepted as a username\n  ---\n  duration_ms: 0.0882\n  type: 'test'\n  ...\n# Subtest: caches and retrieves a user by ID\nok 4 - caches and retrieves a user by ID\n  ---\n  duration_ms: 1.2711\n  type: 'test'\n  ...\n# Subtest: retrieves multiple users independently\nok 5 - retrieves multiple users independently\n  ---\n  duration_ms: 1.1945\n  type: 'test'\n  ...\n# Subtest: returns null for a cache miss\nok 6 - returns null for a cache miss\n  ---\n  duration_ms: 0.1391\n  type: 'test'\n  ...\n# Subtest: clears all cached users\nok 7 - clears all cached users\n  ---\n  duration_ms: 0.1278\n  type: 'test'\n  ...\n# Subtest: getActiveUserCount returns 3 with no deletions\nok 8 - getActiveUserCount returns 3 with no deletions\n  ---\n  duration_ms: 0.9282\n  type: 'test'\n  ...\n# Subtest: getActiveUserCount decrements after a user is removed\nok 9 - getActiveUserCount decrements after a user is removed\n  ---\n  duration_ms: 0.2167\n  type: 'test'\n  ...\n# Subtest: getUserSummary lists all active usernames\nok 10 - getUserSummary lists all active usernames\n  ---\n  duration_ms: 0.9089\n  type: 'test'\n  ...\n# Subtest: getUserSummary excludes removed users\nok 11 - getUserSummary excludes removed users\n  ---\n  duration_ms: 0.3693\n  type: 'test'\n  ...\n# Subtest: looks up a user by ID with all model fields\nok 12 - looks up a user by ID with all model fields\n  ---\n  duration_ms: 1.0204\n  type: 'test'\n  ...\n# Subtest: looks up a user by username\nok 13 - looks up a user by username\n  ---\n  duration_ms: 0.1323\n  type: 'test'\n  ...\n# Subtest: looks up a user by email\nok 14 - looks up a user by email\n  ---\n  duration_ms: 0.0956\n  type: 'test'\n  ...\n# Subtest: unknown lookups return null\nok 15 - unknown lookups return null\n  ---\n  duration_ms: 0.9122\n  type: 'test'\n  ...\n# Subtest: user IDs are immutable\nok 16 - user IDs are immutable\n  ---\n  duration_ms: 0.3876\n  type: 'test'\n  ...\n1..16\n# tests 16\n# suites 0\n# pass 16\n# fail 0\n# cancelled 0\n# skipped 0\n# todo 0\n# duration_ms 3064.425\n",
+            "parsed": {
+              "ok": true,
+              "passed": 16,
+              "failed": 0,
+              "planned": 16,
+              "tests": [
+                {
+                  "number": 1,
+                  "ok": true,
+                  "name": "logs in with a valid username",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 0.7564\n  type: 'test'"
+                },
+                {
+                  "number": 2,
+                  "ok": true,
+                  "name": "returns null for a nonexistent username",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 0.1169\n  type: 'test'"
+                },
+                {
+                  "number": 3,
+                  "ok": true,
+                  "name": "email is not accepted as a username",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 0.0882\n  type: 'test'"
+                },
+                {
+                  "number": 4,
+                  "ok": true,
+                  "name": "caches and retrieves a user by ID",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 1.2711\n  type: 'test'"
+                },
+                {
+                  "number": 5,
+                  "ok": true,
+                  "name": "retrieves multiple users independently",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 1.1945\n  type: 'test'"
+                },
+                {
+                  "number": 6,
+                  "ok": true,
+                  "name": "returns null for a cache miss",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 0.1391\n  type: 'test'"
+                },
+                {
+                  "number": 7,
+                  "ok": true,
+                  "name": "clears all cached users",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 0.1278\n  type: 'test'"
+                },
+                {
+                  "number": 8,
+                  "ok": true,
+                  "name": "getActiveUserCount returns 3 with no deletions",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 0.9282\n  type: 'test'"
+                },
+                {
+                  "number": 9,
+                  "ok": true,
+                  "name": "getActiveUserCount decrements after a user is removed",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 0.2167\n  type: 'test'"
+                },
+                {
+                  "number": 10,
+                  "ok": true,
+                  "name": "getUserSummary lists all active usernames",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 0.9089\n  type: 'test'"
+                },
+                {
+                  "number": 11,
+                  "ok": true,
+                  "name": "getUserSummary excludes removed users",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 0.3693\n  type: 'test'"
+                },
+                {
+                  "number": 12,
+                  "ok": true,
+                  "name": "looks up a user by ID with all model fields",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 1.0204\n  type: 'test'"
+                },
+                {
+                  "number": 13,
+                  "ok": true,
+                  "name": "looks up a user by username",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 0.1323\n  type: 'test'"
+                },
+                {
+                  "number": 14,
+                  "ok": true,
+                  "name": "looks up a user by email",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 0.0956\n  type: 'test'"
+                },
+                {
+                  "number": 15,
+                  "ok": true,
+                  "name": "unknown lookups return null",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 0.9122\n  type: 'test'"
+                },
+                {
+                  "number": 16,
+                  "ok": true,
+                  "name": "user IDs are immutable",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 0.3876\n  type: 'test'"
+                }
+              ]
+            }
+          },
+          "verdict": "PASS",
+          "verdictReason": "16 tests passed"
+        },
+        "S3-M": {
+          "id": "S3-M",
+          "description": "merge feature/reporting into feature/soft-delete; common ancestor 2333e05",
+          "worktreeDir": "<tmp>",
+          "mergeResult1": {
+            "cmd": "git",
+            "args": [
+              "-c",
+              "user.email=demo@collisionlab.local",
+              "-c",
+              "user.name=CollisionLab",
+              "merge",
+              "--no-edit",
+              "dbbbbfdae587f50f666123799f6c581e281cf5e9"
+            ],
+            "cwd": "<tmp>",
+            "stdout": "Merge made by the 'ort' strategy.\n src/reporting.js        | 16 ++++++++++++++++\n tests/reporting.test.js | 28 ++++++++++++++++++++++++++++\n 2 files changed, 44 insertions(+)\n create mode 100644 src/reporting.js\n create mode 100644 tests/reporting.test.js\n",
+            "stderr": "",
+            "status": 0,
+            "signal": null,
+            "error": null,
+            "durationMs": 251
+          },
+          "hasTextualConflicts": false,
+          "testRun": {
+            "label": "S3-M merged unit tests",
+            "dir": "<tmp>",
+            "durationMs": 4573,
+            "exitCode": 1,
+            "signal": null,
+            "spawnError": null,
+            "stdout": "✔ logs in with a valid username (0.7952ms)\n✔ returns null for a nonexistent username (0.1396ms)\n✔ email is not accepted as a username (0.1095ms)\n✔ caches and retrieves a user by ID (1.1496ms)\n✔ retrieves multiple users independently (1.3126ms)\n✔ returns null for a cache miss (0.2127ms)\n✔ clears all cached users (0.2065ms)\n✔ getActiveUserCount returns 3 with no deletions (0.9943ms)\n✖ getActiveUserCount decrements after a user is removed (0.978ms)\n✔ getUserSummary lists all active usernames (0.8513ms)\n✖ getUserSummary excludes removed users (0.26ms)\n✔ getAllUsers returns all three users initially (1.0879ms)\n✔ getUserById returns correct user (0.8186ms)\n✔ removeUser soft-deletes: record still exists with deleted flag (0.228ms)\n✔ removeUser does not change total count in getAllUsers (0.1332ms)\n✔ resetUsers clears deleted flags (0.184ms)\n✔ looks up a user by ID with all model fields (1.0184ms)\n✔ looks up a user by username (0.1375ms)\n✔ looks up a user by email (0.1543ms)\n✔ unknown lookups return null (0.8468ms)\n✔ user IDs are immutable (0.3667ms)\nℹ tests 21\nℹ suites 0\nℹ pass 19\nℹ fail 2\nℹ cancelled 0\nℹ skipped 0\nℹ todo 0\nℹ duration_ms 3785.5005\n\n✖ failing tests:\n\ntest at tests\\reporting.test.js:12:1\n✖ getActiveUserCount decrements after a user is removed (0.978ms)\n  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n  \n  3 !== 2\n  \n      at TestContext.<anonymous> (file:///<tmp>/tests/reporting.test.js:15:10)\n      at Test.runInAsyncScope (node:async_hooks:227:14)\n      at Test.run (node:internal/test_runner/test:1402:25)\n      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {\n    generatedMessage: true,\n    code: 'ERR_ASSERTION',\n    actual: 3,\n    expected: 2,\n    operator: 'strictEqual',\n    diff: 'simple'\n  }\n\ntest at tests\\reporting.test.js:23:1\n✖ getUserSummary excludes removed users (0.26ms)\n  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n  \n  3 !== 2\n  \n      at TestContext.<anonymous> (file:///<tmp>/tests/reporting.test.js:26:10)\n      at Test.runInAsyncScope (node:async_hooks:227:14)\n      at Test.run (node:internal/test_runner/test:1402:25)\n      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {\n    generatedMessage: true,\n    code: 'ERR_ASSERTION',\n    actual: 3,\n    expected: 2,\n    operator: 'strictEqual',\n    diff: 'simple'\n  }\n",
+            "stderr": "",
+            "tapRaw": "TAP version 13\n# Subtest: logs in with a valid username\nok 1 - logs in with a valid username\n  ---\n  duration_ms: 0.7952\n  type: 'test'\n  ...\n# Subtest: returns null for a nonexistent username\nok 2 - returns null for a nonexistent username\n  ---\n  duration_ms: 0.1396\n  type: 'test'\n  ...\n# Subtest: email is not accepted as a username\nok 3 - email is not accepted as a username\n  ---\n  duration_ms: 0.1095\n  type: 'test'\n  ...\n# Subtest: caches and retrieves a user by ID\nok 4 - caches and retrieves a user by ID\n  ---\n  duration_ms: 1.1496\n  type: 'test'\n  ...\n# Subtest: retrieves multiple users independently\nok 5 - retrieves multiple users independently\n  ---\n  duration_ms: 1.3126\n  type: 'test'\n  ...\n# Subtest: returns null for a cache miss\nok 6 - returns null for a cache miss\n  ---\n  duration_ms: 0.2127\n  type: 'test'\n  ...\n# Subtest: clears all cached users\nok 7 - clears all cached users\n  ---\n  duration_ms: 0.2065\n  type: 'test'\n  ...\n# Subtest: getActiveUserCount returns 3 with no deletions\nok 8 - getActiveUserCount returns 3 with no deletions\n  ---\n  duration_ms: 0.9943\n  type: 'test'\n  ...\n# Subtest: getActiveUserCount decrements after a user is removed\nnot ok 9 - getActiveUserCount decrements after a user is removed\n  ---\n  duration_ms: 0.978\n  type: 'test'\n  location: '<tmp>",
+            "parsed": {
+              "ok": false,
+              "passed": 19,
+              "failed": 2,
+              "planned": 21,
+              "tests": [
+                {
+                  "number": 1,
+                  "ok": true,
+                  "name": "logs in with a valid username",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 0.7952\n  type: 'test'"
+                },
+                {
+                  "number": 2,
+                  "ok": true,
+                  "name": "returns null for a nonexistent username",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 0.1396\n  type: 'test'"
+                },
+                {
+                  "number": 3,
+                  "ok": true,
+                  "name": "email is not accepted as a username",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 0.1095\n  type: 'test'"
+                },
+                {
+                  "number": 4,
+                  "ok": true,
+                  "name": "caches and retrieves a user by ID",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 1.1496\n  type: 'test'"
+                },
+                {
+                  "number": 5,
+                  "ok": true,
+                  "name": "retrieves multiple users independently",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 1.3126\n  type: 'test'"
+                },
+                {
+                  "number": 6,
+                  "ok": true,
+                  "name": "returns null for a cache miss",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 0.2127\n  type: 'test'"
+                },
+                {
+                  "number": 7,
+                  "ok": true,
+                  "name": "clears all cached users",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 0.2065\n  type: 'test'"
+                },
+                {
+                  "number": 8,
+                  "ok": true,
+                  "name": "getActiveUserCount returns 3 with no deletions",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 0.9943\n  type: 'test'"
+                },
+                {
+                  "number": 9,
+                  "ok": false,
+                  "name": "getActiveUserCount decrements after a user is removed",
+                  "actualIsNull": false,
+                  "actualValue": "3",
+                  "expectedFields": null,
+                  "errorCode": "ERR_ASSERTION",
+                  "diagnosticYaml": "  duration_ms: 0.978\n  type: 'test'\n  location: '<tmp>",
+                  "expectedValue": "2"
+                },
+                {
+                  "number": 10,
+                  "ok": true,
+                  "name": "getUserSummary lists all active usernames",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 0.8513\n  type: 'test'"
+                },
+                {
+                  "number": 11,
+                  "ok": false,
+                  "name": "getUserSummary excludes removed users",
+                  "actualIsNull": false,
+                  "actualValue": "3",
+                  "expectedFields": null,
+                  "errorCode": "ERR_ASSERTION",
+                  "diagnosticYaml": "  duration_ms: 0.26\n  type: 'test'\n  location: '<tmp>",
+                  "expectedValue": "2"
+                },
+                {
+                  "number": 12,
+                  "ok": true,
+                  "name": "getAllUsers returns all three users initially",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 1.0879\n  type: 'test'"
+                },
+                {
+                  "number": 13,
+                  "ok": true,
+                  "name": "getUserById returns correct user",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 0.8186\n  type: 'test'"
+                },
+                {
+                  "number": 14,
+                  "ok": true,
+                  "name": "removeUser soft-deletes: record still exists with deleted flag",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 0.228\n  type: 'test'"
+                },
+                {
+                  "number": 15,
+                  "ok": true,
+                  "name": "removeUser does not change total count in getAllUsers",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 0.1332\n  type: 'test'"
+                },
+                {
+                  "number": 16,
+                  "ok": true,
+                  "name": "resetUsers clears deleted flags",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 0.184\n  type: 'test'"
+                },
+                {
+                  "number": 17,
+                  "ok": true,
+                  "name": "looks up a user by ID with all model fields",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 1.0184\n  type: 'test'"
+                },
+                {
+                  "number": 18,
+                  "ok": true,
+                  "name": "looks up a user by username",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 0.1375\n  type: 'test'"
+                },
+                {
+                  "number": 19,
+                  "ok": true,
+                  "name": "looks up a user by email",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 0.1543\n  type: 'test'"
+                },
+                {
+                  "number": 20,
+                  "ok": true,
+                  "name": "unknown lookups return null",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 0.8468\n  type: 'test'"
+                },
+                {
+                  "number": 21,
+                  "ok": true,
+                  "name": "user IDs are immutable",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 0.3667\n  type: 'test'"
+                }
+              ]
+            }
+          },
+          "earlyDetection": {
+            "detected": true,
+            "count": 2,
+            "tests": [
+              "getActiveUserCount decrements after a user is removed",
+              "getUserSummary excludes removed users"
+            ]
+          },
+          "verdict": "PASS",
+          "verdictReason": "No textual conflicts; collision already detected: 2 existing test(s) fail immediately — \"getActiveUserCount decrements after a user is removed\", \"getUserSummary excludes removed users\""
+        },
+        "S3-C": {
+          "id": "S3-C",
+          "description": "inject active-count collision test into S3 merged worktree",
+          "injectedFile": "<tmp>",
+          "testRun": {
+            "label": "S3-C collision test",
+            "dir": "<tmp>",
+            "durationMs": 5215,
+            "exitCode": 1,
+            "signal": null,
+            "spawnError": null,
+            "stdout": "✔ logs in with a valid username (0.8448ms)\n✔ returns null for a nonexistent username (0.1343ms)\n✔ email is not accepted as a username (0.1213ms)\n✔ caches and retrieves a user by ID (1.226ms)\n✔ retrieves multiple users independently (0.9917ms)\n✔ returns null for a cache miss (0.1366ms)\n✔ clears all cached users (0.1228ms)\n✔ getActiveUserCount returns 3 with no deletions (0.788ms)\n✖ getActiveUserCount decrements after a user is removed (0.9374ms)\n✔ getUserSummary lists all active usernames (0.9376ms)\n✖ getUserSummary excludes removed users (0.2867ms)\n✖ COLLISION: active user count is wrong after a removal (1.2927ms)\n✔ COLLISION evidence: getUserSummary includes deleted user in list (0.9593ms)\n✔ getAllUsers returns all three users initially (1.0215ms)\n✔ getUserById returns correct user (0.9416ms)\n✔ removeUser soft-deletes: record still exists with deleted flag (0.2439ms)\n✔ removeUser does not change total count in getAllUsers (0.1343ms)\n✔ resetUsers clears deleted flags (0.1792ms)\n✔ looks up a user by ID with all model fields (1.0473ms)\n✔ looks up a user by username (0.2192ms)\n✔ looks up a user by email (0.1746ms)\n✔ unknown lookups return null (0.8298ms)\n✔ user IDs are immutable (0.394ms)\nℹ tests 23\nℹ suites 0\nℹ pass 20\nℹ fail 3\nℹ cancelled 0\nℹ skipped 0\nℹ todo 0\nℹ duration_ms 4420.6557\n\n✖ failing tests:\n\ntest at tests\\reporting.test.js:12:1\n✖ getActiveUserCount decrements after a user is removed (0.9374ms)\n  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n  \n  3 !== 2\n  \n      at TestContext.<anonymous> (file:///<tmp>/tests/reporting.test.js:15:10)\n      at Test.runInAsyncScope (node:async_hooks:227:14)\n      at Test.run (node:internal/test_runner/test:1402:25)\n      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {\n    generatedMessage: true,\n    code: 'ERR_ASSERTION',\n    actual: 3,\n    expected: 2,\n    operator: 'strictEqual',\n    diff: 'simple'\n  }\n\ntest at tests\\reporting.test.js:23:1\n✖ getUserSummary excludes removed users (0.2867ms)\n  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n  \n  3 !== 2\n  \n      at TestContext.<anonymous> (file:///<tmp>/tests/reporting.test.js:26:10)\n      at Test.runInAsyncScope (node:async_hooks:227:14)\n      at Test.run (node:internal/test_runner/test:1402:25)\n      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {\n    generatedMessage: true,\n    code: 'ERR_ASSERTION',\n    actual: 3,\n    expected: 2,\n    operator: 'strictEqual',\n    diff: 'simple'\n  }\n\ntest at tests\\soft-delete-reporting-collision.test.js:8:1\n✖ COLLISION: active user count is wrong after a removal (1.2927ms)\n  AssertionError [ERR_ASSERTION]: Expected 2 active users after removing one, but got 3 — soft-deleted record still counted\n  \n  3 !== 2\n  \n      at TestContext.<anonymous> (file:///<tmp>/tests/soft-delete-reporting-collision.test.js:11:10)\n      at Test.runInAsyncScope (node:async_hooks:227:14)\n      at Test.run (node:internal/test_runner/test:1402:25)\n      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {\n    generatedMessage: false,\n    code: 'ERR_ASSERTION',\n    actual: 3,\n    expected: 2,\n    operator: 'strictEqual',\n    diff: 'simple'\n  }\n",
+            "stderr": "",
+            "tapRaw": "TAP version 13\n# Subtest: logs in with a valid username\nok 1 - logs in with a valid username\n  ---\n  duration_ms: 0.8448\n  type: 'test'\n  ...\n# Subtest: returns null for a nonexistent username\nok 2 - returns null for a nonexistent username\n  ---\n  duration_ms: 0.1343\n  type: 'test'\n  ...\n# Subtest: email is not accepted as a username\nok 3 - email is not accepted as a username\n  ---\n  duration_ms: 0.1213\n  type: 'test'\n  ...\n# Subtest: caches and retrieves a user by ID\nok 4 - caches and retrieves a user by ID\n  ---\n  duration_ms: 1.226\n  type: 'test'\n  ...\n# Subtest: retrieves multiple users independently\nok 5 - retrieves multiple users independently\n  ---\n  duration_ms: 0.9917\n  type: 'test'\n  ...\n# Subtest: returns null for a cache miss\nok 6 - returns null for a cache miss\n  ---\n  duration_ms: 0.1366\n  type: 'test'\n  ...\n# Subtest: clears all cached users\nok 7 - clears all cached users\n  ---\n  duration_ms: 0.1228\n  type: 'test'\n  ...\n# Subtest: getActiveUserCount returns 3 with no deletions\nok 8 - getActiveUserCount returns 3 with no deletions\n  ---\n  duration_ms: 0.788\n  type: 'test'\n  ...\n# Subtest: getActiveUserCount decrements after a user is removed\nnot ok 9 - getActiveUserCount decrements after a user is removed\n  ---\n  duration_ms: 0.9374\n  type: 'test'\n  location: '<tmp>",
+            "parsed": {
+              "ok": false,
+              "passed": 20,
+              "failed": 3,
+              "planned": 23,
+              "tests": [
+                {
+                  "number": 1,
+                  "ok": true,
+                  "name": "logs in with a valid username",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 0.8448\n  type: 'test'"
+                },
+                {
+                  "number": 2,
+                  "ok": true,
+                  "name": "returns null for a nonexistent username",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 0.1343\n  type: 'test'"
+                },
+                {
+                  "number": 3,
+                  "ok": true,
+                  "name": "email is not accepted as a username",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 0.1213\n  type: 'test'"
+                },
+                {
+                  "number": 4,
+                  "ok": true,
+                  "name": "caches and retrieves a user by ID",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 1.226\n  type: 'test'"
+                },
+                {
+                  "number": 5,
+                  "ok": true,
+                  "name": "retrieves multiple users independently",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 0.9917\n  type: 'test'"
+                },
+                {
+                  "number": 6,
+                  "ok": true,
+                  "name": "returns null for a cache miss",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 0.1366\n  type: 'test'"
+                },
+                {
+                  "number": 7,
+                  "ok": true,
+                  "name": "clears all cached users",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 0.1228\n  type: 'test'"
+                },
+                {
+                  "number": 8,
+                  "ok": true,
+                  "name": "getActiveUserCount returns 3 with no deletions",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 0.788\n  type: 'test'"
+                },
+                {
+                  "number": 9,
+                  "ok": false,
+                  "name": "getActiveUserCount decrements after a user is removed",
+                  "actualIsNull": false,
+                  "actualValue": "3",
+                  "expectedFields": null,
+                  "errorCode": "ERR_ASSERTION",
+                  "diagnosticYaml": "  duration_ms: 0.9374\n  type: 'test'\n  location: '<tmp>",
+                  "expectedValue": "2"
+                },
+                {
+                  "number": 10,
+                  "ok": true,
+                  "name": "getUserSummary lists all active usernames",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 0.9376\n  type: 'test'"
+                },
+                {
+                  "number": 11,
+                  "ok": false,
+                  "name": "getUserSummary excludes removed users",
+                  "actualIsNull": false,
+                  "actualValue": "3",
+                  "expectedFields": null,
+                  "errorCode": "ERR_ASSERTION",
+                  "diagnosticYaml": "  duration_ms: 0.2867\n  type: 'test'\n  location: '<tmp>",
+                  "expectedValue": "2"
+                },
+                {
+                  "number": 12,
+                  "ok": false,
+                  "name": "COLLISION: active user count is wrong after a removal",
+                  "actualIsNull": false,
+                  "actualValue": "3",
+                  "expectedFields": null,
+                  "errorCode": "ERR_ASSERTION",
+                  "diagnosticYaml": "  duration_ms: 1.2927\n  type: 'test'\n  location: '<tmp>",
+                  "expectedValue": "2"
+                },
+                {
+                  "number": 13,
+                  "ok": true,
+                  "name": "COLLISION evidence: getUserSummary includes deleted user in list",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 0.9593\n  type: 'test'"
+                },
+                {
+                  "number": 14,
+                  "ok": true,
+                  "name": "getAllUsers returns all three users initially",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 1.0215\n  type: 'test'"
+                },
+                {
+                  "number": 15,
+                  "ok": true,
+                  "name": "getUserById returns correct user",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 0.9416\n  type: 'test'"
+                },
+                {
+                  "number": 16,
+                  "ok": true,
+                  "name": "removeUser soft-deletes: record still exists with deleted flag",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 0.2439\n  type: 'test'"
+                },
+                {
+                  "number": 17,
+                  "ok": true,
+                  "name": "removeUser does not change total count in getAllUsers",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 0.1343\n  type: 'test'"
+                },
+                {
+                  "number": 18,
+                  "ok": true,
+                  "name": "resetUsers clears deleted flags",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 0.1792\n  type: 'test'"
+                },
+                {
+                  "number": 19,
+                  "ok": true,
+                  "name": "looks up a user by ID with all model fields",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 1.0473\n  type: 'test'"
+                },
+                {
+                  "number": 20,
+                  "ok": true,
+                  "name": "looks up a user by username",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 0.2192\n  type: 'test'"
+                },
+                {
+                  "number": 21,
+                  "ok": true,
+                  "name": "looks up a user by email",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 0.1746\n  type: 'test'"
+                },
+                {
+                  "number": 22,
+                  "ok": true,
+                  "name": "unknown lookups return null",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 0.8298\n  type: 'test'"
+                },
+                {
+                  "number": 23,
+                  "ok": true,
+                  "name": "user IDs are immutable",
+                  "actualIsNull": false,
+                  "expectedFields": null,
+                  "errorCode": null,
+                  "diagnosticYaml": "  duration_ms: 0.394\n  type: 'test'"
+                }
+              ]
+            }
+          },
+          "collisionCheck": {
+            "ok": true,
+            "reason": "all conditions met: exactly 3 failures (2 early-detection + 1 collision), actual=3, expected=2, ERR_ASSERTION"
+          },
+          "verdict": "PASS",
+          "verdictReason": "Confirmed: count=3 (expected 2), ERR_ASSERTION; 20 other tests passed"
+        }
+      }
+    }
+  },
+  "cleanup": [
+    {
+      "dir": "<tmp>",
+      "removeStatus": 0,
+      "removeError": null,
+      "removeStderr": ""
+    },
+    {
+      "dir": "<tmp>",
+      "removeStatus": 0,
+      "removeError": null,
+      "removeStderr": ""
+    },
+    {
+      "dir": "<tmp>",
+      "removeStatus": 0,
+      "removeError": null,
+      "removeStderr": ""
+    },
+    {
+      "dir": "<tmp>",
+      "removeStatus": 0,
+      "removeError": null,
+      "removeStderr": ""
+    },
+    {
+      "dir": "<tmp>",
+      "removeStatus": 0,
+      "removeError": null,
+      "removeStderr": ""
+    },
+    {
+      "dir": "<tmp>",
+      "removeStatus": 0,
+      "removeError": null,
+      "removeStderr": ""
+    },
+    {
+      "dir": "<tmp>",
+      "removeStatus": 0,
+      "removeError": null,
+      "removeStderr": ""
+    },
+    {
+      "dir": "<tmp>",
+      "removeStatus": 0,
+      "removeError": null,
+      "removeStderr": ""
+    },
+    {
+      "dir": "<tmp>",
+      "removeStatus": 0,
+      "removeError": null,
+      "removeStderr": ""
+    },
+    {
+      "dir": "<tmp>",
+      "removeStatus": 0,
+      "removeError": null,
+      "removeStderr": ""
+    }
+  ],
+  "overallVerdict": "PASS"
+}
+
+
+

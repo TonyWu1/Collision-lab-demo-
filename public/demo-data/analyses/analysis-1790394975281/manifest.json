@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "kind": "bob-collision-workflow",
+  "createdAt": "2026-09-26T03:56:15.281Z",
+  "repoRoot": "<redacted>",
+  "branchA": {
+    "ref": "feature/email-auth",
+    "sha": "2fa36c016fee2b361148c6614b3a7f7ba3a2e55a"
+  },
+  "branchB": {
+    "ref": "feature/profile-cache-v2",
+    "sha": "ed7e486eb785d0e2dc3edd6ef8c63bbcb7b6b0f9"
+  },
+  "mergeBase": "b053926c90f5cf916541430980df1ffdf218152d",
+  "requirements": {
+    "sha": "1f3552d0d39595ddd393bb8b7d6b76f28e0cac87",
+    "path": "requirements/authentication-v2.md",
+    "sha256": "7e2ccb738bdfa10001e8580142f01b5fd23a633c7b9632d12b3331dfa4b70e34"
+  }
+}
+

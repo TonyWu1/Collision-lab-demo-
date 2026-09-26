@@ -1,0 +1,249 @@
+{
+  "schemaVersion": 1,
+  "kind": "bob-collision-execution",
+  "startedAt": "2026-09-26T03:56:56.172Z",
+  "manifest": {
+    "schemaVersion": 1,
+    "kind": "bob-collision-workflow",
+    "createdAt": "2026-09-26T03:56:15.281Z",
+    "repoRoot": "<redacted>",
+    "branchA": {
+      "ref": "feature/email-auth",
+      "sha": "2fa36c016fee2b361148c6614b3a7f7ba3a2e55a"
+    },
+    "branchB": {
+      "ref": "feature/profile-cache-v2",
+      "sha": "ed7e486eb785d0e2dc3edd6ef8c63bbcb7b6b0f9"
+    },
+    "mergeBase": "b053926c90f5cf916541430980df1ffdf218152d",
+    "requirements": {
+      "sha": "1f3552d0d39595ddd393bb8b7d6b76f28e0cac87",
+      "path": "requirements/authentication-v2.md",
+      "sha256": "7e2ccb738bdfa10001e8580142f01b5fd23a633c7b9632d12b3331dfa4b70e34"
+    }
+  },
+  "testSha256": "a4d747a63883bc3601f3d52ddd32c8774395575aca40deb4aea980293bd4f17b",
+  "hypothesisSha256": "6b5c8f9c53081dee8bca989fa70a55f75424ba56e2eeb7891ef549f3ade6a466",
+  "status": "FAILURE_REQUIRES_REVIEW",
+  "runs": {
+    "branchA": {
+      "command": "C:\\Program Files\\nodejs\\node.exe",
+      "args": [
+        "--test",
+        "--test-reporter=tap"
+      ],
+      "cwd": "<tmp>",
+      "exitCode": 0,
+      "signal": null,
+      "error": null,
+      "stdout": "TAP version 13\n# Subtest: logs in with a valid email\nok 1 - logs in with a valid email\n  ---\n  duration_ms: 0.5302\n  type: 'test'\n  ...\n# Subtest: returns null for a nonexistent email\nok 2 - returns null for a nonexistent email\n  ---\n  duration_ms: 0.0874\n  type: 'test'\n  ...\n# Subtest: username is not accepted as an email\nok 3 - username is not accepted as an email\n  ---\n  duration_ms: 0.068\n  type: 'test'\n  ...\n# Subtest: caches and retrieves a user by ID\nok 4 - caches and retrieves a user by ID\n  ---\n  duration_ms: 0.8147\n  type: 'test'\n  ...\n# Subtest: retrieves multiple users independently\nok 5 - retrieves multiple users independently\n  ---\n  duration_ms: 0.147\n  type: 'test'\n  ...\n# Subtest: returns null for a cache miss\nok 6 - returns null for a cache miss\n  ---\n  duration_ms: 0.1288\n  type: 'test'\n  ...\n# Subtest: clears all cached users\nok 7 - clears all cached users\n  ---\n  duration_ms: 0.1011\n  type: 'test'\n  ...\n# Subtest: looks up a user by ID with all model fields\nok 8 - looks up a user by ID with all model fields\n  ---\n  duration_ms: 0.9444\n  type: 'test'\n  ...\n# Subtest: looks up a user by username\nok 9 - looks up a user by username\n  ---\n  duration_ms: 0.122\n  type: 'test'\n  ...\n# Subtest: looks up a user by email\nok 10 - looks up a user by email\n  ---\n  duration_ms: 0.1047\n  type: 'test'\n  ...\n# Subtest: unknown lookups return null\nok 11 - unknown lookups return null\n  ---\n  duration_ms: 0.1912\n  type: 'test'\n  ...\n# Subtest: user IDs are immutable\nok 12 - user IDs are immutable\n  ---\n  duration_ms: 0.4456\n  type: 'test'\n  ...\n1..12\n# tests 12\n# suites 0\n# pass 12\n# fail 0\n# cancelled 0\n# skipped 0\n# todo 0\n# duration_ms 2028.2478\n",
+      "stderr": "",
+      "durationMs": 2709,
+      "summary": {
+        "tests": 12,
+        "passed": 12,
+        "failed": 0,
+        "skipped": 0
+      }
+    },
+    "branchB": {
+      "command": "C:\\Program Files\\nodejs\\node.exe",
+      "args": [
+        "--test",
+        "--test-reporter=tap"
+      ],
+      "cwd": "<tmp>",
+      "exitCode": 0,
+      "signal": null,
+      "error": null,
+      "stdout": "TAP version 13\n# Subtest: logs in with a valid username\nok 1 - logs in with a valid username\n  ---\n  duration_ms: 0.565\n  type: 'test'\n  ...\n# Subtest: returns null for a nonexistent username\nok 2 - returns null for a nonexistent username\n  ---\n  duration_ms: 0.0871\n  type: 'test'\n  ...\n# Subtest: email is not accepted as a username\nok 3 - email is not accepted as a username\n  ---\n  duration_ms: 0.1481\n  type: 'test'\n  ...\n# Subtest: caches and retrieves a user by ID\nok 4 - caches and retrieves a user by ID\n  ---\n  duration_ms: 1.3248\n  type: 'test'\n  ...\n# Subtest: retrieves multiple users independently\nok 5 - retrieves multiple users independently\n  ---\n  duration_ms: 0.3805\n  type: 'test'\n  ...\n# Subtest: returns null for a cache miss\nok 6 - returns null for a cache miss\n  ---\n  duration_ms: 0.2073\n  type: 'test'\n  ...\n# Subtest: clears all cached users\nok 7 - clears all cached users\n  ---\n  duration_ms: 0.2572\n  type: 'test'\n  ...\n# Subtest: caches and retrieves a profile by username\nok 8 - caches and retrieves a profile by username\n  ---\n  duration_ms: 2.1739\n  type: 'test'\n  ...\n# Subtest: uses username rather than ID or email as the lookup identity\nok 9 - uses username rather than ID or email as the lookup identity\n  ---\n  duration_ms: 0.3476\n  type: 'test'\n  ...\n# Subtest: returns null for an uncached username\nok 10 - returns null for an uncached username\n  ---\n  duration_ms: 0.1757\n  type: 'test'\n  ...\n# Subtest: retrieves multiple profiles independently\nok 11 - retrieves multiple profiles independently\n  ---\n  duration_ms: 0.3239\n  type: 'test'\n  ...\n# Subtest: replaces a cached profile for the same username\nok 12 - replaces a cached profile for the same username\n  ---\n  duration_ms: 0.2099\n  type: 'test'\n  ...\n# Subtest: clears all cached profiles\nok 13 - clears all cached profiles\n  ---\n  duration_ms: 0.2797\n  type: 'test'\n  ...\n# Subtest: profile and ID-based caches store and clear independently\nok 14 - profile and ID-based caches store and clear independently\n  ---\n  duration_ms: 0.2951\n  type: 'test'\n  ...\n# Subtest: looks up a user by ID with all model fields\nok 15 - looks up a user by ID with all model fields\n  ---\n  duration_ms: 1.1132\n  type: 'test'\n  ...\n# Subtest: looks up a user by username\nok 16 - looks up a user by username\n  ---\n  duration_ms: 0.1371\n  type: 'test'\n  ...\n# Subtest: looks up a user by email\nok 17 - looks up a user by email\n  ---\n  duration_ms: 0.1057\n  type: 'test'\n  ...\n# Subtest: unknown lookups return null\nok 18 - unknown lookups return null\n  ---\n  duration_ms: 0.1782\n  type: 'test'\n  ...\n# Subtest: user IDs are immutable\nok 19 - user IDs are immutable\n  ---\n  duration_ms: 0.4501\n  type: 'test'\n  ...\n1..19\n# tests 19\n# suites 0\n# pass 19\n# fail 0\n# cancelled 0\n# skipped 0\n# todo 0\n# duration_ms 2718.0292\n",
+      "stderr": "",
+      "durationMs": 3434,
+      "summary": {
+        "tests": 19,
+        "passed": 19,
+        "failed": 0,
+        "skipped": 0
+      }
+    },
+    "mergedExisting": {
+      "command": "C:\\Program Files\\nodejs\\node.exe",
+      "args": [
+        "--test",
+        "--test-reporter=tap"
+      ],
+      "cwd": "<tmp>",
+      "exitCode": 0,
+      "signal": null,
+      "error": null,
+      "stdout": "TAP version 13\n# Subtest: logs in with a valid email\nok 1 - logs in with a valid email\n  ---\n  duration_ms: 0.5401\n  type: 'test'\n  ...\n# Subtest: returns null for a nonexistent email\nok 2 - returns null for a nonexistent email\n  ---\n  duration_ms: 0.0875\n  type: 'test'\n  ...\n# Subtest: username is not accepted as an email\nok 3 - username is not accepted as an email\n  ---\n  duration_ms: 0.0728\n  type: 'test'\n  ...\n# Subtest: caches and retrieves a user by ID\nok 4 - caches and retrieves a user by ID\n  ---\n  duration_ms: 1.0625\n  type: 'test'\n  ...\n# Subtest: retrieves multiple users independently\nok 5 - retrieves multiple users independently\n  ---\n  duration_ms: 0.2243\n  type: 'test'\n  ...\n# Subtest: returns null for a cache miss\nok 6 - returns null for a cache miss\n  ---\n  duration_ms: 0.1464\n  type: 'test'\n  ...\n# Subtest: clears all cached users\nok 7 - clears all cached users\n  ---\n  duration_ms: 0.149\n  type: 'test'\n  ...\n# Subtest: caches and retrieves a profile by username\nok 8 - caches and retrieves a profile by username\n  ---\n  duration_ms: 1.8908\n  type: 'test'\n  ...\n# Subtest: uses username rather than ID or email as the lookup identity\nok 9 - uses username rather than ID or email as the lookup identity\n  ---\n  duration_ms: 0.2663\n  type: 'test'\n  ...\n# Subtest: returns null for an uncached username\nok 10 - returns null for an uncached username\n  ---\n  duration_ms: 0.2601\n  type: 'test'\n  ...\n# Subtest: retrieves multiple profiles independently\nok 11 - retrieves multiple profiles independently\n  ---\n  duration_ms: 0.3876\n  type: 'test'\n  ...\n# Subtest: replaces a cached profile for the same username\nok 12 - replaces a cached profile for the same username\n  ---\n  duration_ms: 0.2701\n  type: 'test'\n  ...\n# Subtest: clears all cached profiles\nok 13 - clears all cached profiles\n  ---\n  duration_ms: 0.1596\n  type: 'test'\n  ...\n# Subtest: profile and ID-based caches store and clear independently\nok 14 - profile and ID-based caches store and clear independently\n  ---\n  duration_ms: 0.2705\n  type: 'test'\n  ...\n# Subtest: looks up a user by ID with all model fields\nok 15 - looks up a user by ID with all model fields\n  ---\n  duration_ms: 0.9272\n  type: 'test'\n  ...\n# Subtest: looks up a user by username\nok 16 - looks up a user by username\n  ---\n  duration_ms: 0.1508\n  type: 'test'\n  ...\n# Subtest: looks up a user by email\nok 17 - looks up a user by email\n  ---\n  duration_ms: 0.1032\n  type: 'test'\n  ...\n# Subtest: unknown lookups return null\nok 18 - unknown lookups return null\n  ---\n  duration_ms: 0.2148\n  type: 'test'\n  ...\n# Subtest: user IDs are immutable\nok 19 - user IDs are immutable\n  ---\n  duration_ms: 0.4755\n  type: 'test'\n  ...\n1..19\n# tests 19\n# suites 0\n# pass 19\n# fail 0\n# cancelled 0\n# skipped 0\n# todo 0\n# duration_ms 2692.3324\n",
+      "stderr": "",
+      "durationMs": 3435,
+      "summary": {
+        "tests": 19,
+        "passed": 19,
+        "failed": 0,
+        "skipped": 0
+      }
+    },
+    "controlA": {
+      "command": "C:\\Program Files\\nodejs\\node.exe",
+      "args": [
+        "--test",
+        "--test-reporter=tap",
+        "tests/collisionlab-generated.test.mjs"
+      ],
+      "cwd": "<tmp>",
+      "exitCode": 0,
+      "signal": null,
+      "error": null,
+      "stdout": "TAP version 13\n# Subtest: login() accepts the probed credential and returns Alice\nok 1 - login() accepts the probed credential and returns Alice\n  ---\n  duration_ms: 0.8803\n  type: 'test'\n  ...\n# Subtest: loginAndLoadProfile() returns the same user as login() for the same credential\nok 2 - loginAndLoadProfile() returns the same user as login() for the same credential # SKIP profileSession.js is absent on this branch\n  ---\n  duration_ms: 0.8198\n  type: 'test'\n  ...\n1..2\n# tests 2\n# suites 0\n# pass 1\n# fail 0\n# cancelled 0\n# skipped 1\n# todo 0\n# duration_ms 716.2175\n",
+      "stderr": "",
+      "durationMs": 1421,
+      "summary": {
+        "tests": 2,
+        "passed": 1,
+        "failed": 0,
+        "skipped": 1
+      }
+    },
+    "controlB": {
+      "command": "C:\\Program Files\\nodejs\\node.exe",
+      "args": [
+        "--test",
+        "--test-reporter=tap",
+        "tests/collisionlab-generated.test.mjs"
+      ],
+      "cwd": "<tmp>",
+      "exitCode": 0,
+      "signal": null,
+      "error": null,
+      "stdout": "TAP version 13\n# Subtest: login() accepts the probed credential and returns Alice\nok 1 - login() accepts the probed credential and returns Alice\n  ---\n  duration_ms: 0.5224\n  type: 'test'\n  ...\n# Subtest: loginAndLoadProfile() returns the same user as login() for the same credential\nok 2 - loginAndLoadProfile() returns the same user as login() for the same credential\n  ---\n  duration_ms: 0.1537\n  type: 'test'\n  ...\n1..2\n# tests 2\n# suites 0\n# pass 2\n# fail 0\n# cancelled 0\n# skipped 0\n# todo 0\n# duration_ms 750.1908\n",
+      "stderr": "",
+      "durationMs": 1460,
+      "summary": {
+        "tests": 2,
+        "passed": 2,
+        "failed": 0,
+        "skipped": 0
+      }
+    },
+    "combined": {
+      "command": "C:\\Program Files\\nodejs\\node.exe",
+      "args": [
+        "--test",
+        "--test-reporter=tap",
+        "tests/collisionlab-generated.test.mjs"
+      ],
+      "cwd": "<tmp>",
+      "exitCode": 1,
+      "signal": null,
+      "error": null,
+      "stdout": "TAP version 13\n# Subtest: login() accepts the probed credential and returns Alice\nok 1 - login() accepts the probed credential and returns Alice\n  ---\n  duration_ms: 0.5636\n  type: 'test'\n  ...\n# Subtest: loginAndLoadProfile() returns the same user as login() for the same credential\nnot ok 2 - loginAndLoadProfile() returns the same user as login() for the same credential\n  ---\n  duration_ms: 0.5563\n  type: 'test'\n  location: '<tmp>"alice@example.com\") must return a user record, got: null. login() accepted this credential (test 1 passed), so null here means the profile lookup failed after a successful login — the collision.'\n  code: 'ERR_ASSERTION'\n  name: 'AssertionError'\n  expected: true\n  actual: false\n  operator: '=='\n  stack: |-\n    TestContext.<anonymous> (file:///<tmp>",
+      "stderr": "",
+      "durationMs": 1391,
+      "summary": {
+        "tests": 2,
+        "passed": 1,
+        "failed": 1,
+        "skipped": 0
+      }
+    }
+  },
+  "cleanup": [
+    {
+      "path": "<tmp>",
+      "result": {
+        "command": "git",
+        "args": [
+          "worktree",
+          "remove",
+          "--force",
+          "<tmp>"
+        ],
+        "cwd": "<tmp>",
+        "exitCode": 0,
+        "signal": null,
+        "error": null,
+        "stdout": "",
+        "stderr": "",
+        "durationMs": 120
+      }
+    },
+    {
+      "path": "<tmp>",
+      "result": {
+        "command": "git",
+        "args": [
+          "worktree",
+          "remove",
+          "--force",
+          "<tmp>"
+        ],
+        "cwd": "<tmp>",
+        "exitCode": 0,
+        "signal": null,
+        "error": null,
+        "stdout": "",
+        "stderr": "",
+        "durationMs": 115
+      }
+    },
+    {
+      "path": "<tmp>",
+      "result": {
+        "command": "git",
+        "args": [
+          "worktree",
+          "remove",
+          "--force",
+          "<tmp>"
+        ],
+        "cwd": "<tmp>",
+        "exitCode": 0,
+        "signal": null,
+        "error": null,
+        "stdout": "",
+        "stderr": "",
+        "durationMs": 119
+      }
+    }
+  ],
+  "merge": {
+    "command": "git",
+    "args": [
+      "-c",
+      "user.name=CollisionLab",
+      "-c",
+      "user.email=demo@collisionlab.local",
+      "merge",
+      "--no-edit",
+      "2fa36c016fee2b361148c6614b3a7f7ba3a2e55a"
+    ],
+    "cwd": "<tmp>",
+    "exitCode": 0,
+    "signal": null,
+    "error": null,
+    "stdout": "Merge made by the 'ort' strategy.\n README.md          | 10 +++++-----\n src/app.js         |  4 ++--\n src/auth.js        |  6 +++---\n tests/auth.test.js | 14 +++++++-------\n 4 files changed, 17 insertions(+), 17 deletions(-)\n",
+    "stderr": "",
+    "durationMs": 258
+  },
+  "unmergedPaths": {
+    "command": "git",
+    "args": [
+      "diff",
+      "--name-only",
+      "--diff-filter=U"
+    ],
+    "cwd": "<tmp>",
+    "exitCode": 0,
+    "signal": null,
+    "error": null,
+    "stdout": "",
+    "stderr": "",
+    "durationMs": 97
+  },
+  "cleanupOk": true,
+  "finishedAt": "2026-09-26T03:57:11.674Z"
+}
+
