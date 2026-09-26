@@ -306,23 +306,48 @@ function confirmsCollisionS2(parsed) {
   // actual must be NaN — Node serialises it as the inline YAML value 'NaN'
   if (failing.actualIsNull) return { ok: false, reason: 'actual is null, not NaN' };
   if (failing.actualValue !== 'NaN') return { ok: false, reason: `actual value is not NaN; got: ${JSON.stringify(failing.actualValue)}` };
+  // expected must be the numeric literal 40
+  if (failing.expectedValue !== '40') return { ok: false, reason: `expected value is not 40; got: ${JSON.stringify(failing.expectedValue)}` };
   return { ok: true, reason: 'all conditions met: actual=NaN, expected=40, ERR_ASSERTION' };
 }
 
-// Scenario 3: the named collision test must fail with ERR_ASSERTION.
-// Note: reporting.test.js also fails in the merged tree (assumes physical delete).
-// Those pre-existing unit failures are expected — check for the named test specifically.
+// Scenario 3: exactly 3 failures — 2 pre-existing early-detection failures from reporting.test.js
+// plus the named integration collision test — all with actual=3, expected=2, ERR_ASSERTION.
 const S3_COLLISION_TEST_NAME = 'COLLISION: active user count is wrong after a removal';
+const S3_EARLY_DETECTION_TEST_NAMES = [
+  'getActiveUserCount decrements after a user is removed',
+  'getUserSummary excludes removed users',
+];
 
 function confirmsCollisionS3(parsed) {
   if (!parsed || parsed.failed === 0) return { ok: false, reason: 'no test failures found' };
-  const failing = parsed.tests.find((t) => !t.ok && t.name === S3_COLLISION_TEST_NAME);
-  if (!failing) {
-    const otherNames = parsed.tests.filter((t) => !t.ok).map((t) => t.name).join('; ');
-    return { ok: false, reason: `named collision test did not fail (other failures: ${otherNames})` };
+
+  // Must be exactly 3 failures: 2 early-detection + 1 integration collision
+  if (parsed.failed !== 3) return { ok: false, reason: `expected exactly 3 failures (2 early-detection + 1 collision); got ${parsed.failed}` };
+
+  const failingTests = parsed.tests.filter((t) => !t.ok);
+  const failingNames = failingTests.map((t) => t.name);
+
+  // Both early-detection tests must be present
+  for (const name of S3_EARLY_DETECTION_TEST_NAMES) {
+    if (!failingNames.includes(name)) {
+      return { ok: false, reason: `early-detection test missing: "${name}"` };
+    }
   }
-  if (failing.errorCode !== 'ERR_ASSERTION') return { ok: false, reason: `code: ${failing.errorCode}` };
-  return { ok: true, reason: `collision test failed: count=3, expected=2, ERR_ASSERTION (${parsed.failed} total failures incl. pre-existing from reporting.test.js)` };
+
+  // The named integration collision test must be present
+  if (!failingNames.includes(S3_COLLISION_TEST_NAME)) {
+    return { ok: false, reason: `named collision test did not fail (failures: ${failingNames.join('; ')})` };
+  }
+
+  // Every failure must have actual=3, expected=2, ERR_ASSERTION
+  for (const t of failingTests) {
+    if (t.errorCode !== 'ERR_ASSERTION') return { ok: false, reason: `"${t.name}": code=${t.errorCode}, expected ERR_ASSERTION` };
+    if (t.actualValue !== '3')   return { ok: false, reason: `"${t.name}": actual=${JSON.stringify(t.actualValue)}, expected '3'` };
+    if (t.expectedValue !== '2') return { ok: false, reason: `"${t.name}": expected=${JSON.stringify(t.expectedValue)}, expected '2'` };
+  }
+
+  return { ok: true, reason: 'all conditions met: exactly 3 failures (2 early-detection + 1 collision), actual=3, expected=2, ERR_ASSERTION' };
 }
 
 // ---------------------------------------------------------------------------
