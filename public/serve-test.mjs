@@ -10,6 +10,7 @@ const PORT = 7433;
 const HOST = '127.0.0.1';
 
 const MIME = {
+  '.css': 'text/css',
   '.html': 'text/html; charset=utf-8',
   '.json': 'application/json',
   '.md':   'text/plain',

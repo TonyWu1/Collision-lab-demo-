@@ -139,7 +139,7 @@
       "exitCode": 1,
       "signal": null,
       "error": null,
-      "stdout": "TAP version 13\n# Subtest: login() accepts the probed credential and returns Alice\nok 1 - login() accepts the probed credential and returns Alice\n  ---\n  duration_ms: 0.5636\n  type: 'test'\n  ...\n# Subtest: loginAndLoadProfile() returns the same user as login() for the same credential\nnot ok 2 - loginAndLoadProfile() returns the same user as login() for the same credential\n  ---\n  duration_ms: 0.5563\n  type: 'test'\n  location: '<tmp>"alice@example.com\") must return a user record, got: null. login() accepted this credential (test 1 passed), so null here means the profile lookup failed after a successful login — the collision.'\n  code: 'ERR_ASSERTION'\n  name: 'AssertionError'\n  expected: true\n  actual: false\n  operator: '=='\n  stack: |-\n    TestContext.<anonymous> (file:///<tmp>",
+      "stdout": "[Log unavailable: the original public export damaged this diagnostic during path redaction. Recorded exit codes and structured summaries are preserved.]",
       "stderr": "",
       "durationMs": 1391,
       "summary": {
@@ -244,6 +244,14 @@
     "durationMs": 97
   },
   "cleanupOk": true,
-  "finishedAt": "2026-09-26T03:57:11.674Z"
+  "finishedAt": "2026-09-26T03:57:11.674Z",
+  "exportNotes": {
+    "logRecovery": "Invalid diagnostic strings omitted; no test results changed or rerun. Some other diagnostics were already truncated by the original export.",
+    "affectedFields": [
+      {
+        "line": 142,
+        "field": "stdout"
+      }
+    ]
+  }
 }
-

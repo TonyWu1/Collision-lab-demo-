@@ -1,0 +1,125 @@
+{
+  "description": "Exact source snapshots run in the browser. This is function execution, not a live Git merge or Bob analysis. Price-object uses the available original price-object source; saved merge evidence references price-object-v2 separately.",
+  "files": [
+    {
+      "path": "playground/auth-control/users.js",
+      "branch": "feature/profile-cache-v2",
+      "commit": "ed7e486eb785d0e2dc3edd6ef8c63bbcb7b6b0f9",
+      "source": "src/users.js"
+    },
+    {
+      "path": "playground/auth-control/auth.js",
+      "branch": "feature/profile-cache-v2",
+      "commit": "ed7e486eb785d0e2dc3edd6ef8c63bbcb7b6b0f9",
+      "source": "src/auth.js"
+    },
+    {
+      "path": "playground/auth-control/profileCache.js",
+      "branch": "feature/profile-cache-v2",
+      "commit": "ed7e486eb785d0e2dc3edd6ef8c63bbcb7b6b0f9",
+      "source": "src/profileCache.js"
+    },
+    {
+      "path": "playground/auth-control/profileSession.js",
+      "branch": "feature/profile-cache-v2",
+      "commit": "ed7e486eb785d0e2dc3edd6ef8c63bbcb7b6b0f9",
+      "source": "src/profileSession.js"
+    },
+    {
+      "path": "playground/auth-combined/users.js",
+      "branch": "feature/email-auth",
+      "commit": "2fa36c016fee2b361148c6614b3a7f7ba3a2e55a",
+      "source": "src/users.js"
+    },
+    {
+      "path": "playground/auth-combined/auth.js",
+      "branch": "feature/email-auth",
+      "commit": "2fa36c016fee2b361148c6614b3a7f7ba3a2e55a",
+      "source": "src/auth.js"
+    },
+    {
+      "path": "playground/auth-combined/profileCache.js",
+      "branch": "feature/profile-cache-v2",
+      "commit": "ed7e486eb785d0e2dc3edd6ef8c63bbcb7b6b0f9",
+      "source": "src/profileCache.js"
+    },
+    {
+      "path": "playground/auth-combined/profileSession.js",
+      "branch": "feature/profile-cache-v2",
+      "commit": "ed7e486eb785d0e2dc3edd6ef8c63bbcb7b6b0f9",
+      "source": "src/profileSession.js"
+    },
+    {
+      "path": "playground/auth-fixed/users.js",
+      "branch": "fix/canonical-profile-identity",
+      "commit": "7d46687cda0a5825b4a6cb084d8507863ea7e5fd",
+      "source": "src/users.js"
+    },
+    {
+      "path": "playground/auth-fixed/auth.js",
+      "branch": "fix/canonical-profile-identity",
+      "commit": "7d46687cda0a5825b4a6cb084d8507863ea7e5fd",
+      "source": "src/auth.js"
+    },
+    {
+      "path": "playground/auth-fixed/profileCache.js",
+      "branch": "fix/canonical-profile-identity",
+      "commit": "7d46687cda0a5825b4a6cb084d8507863ea7e5fd",
+      "source": "src/profileCache.js"
+    },
+    {
+      "path": "playground/auth-fixed/profileSession.js",
+      "branch": "fix/canonical-profile-identity",
+      "commit": "7d46687cda0a5825b4a6cb084d8507863ea7e5fd",
+      "source": "src/profileSession.js"
+    },
+    {
+      "path": "playground/price-control/catalog.js",
+      "branch": "feature/cart",
+      "commit": "bd96dff65b0b68b90676566a09f808f43ed1f09d",
+      "source": "src/catalog.js"
+    },
+    {
+      "path": "playground/price-control/cart.js",
+      "branch": "feature/cart",
+      "commit": "bd96dff65b0b68b90676566a09f808f43ed1f09d",
+      "source": "src/cart.js"
+    },
+    {
+      "path": "playground/price-combined/catalog.js",
+      "branch": "feature/price-object",
+      "commit": "af25af8d0e1b03eb19d6092d3e9d97217068d5a8",
+      "source": "src/catalog.js"
+    },
+    {
+      "path": "playground/price-combined/cart.js",
+      "branch": "feature/cart",
+      "commit": "bd96dff65b0b68b90676566a09f808f43ed1f09d",
+      "source": "src/cart.js"
+    },
+    {
+      "path": "playground/delete-control/userStore.js",
+      "branch": "feature/reporting",
+      "commit": "dbbbbfdae587f50f666123799f6c581e281cf5e9",
+      "source": "src/userStore.js"
+    },
+    {
+      "path": "playground/delete-control/reporting.js",
+      "branch": "feature/reporting",
+      "commit": "dbbbbfdae587f50f666123799f6c581e281cf5e9",
+      "source": "src/reporting.js"
+    },
+    {
+      "path": "playground/delete-combined/userStore.js",
+      "branch": "feature/soft-delete",
+      "commit": "5e3c257785113367595d5507bfbde678ba5d2c3c",
+      "source": "src/userStore.js"
+    },
+    {
+      "path": "playground/delete-combined/reporting.js",
+      "branch": "feature/reporting",
+      "commit": "dbbbbfdae587f50f666123799f6c581e281cf5e9",
+      "source": "src/reporting.js"
+    }
+  ]
+}

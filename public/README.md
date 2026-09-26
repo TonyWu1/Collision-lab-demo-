@@ -1,3 +1,17 @@
+# Public live playground
+
+The homepage executes the three prepared scenario functions in the visitor’s browser. It supports sample-user selection, product/quantity inputs, deletion count, and the existing identity fix. Every run resets its state. This is live JavaScript execution; it does not merge Git branches, run the Node test runner, or invoke IBM Bob.
+
+Source snapshots are unchanged copies from the commits listed in `playground/sources.json`. The price snapshot comes from the available original `feature/price-object`; saved conflict-free Git merge evidence separately references `feature/price-object-v2`. Do not describe the browser run as proof of a new Git merge.
+
+The prior evidence dashboard is available at `evidence.html`. Two execution files contained invalid diagnostic strings caused by the earlier public export. Only those damaged log strings were replaced with explicit unavailable notices. Structured results were retained unchanged. `exportNotes` records the omissions; these historical runs were not rerun.
+
+Validation: `node --test scripts/test-public.mjs`. GitHub Pages runs this check before deployment so malformed evidence cannot be published silently. Preview: `node public/serve-test.mjs`, then open http://127.0.0.1:7433/.
+
+---
+
+## Earlier evidence-bundle documentation
+
 # CollisionLab — Public Demo
 
 > **Saved demonstration evidence — analysis runs locally in IBM Bob.**
