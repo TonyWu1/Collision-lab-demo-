@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "start": "node src/app.js",
-    "test": "node --test",
+    "test": "node --test \"tests/*.test.js\" \"scripts/workflow-tests/*.test.mjs\"",
     "demo": "node scripts/run-demo.mjs",
     "dashboard": "node scripts/server.mjs"
   },
