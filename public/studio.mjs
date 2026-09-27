@@ -7,6 +7,11 @@ const scenarios = {
  delete: {tag:'DATA LIFECYCLE', title:'The user is gone. The count isn’t.', description:'Deletion keeps records for recovery. Reporting still assumes every stored record belongs to an active user.', a:'Soft deletion', b:'Active-user reporting', changeA:'removeUser() sets deleted: true.', changeB:'The report counts all stored records.', directory:'analysis-1790395587341', explanation:'Soft deletion keeps the records in storage. Counting all records includes deleted users; an active-user report must exclude them.', fields:'<label for="count">Users to remove from the 3-user sample</label><select id="count"><option value="1">Remove 1 user</option><option value="2">Remove 2 users</option><option value="3">Remove all 3 users</option></select><p class="input-note">The user store resets before every run.</p>'}
 };
 let selected = 'auth', evidenceRequest = 0;
+const excerpts = {
+ auth: ["// auth.js\nlogin(email)\n  → getUserByEmail(email)", "// profileSession.js\ncacheProfile(user);\ngetProfileByUsername(\n  loginIdentifier\n);"],
+ price: ["// catalog.js\nprice: {\n  amount: 20,\n  currency: 'USD'\n}", "// cart.js\nproduct.price\n  * quantity\n\n// Expects a number"],
+ delete: ["// userStore.js\nfunction removeUser(id) {\n  const user = /* find */;\n  user.deleted = true;\n}", "// reporting.js\ngetActiveUserCount()\n  → getAllUsers().length"]
+};
 const emptyConsole = $('console').innerHTML;
 async function loadEvidence(key) {
  const token = ++evidenceRequest;
@@ -31,6 +36,9 @@ function choose(key) {
  selected = key; const s = scenarios[key];
  document.querySelectorAll('[data-scenario]').forEach(b => { const active = b.dataset.scenario === key; b.classList.toggle('selected', active); b.setAttribute('aria-selected', String(active)); });
  $('scenarioTag').textContent=s.tag; $('scenarioTitle').textContent=s.title; $('scenarioDescription').textContent=s.description;
+ $('codeA').textContent = excerpts[key][0]; $('codeB').textContent = excerpts[key][1];
+ $('codeA').setAttribute('aria-label', 'Illustrative excerpt of branch A behavior');
+ $('codeB').setAttribute('aria-label', 'Illustrative excerpt of branch B behavior');
  for (const [id,value] of Object.entries({branchA:s.a,branchB:s.b,changeA:s.changeA,changeB:s.changeB})) $(id).textContent=value;
  $('inputs').innerHTML=s.fields; $('console').innerHTML=emptyConsole; $('result').innerHTML=''; $('runStatus').textContent='READY';
  $('sourceLink').href='playground/sources.json'; loadEvidence(key);
@@ -55,7 +63,12 @@ $('runForm').addEventListener('submit', event => {
   $('result').innerHTML=`<div class="result-panel ${run.passed?'good':''}"><div><h3>${escape(title)}</h3><p>${!run.controlPassed?'The control did not satisfy the assertion. This run cannot confirm a collision.':run.passed?'The existing fix stores and retrieves the profile by immutable user ID. Email remains the login credential.':escape(scenarios[selected].explanation)} ${reproduced?'This is an expected failure in the sample application. The playground is working.':''}</p></div><div class="comparison"><div><small>WORKING CONTROL</small><strong class="${run.controlPassed?'good':'bad'}">${escape(displayValue(run.control))}</strong></div><div><small>EXPECTED RESULT</small><strong>${escape(displayValue(run.expected))}</strong></div><div><small>${options.fixed?'WITH FIX':'COMBINED RESULT'}</small><strong class="${run.passed?'good':'bad'}">${escape(displayValue(run.actual))}</strong></div></div></div>`;
  } catch (error) { $('runStatus').textContent='INPUT / EXECUTION ERROR'; $('result').innerHTML=`<p class="error">${escape(error.message)}</p>`; }
 });
-$('inputs').addEventListener('change', () => { $('result').innerHTML=''; $('console').innerHTML=emptyConsole; $('runStatus').textContent='READY · INPUT CHANGED'; });
+$('inputs').addEventListener('change', () => {
+ $('result').innerHTML=''; $('console').innerHTML=emptyConsole; $('runStatus').textContent='READY · INPUT CHANGED';
+ if (selected === 'auth') $('codeB').textContent = $('fixed')?.checked
+   ? '// Existing identity fix\ncacheProfile(user);\ngetProfileById(user.id);\n\n// Cache key: user.id'
+   : excerpts.auth[1];
+});
 $('inputs').addEventListener('input', () => { $('result').innerHTML=''; $('console').innerHTML=emptyConsole; $('runStatus').textContent='READY · INPUT CHANGED'; });
 $('copyCommand').addEventListener('click', async () => { try { await navigator.clipboard.writeText($('bobCommand').textContent); $('copyCommand').textContent='Copied'; } catch { $('copyCommand').textContent='Select the command to copy'; } });
 choose(selected);
