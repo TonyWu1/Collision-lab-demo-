@@ -32,11 +32,17 @@ Scenario 1 includes a fix that keys the profile cache by immutable user ID. Scen
 
 **Current scope:** this is a reproducible demo for three prepared scenarios. It is not yet a general service that accepts arbitrary repositories or discovers every possible semantic conflict.
 
+## Why the workflow matters
+
+CollisionLab focuses on composition failures that ordinary merge checks can miss. In the identity scenario, both branch suites pass and the merged existing suite remains **19/19 green**, while the generated integration test exposes the incompatible email-versus-username assumption. The helper verification run for that scenario completes in roughly **14 seconds** on the recorded benchmark.
+
+The three prepared scenarios cover different classes of contract collision: identity semantics, API/data shape, and data lifecycle. The goal is not to replace Git or a full test suite, but to add a focused Bob-assisted verification step when independently valid changes may interact.
+
 ## Try the hosted demo
 
 [Open CollisionLab’s evidence dashboard](https://tonywu1.github.io/Collision-lab-demo-/).
 
-The hosted site presents saved demonstration evidence. It does not run IBM Bob or analyze a visitor’s branches live. The failing application tests shown in collision cards are intentional reproductions; they are evidence of the collision, not dashboard crashes.
+The hosted site presents a live browser playground plus saved demonstration evidence. It does not run IBM Bob or analyze a visitor’s branches live. The failing application tests shown in collision cards are intentional reproductions; they are evidence of the collision, not dashboard crashes.
 
 ## Run locally
 
@@ -68,25 +74,34 @@ CollisionLab is designed around a Bob-assisted developer workflow:
 4. Run the test against the combined code and inspect the result.
 5. Explain the collision and suggest a compatible change.
 
-The hosted dashboard is a saved-evidence viewer; Bob runs in the developer’s IDE, not inside the public webpage.
+The reusable Bob command is defined in [`.bob/commands/collision.md`](.bob/commands/collision.md). It instructs Bob to pin the branch refs, analyze the branches independently, form a falsifiable hypothesis, generate a fresh integration test, execute it in isolated worktrees, classify the result, and suggest a minimal fix without silently modifying production code.
+
+The hosted dashboard is a saved-evidence viewer and browser playground; Bob runs in the developer’s IDE, not inside the public webpage.
 
 ### Bob task evidence
 
-The hackathon submission requires task-session summary screenshots captured in the hackathon-provisioned Bob account. Add the genuine screenshots to [`bob_sessions/`](bob_sessions/README.md) before submission. The folder currently contains instructions only; it does not claim that screenshots have already been added.
+Genuine IBM Bob task-session evidence from the development of CollisionLab is available in [`bob_sessions/`](bob_sessions/).
+
+The screenshots document Bob-assisted branch analysis, semantic-conflict reasoning, integration-test design, debugging, and verification performed during the project.
 
 ## Technology
 
+- IBM Bob 2.0 Agent mode
 - Node.js, plain JavaScript, and Git
 - Node.js built-in test runner
-- Static HTML, CSS, and JavaScript dashboard
+- Git worktrees for isolated branch and merge verification
+- Static HTML, CSS, and JavaScript playground/dashboard
 - No database or third-party runtime dependencies
 
 ## Repository layout
 
 ```text
 .
-├── bob_sessions/       # Add genuine IBM Bob task-summary screenshots here
-├── scripts/            # Evidence runner, local dashboard, and checks
+├── .bob/commands/      # Reusable IBM Bob /collision workflow
+├── bob_sessions/       # Genuine IBM Bob task-session evidence
+├── docs/               # Workflow documentation and benchmark results
+├── public/             # Hosted playground and saved evidence
+├── scripts/            # Evidence runner, verification helpers, and local dashboard
 ├── src/                # Baseline sample application
 ├── tests/              # Node.js tests
 ├── package.json
@@ -95,4 +110,4 @@ The hackathon submission requires task-session summary screenshots captured in t
 
 ## Project status
 
-This repository is a hackathon prototype and evidence package. It demonstrates how individually valid changes can interact badly, and it documents what the current runner can verify. The public demo and local runner have different roles: the public site is a saved replay; the local runner executes the prepared Git scenarios.
+This repository is a hackathon prototype and evidence package. It demonstrates how individually valid changes can interact badly, and it documents what the current runner can verify. The public demo and local runner have different roles: the public site is a live browser demonstration plus saved replay; the local runner executes the prepared Git scenarios and Bob workflow.
