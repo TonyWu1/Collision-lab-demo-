@@ -1,0 +1,88 @@
+{
+  "schemaVersion": 1,
+  "kind": "bob-collision-analysis",
+  "analysisDirectory": "scripts/reports/analysis-1790394975281",
+  "previousAnalyses": [
+    "scripts/reports/analysis-1790394477074",
+    "scripts/reports/analysis-1790394782422"
+  ],
+  "createdAt": "2026-09-26T03:57:11.674Z",
+
+  "branches": {
+    "A": { "ref": "feature/email-auth",       "sha": "2fa36c016fee2b361148c6614b3a7f7ba3a2e55a" },
+    "B": { "ref": "feature/profile-cache-v2", "sha": "ed7e486eb785d0e2dc3edd6ef8c63bbcb7b6b0f9" },
+    "mergeBase": "b053926c90f5cf916541430980df1ffdf218152d"
+  },
+
+  "requirements": {
+    "ref": "demo/combined-auth-cache",
+    "path": "requirements/authentication-v2.md",
+    "blobSha": "1f3552d0d39595ddd393bb8b7d6b76f28e0cac87",
+    "sha256": "7e2ccb738bdfa10001e8580142f01b5fd23a633c7b9632d12b3331dfa4b70e34",
+    "citations": ["AUTH-02", "INT-01", "CACHE-01"]
+  },
+
+  "generatedTest": {
+    "file": "generated.test.mjs",
+    "sha256": "a4d747a63883bc3601f3d52ddd32c8774395575aca40deb4aea980293bd4f17b",
+    "version": "v3",
+    "changeFromV2": "Replaced early `return` with `t.skip('profileSession.js is absent on this branch')` using the TestContext parameter. No production code, credentials, or other assertions changed.",
+    "copiedFromExisting": false
+  },
+
+  "merge": {
+    "strategy": "ort",
+    "textualConflict": false,
+    "unmergedPaths": [],
+    "filesChanged": ["README.md", "src/app.js", "src/auth.js", "tests/auth.test.js"],
+    "exitCode": 0
+  },
+
+  "testResults": {
+    "branchA_existing":  { "tests": 12, "passed": 12, "failed": 0, "skipped": 0, "exitCode": 0 },
+    "branchB_existing":  { "tests": 19, "passed": 19, "failed": 0, "skipped": 0, "exitCode": 0 },
+    "merged_existing":   { "tests": 19, "passed": 19, "failed": 0, "skipped": 0, "exitCode": 0 },
+
+    "controlA_generated": {
+      "tests": 2, "passed": 1, "failed": 0, "skipped": 1, "exitCode": 0,
+      "tapSnippet": "ok 2 - loginAndLoadProfile() returns the same user as login() for the same credential # SKIP profileSession.js is absent on this branch",
+      "verdict": "MATCHES EXPECTED: 1 passed, 1 skipped"
+    },
+    "controlB_generated": {
+      "tests": 2, "passed": 2, "failed": 0, "skipped": 0, "exitCode": 0,
+      "probedCredential": "alice (username)",
+      "verdict": "MATCHES EXPECTED: 2 passed, 0 skipped"
+    },
+    "combined_generated": {
+      "tests": 2, "passed": 1, "failed": 1, "skipped": 0, "exitCode": 1,
+      "probedCredential": "alice@example.com (email)",
+      "failureAfterLoginPass": true,
+      "failureMessage": "loginAndLoadProfile(\"alice@example.com\") must return a user record, got: null. login() accepted this credential (test 1 passed), so null here means the profile lookup failed after a successful login — the collision.",
+      "verdict": "MATCHES EXPECTED: 1 passed, 1 failed"
+    }
+  },
+
+  "controlPattern": {
+    "expected": "A: 1 pass 1 skip 0 fail | B: 2 pass 0 skip 0 fail | combined: 1 pass 0 skip 1 fail",
+    "actual":   "A: 1 pass 1 skip 0 fail | B: 2 pass 0 skip 0 fail | combined: 1 pass 0 skip 1 fail",
+    "matches": true
+  },
+
+  "verdict": "CONFIRMED",
+  "verdictRationale": "Both branch suites pass independently. Merge is textually clean. The generated test emits a proper TAP skip on control A (t.skip via TestContext), passes on control B (integration works under username-auth), and fails on combined after the login assertion passes — confirming the cache-key mismatch as the fault site. All three counts match the requested targets exactly.",
+
+  "requirementViolations": [
+    { "id": "INT-01", "violation": "Profile lookup returns null after successful login on merged code." },
+    { "id": "AUTH-02", "violation": "profileSession.js treats loginIdentifier as user.username." },
+    { "id": "CACHE-01", "violation": "profileCache.js keys by mutable user.username, not user.id." }
+  ],
+
+  "suggestedFix": {
+    "description": "Key profileCache.js by user.id; expose getProfileById(id); change profileSession.js to call getProfileById(user.id). Do not modify auth.js.",
+    "applied": false,
+    "existingImplementation": "fix/canonical-profile-identity @ 7d46687"
+  },
+
+  "cleanup": { "ok": true, "worktreesRemoved": 3, "allExitCode0": true }
+}
+

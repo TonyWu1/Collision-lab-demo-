@@ -1,0 +1,57 @@
+diff --git a/src/reporting.js b/src/reporting.js
+new file mode 100644
+index 0000000..61a31da
+--- /dev/null
++++ b/src/reporting.js
+@@ -0,0 +1,16 @@
++// User reporting. Computes summary statistics over the user store.
++// Assumes that removeUser physically removes the record from the store,
++// so getAllUsers() always returns only active (non-deleted) users.
++import { getAllUsers } from './userStore.js';
++
++export function getActiveUserCount() {
++  return getAllUsers().length;
++}
++
++export function getUserSummary() {
++  const users = getAllUsers();
++  return {
++    total: users.length,
++    usernames: users.map((u) => u.username),
++  };
++}
+diff --git a/tests/reporting.test.js b/tests/reporting.test.js
+new file mode 100644
+index 0000000..021c4e8
+--- /dev/null
++++ b/tests/reporting.test.js
+@@ -0,0 +1,28 @@
++import test from 'node:test';
++import assert from 'node:assert/strict';
++import { resetUsers, removeUser } from '../src/userStore.js';
++import { getActiveUserCount, getUserSummary } from '../src/reporting.js';
++
++test.beforeEach(() => { resetUsers(); });
++
++test('getActiveUserCount returns 3 with no deletions', () => {
++  assert.equal(getActiveUserCount(), 3);
++});
++
++test('getActiveUserCount decrements after a user is removed', () => {
++  removeUser('u1');
++  // On main, removeUser physically splices — so count should drop to 2
++  assert.equal(getActiveUserCount(), 2);
++});
++
++test('getUserSummary lists all active usernames', () => {
++  const summary = getUserSummary();
++  assert.deepEqual(summary.usernames.sort(), ['alice', 'bruno', 'carla']);
++});
++
++test('getUserSummary excludes removed users', () => {
++  removeUser('u2');
++  const summary = getUserSummary();
++  assert.equal(summary.total, 2);
++  assert.ok(!summary.usernames.includes('bruno'));
++});
+

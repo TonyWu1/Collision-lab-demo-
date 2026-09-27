@@ -1,0 +1,85 @@
+diff --git a/src/cart.js b/src/cart.js
+new file mode 100644
+index 0000000..d14ba70
+--- /dev/null
++++ b/src/cart.js
+@@ -0,0 +1,31 @@
++// Shopping cart. Assumes product.price is a numeric value in USD.
++// Callers pass product objects retrieved from the catalog.
++
++export function createCart() {
++  const items = [];
++
++  return {
++    addItem(product, quantity = 1) {
++      const existing = items.find((i) => i.product.id === product.id);
++      if (existing) {
++        existing.quantity += quantity;
++      } else {
++        items.push({ product, quantity });
++      }
++    },
++
++    removeItem(productId) {
++      const idx = items.findIndex((i) => i.product.id === productId);
++      if (idx !== -1) items.splice(idx, 1);
++    },
++
++    getTotal() {
++      // product.price is a number — multiply directly
++      return items.reduce((sum, { product, quantity }) => sum + product.price * quantity, 0);
++    },
++
++    getItems() {
++      return items.slice();
++    },
++  };
++}
+diff --git a/tests/cart.test.js b/tests/cart.test.js
+new file mode 100644
+index 0000000..2ae54c0
+--- /dev/null
++++ b/tests/cart.test.js
+@@ -0,0 +1,41 @@
++import test from 'node:test';
++import assert from 'node:assert/strict';
++import { createCart } from '../src/cart.js';
++
++// Baseline catalog shapes (numeric price, as main defines them).
++const widget  = { id: 'p1', name: 'Widget',  price: 20 };
++const gadget  = { id: 'p2', name: 'Gadget',  price: 45 };
++const doohick = { id: 'p3', name: 'Doohick', price: 8  };
++
++test('empty cart has zero total', () => {
++  const cart = createCart();
++  assert.equal(cart.getTotal(), 0);
++});
++
++test('addItem increases total by price × quantity', () => {
++  const cart = createCart();
++  cart.addItem(widget, 2);
++  assert.equal(cart.getTotal(), 40);
++});
++
++test('multiple distinct products sum correctly', () => {
++  const cart = createCart();
++  cart.addItem(widget, 1);   // 20
++  cart.addItem(gadget, 2);   // 90
++  assert.equal(cart.getTotal(), 110);
++});
++
++test('addItem on existing product accumulates quantity', () => {
++  const cart = createCart();
++  cart.addItem(doohick, 3);
++  cart.addItem(doohick, 2);
++  assert.equal(cart.getTotal(), 40); // 8 × 5
++});
++
++test('removeItem brings total back to zero', () => {
++  const cart = createCart();
++  cart.addItem(widget, 1);
++  cart.removeItem('p1');
++  assert.equal(cart.getTotal(), 0);
++  assert.equal(cart.getItems().length, 0);
++});
+
