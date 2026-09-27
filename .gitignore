@@ -1,11 +1,114 @@
-node_modules/
-coverage/
-*.log
+# ============================================
+# IBM HACKATHON SECURITY RULES
+# ============================================
+
+# AI assistant / IDE session files
+.copilot/
+.cursor/
+.codeium/
+
+# Environment files
 .env
 .env.*
+!.env.example
+*.env
+env.local
+.env.local
+.env.*.local
+
+# IBM Cloud credentials
+ibmcloud-credentials.json
+ibm-credentials.env
+*-credentials.json
+*apikey*
+*api-key*
+*api_key*
+
+# Configuration files with credentials
+config.json
+config.yaml
+config.yml
+secrets.json
+secrets.yaml
+secrets.yml
+credentials.json
+credentials.yaml
+
+# Private keys
+*.pem
+*.key
+*.p12
+*.pfx
+*.cer
+*.crt
+id_rsa
+id_dsa
+*.ppk
+
+# Generic credential patterns
+*credentials*
+*secret*
+*password*
+*token*
+
+# Database credentials
+database.yml
+database.json
+db-config.*
+
+# ============================================
+# DEVELOPMENT FILES
+# ============================================
+
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.npm
+coverage/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+env/
+ENV/
+.venv
+
+# Java
+*.class
+*.jar
+*.war
+target/
+
+# IDE / OS files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
 .DS_Store
+
+# Build / temporary outputs
+dist/
+build/
+*.log
+*.bak
+*.tmp
+*.temp
+.backup/
+
+# ============================================
+# COLLISIONLAB-SPECIFIC RULES
+# ============================================
+
+# Local evidence runner output
 scripts/reports/
 
-# Public demo: evidence bundle is explicitly committed despite reports/ being ignored
+# Public demo evidence bundle is intentionally committed
 !public/demo-data/
 !public/demo-data/**
