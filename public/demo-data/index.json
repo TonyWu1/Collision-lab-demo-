@@ -1,0 +1,39 @@
+{
+  "schemaVersion": 1,
+  "label": "Saved demonstration evidence — analysis runs locally in IBM Bob.",
+  "description": "Static evidence bundle for the CollisionLab public demo. All three analyses were produced by running /collision in IBM Bob Agent mode on this repository. The prepared-demo report was produced by npm run demo.",
+  "preparedReport": "prepared-demo.json",
+  "analyses": [
+    {
+      "dirname": "analysis-1790394975281",
+      "scenario": "auth-cache",
+      "title": "Auth identity / profile cache",
+      "branchA": "feature/email-auth",
+      "branchB": "feature/profile-cache-v2",
+      "shaA": "2fa36c016fee2b361148c6614b3a7f7ba3a2e55a",
+      "shaB": "ed7e486eb785d0e2dc3edd6ef8c63bbcb7b6b0f9",
+      "verdict": "CONFIRMED",
+      "evidenceVersion": "v3"
+    },
+    {
+      "dirname": "analysis-1790395587341",
+      "scenario": "soft-delete-reporting",
+      "title": "Soft-delete / reporting",
+      "branchA": "feature/soft-delete",
+      "branchB": "feature/reporting",
+      "shaA": "5e3c257785113367595d5507bfbde678ba5d2c3c",
+      "shaB": "dbbbbfdae587f50f666123799f6c581e281cf5e9",
+      "verdict": "CONFIRMED"
+    },
+    {
+      "dirname": "analysis-1790395659460",
+      "scenario": "price-cart",
+      "title": "Price object / cart",
+      "branchA": "feature/price-object-v2",
+      "branchB": "feature/cart",
+      "shaA": "0f23c69f74ecb313f4609c889f248e057fab9d2b",
+      "shaB": "bd96dff65b0b68b90676566a09f808f43ed1f09d",
+      "verdict": "CONFIRMED"
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+node_modules/
+coverage/
+*.log
+.env
+.env.*
+.DS_Store
+scripts/reports/
+
+# Public demo: evidence bundle is explicitly committed despite reports/ being ignored
+!public/demo-data/
+!public/demo-data/**

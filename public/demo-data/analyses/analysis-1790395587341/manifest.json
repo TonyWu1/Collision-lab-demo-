@@ -1,0 +1,16 @@
+{
+  "schemaVersion": 1,
+  "kind": "bob-collision-workflow",
+  "createdAt": "2026-09-26T04:06:27.341Z",
+  "repoRoot": "<redacted>",
+  "branchA": {
+    "ref": "feature/soft-delete",
+    "sha": "5e3c257785113367595d5507bfbde678ba5d2c3c"
+  },
+  "branchB": {
+    "ref": "feature/reporting",
+    "sha": "dbbbbfdae587f50f666123799f6c581e281cf5e9"
+  },
+  "mergeBase": "2333e05494449d80bfe4fa889a64b20dbe24f7e0"
+}
+

@@ -1,0 +1,244 @@
+{
+  "schemaVersion": 1,
+  "kind": "bob-collision-execution",
+  "startedAt": "2026-09-26T04:09:12.923Z",
+  "manifest": {
+    "schemaVersion": 1,
+    "kind": "bob-collision-workflow",
+    "createdAt": "2026-09-26T04:06:27.341Z",
+    "repoRoot": "<redacted>",
+    "branchA": {
+      "ref": "feature/soft-delete",
+      "sha": "5e3c257785113367595d5507bfbde678ba5d2c3c"
+    },
+    "branchB": {
+      "ref": "feature/reporting",
+      "sha": "dbbbbfdae587f50f666123799f6c581e281cf5e9"
+    },
+    "mergeBase": "2333e05494449d80bfe4fa889a64b20dbe24f7e0"
+  },
+  "testSha256": "f2e1a17d897b11978ec65a2c0bb03d0ed452d2d0b8ba83983e80974a270f1ebe",
+  "hypothesisSha256": "783aefb7ef0654778d9da31ea9964272a4bc790d7506a0f5ee42cd82c805d174",
+  "status": "FAILURE_REQUIRES_REVIEW",
+  "runs": {
+    "branchA": {
+      "command": "C:\\Program Files\\nodejs\\node.exe",
+      "args": [
+        "--test",
+        "--test-reporter=tap"
+      ],
+      "cwd": "<tmp>",
+      "exitCode": 0,
+      "signal": null,
+      "error": null,
+      "stdout": "TAP version 13\n# Subtest: logs in with a valid username\nok 1 - logs in with a valid username\n  ---\n  duration_ms: 0.5486\n  type: 'test'\n  ...\n# Subtest: returns null for a nonexistent username\nok 2 - returns null for a nonexistent username\n  ---\n  duration_ms: 0.0806\n  type: 'test'\n  ...\n# Subtest: email is not accepted as a username\nok 3 - email is not accepted as a username\n  ---\n  duration_ms: 0.0703\n  type: 'test'\n  ...\n# Subtest: caches and retrieves a user by ID\nok 4 - caches and retrieves a user by ID\n  ---\n  duration_ms: 0.8273\n  type: 'test'\n  ...\n# Subtest: retrieves multiple users independently\nok 5 - retrieves multiple users independently\n  ---\n  duration_ms: 0.1758\n  type: 'test'\n  ...\n# Subtest: returns null for a cache miss\nok 6 - returns null for a cache miss\n  ---\n  duration_ms: 0.1153\n  type: 'test'\n  ...\n# Subtest: clears all cached users\nok 7 - clears all cached users\n  ---\n  duration_ms: 0.1111\n  type: 'test'\n  ...\n# Subtest: getAllUsers returns all three users initially\nok 8 - getAllUsers returns all three users initially\n  ---\n  duration_ms: 0.6301\n  type: 'test'\n  ...\n# Subtest: getUserById returns correct user\nok 9 - getUserById returns correct user\n  ---\n  duration_ms: 0.9284\n  type: 'test'\n  ...\n# Subtest: removeUser soft-deletes: record still exists with deleted flag\nok 10 - removeUser soft-deletes: record still exists with deleted flag\n  ---\n  duration_ms: 0.2837\n  type: 'test'\n  ...\n# Subtest: removeUser does not change total count in getAllUsers\nok 11 - removeUser does not change total count in getAllUsers\n  ---\n  duration_ms: 0.1564\n  type: 'test'\n  ...\n# Subtest: resetUsers clears deleted flags\nok 12 - resetUsers clears deleted flags\n  ---\n  duration_ms: 0.1969\n  type: 'test'\n  ...\n# Subtest: looks up a user by ID with all model fields\nok 13 - looks up a user by ID with all model fields\n  ---\n  duration_ms: 0.8757\n  type: 'test'\n  ...\n# Subtest: looks up a user by username\nok 14 - looks up a user by username\n  ---\n  duration_ms: 0.1181\n  type: 'test'\n  ...\n# Subtest: looks up a user by email\nok 15 - looks up a user by email\n  ---\n  duration_ms: 0.078\n  type: 'test'\n  ...\n# Subtest: unknown lookups return null\nok 16 - unknown lookups return null\n  ---\n  duration_ms: 0.1019\n  type: 'test'\n  ...\n# Subtest: user IDs are immutable\nok 17 - user IDs are immutable\n  ---\n  duration_ms: 0.362\n  type: 'test'\n  ...\n1..17\n# tests 17\n# suites 0\n# pass 17\n# fail 0\n# cancelled 0\n# skipped 0\n# todo 0\n# duration_ms 2631.8041\n",
+      "stderr": "",
+      "durationMs": 3338,
+      "summary": {
+        "tests": 17,
+        "passed": 17,
+        "failed": 0,
+        "skipped": 0
+      }
+    },
+    "branchB": {
+      "command": "C:\\Program Files\\nodejs\\node.exe",
+      "args": [
+        "--test",
+        "--test-reporter=tap"
+      ],
+      "cwd": "<tmp>",
+      "exitCode": 0,
+      "signal": null,
+      "error": null,
+      "stdout": "TAP version 13\n# Subtest: logs in with a valid username\nok 1 - logs in with a valid username\n  ---\n  duration_ms: 0.5654\n  type: 'test'\n  ...\n# Subtest: returns null for a nonexistent username\nok 2 - returns null for a nonexistent username\n  ---\n  duration_ms: 0.0866\n  type: 'test'\n  ...\n# Subtest: email is not accepted as a username\nok 3 - email is not accepted as a username\n  ---\n  duration_ms: 0.0755\n  type: 'test'\n  ...\n# Subtest: caches and retrieves a user by ID\nok 4 - caches and retrieves a user by ID\n  ---\n  duration_ms: 2.8211\n  type: 'test'\n  ...\n# Subtest: retrieves multiple users independently\nok 5 - retrieves multiple users independently\n  ---\n  duration_ms: 0.2172\n  type: 'test'\n  ...\n# Subtest: returns null for a cache miss\nok 6 - returns null for a cache miss\n  ---\n  duration_ms: 0.1183\n  type: 'test'\n  ...\n# Subtest: clears all cached users\nok 7 - clears all cached users\n  ---\n  duration_ms: 0.1054\n  type: 'test'\n  ...\n# Subtest: getActiveUserCount returns 3 with no deletions\nok 8 - getActiveUserCount returns 3 with no deletions\n  ---\n  duration_ms: 1.155\n  type: 'test'\n  ...\n# Subtest: getActiveUserCount decrements after a user is removed\nok 9 - getActiveUserCount decrements after a user is removed\n  ---\n  duration_ms: 0.1642\n  type: 'test'\n  ...\n# Subtest: getUserSummary lists all active usernames\nok 10 - getUserSummary lists all active usernames\n  ---\n  duration_ms: 0.5714\n  type: 'test'\n  ...\n# Subtest: getUserSummary excludes removed users\nok 11 - getUserSummary excludes removed users\n  ---\n  duration_ms: 0.1588\n  type: 'test'\n  ...\n# Subtest: looks up a user by ID with all model fields\nok 12 - looks up a user by ID with all model fields\n  ---\n  duration_ms: 0.8725\n  type: 'test'\n  ...\n# Subtest: looks up a user by username\nok 13 - looks up a user by username\n  ---\n  duration_ms: 0.108\n  type: 'test'\n  ...\n# Subtest: looks up a user by email\nok 14 - looks up a user by email\n  ---\n  duration_ms: 0.0816\n  type: 'test'\n  ...\n# Subtest: unknown lookups return null\nok 15 - unknown lookups return null\n  ---\n  duration_ms: 0.1064\n  type: 'test'\n  ...\n# Subtest: user IDs are immutable\nok 16 - user IDs are immutable\n  ---\n  duration_ms: 0.3016\n  type: 'test'\n  ...\n1..16\n# tests 16\n# suites 0\n# pass 16\n# fail 0\n# cancelled 0\n# skipped 0\n# todo 0\n# duration_ms 2594.9018\n",
+      "stderr": "",
+      "durationMs": 3263,
+      "summary": {
+        "tests": 16,
+        "passed": 16,
+        "failed": 0,
+        "skipped": 0
+      }
+    },
+    "mergedExisting": {
+      "command": "C:\\Program Files\\nodejs\\node.exe",
+      "args": [
+        "--test",
+        "--test-reporter=tap"
+      ],
+      "cwd": "<tmp>",
+      "exitCode": 1,
+      "signal": null,
+      "error": null,
+      "stdout": "TAP version 13\n# Subtest: logs in with a valid username\nok 1 - logs in with a valid username\n  ---\n  duration_ms: 0.5528\n  type: 'test'\n  ...\n# Subtest: returns null for a nonexistent username\nok 2 - returns null for a nonexistent username\n  ---\n  duration_ms: 0.0857\n  type: 'test'\n  ...\n# Subtest: email is not accepted as a username\nok 3 - email is not accepted as a username\n  ---\n  duration_ms: 0.0718\n  type: 'test'\n  ...\n# Subtest: caches and retrieves a user by ID\nok 4 - caches and retrieves a user by ID\n  ---\n  duration_ms: 0.8244\n  type: 'test'\n  ...\n# Subtest: retrieves multiple users independently\nok 5 - retrieves multiple users independently\n  ---\n  duration_ms: 0.2107\n  type: 'test'\n  ...\n# Subtest: returns null for a cache miss\nok 6 - returns null for a cache miss\n  ---\n  duration_ms: 0.1487\n  type: 'test'\n  ...\n# Subtest: clears all cached users\nok 7 - clears all cached users\n  ---\n  duration_ms: 0.145\n  type: 'test'\n  ...\n# Subtest: getActiveUserCount returns 3 with no deletions\nok 8 - getActiveUserCount returns 3 with no deletions\n  ---\n  duration_ms: 1.2994\n  type: 'test'\n  ...\n# Subtest: getActiveUserCount decrements after a user is removed\nnot ok 9 - getActiveUserCount decrements after a user is removed\n  ---\n  duration_ms: 0.7072\n  type: 'test'\n  location: '<tmp>",
+      "stderr": "",
+      "durationMs": 4062,
+      "summary": {
+        "tests": 21,
+        "passed": 19,
+        "failed": 2,
+        "skipped": 0
+      }
+    },
+    "controlA": {
+      "command": "C:\\Program Files\\nodejs\\node.exe",
+      "args": [
+        "--test",
+        "--test-reporter=tap",
+        "tests/collisionlab-generated.test.mjs"
+      ],
+      "cwd": "<tmp>",
+      "exitCode": 0,
+      "signal": null,
+      "error": null,
+      "stdout": "TAP version 13\n# Subtest: getActiveUserCount() returns 2 after one user is removed\nok 1 - getActiveUserCount() returns 2 after one user is removed # SKIP src/reporting.js is absent on this branch — reporting feature not present\n  ---\n  duration_ms: 0.5644\n  type: 'test'\n  ...\n# Subtest: getUserSummary() excludes removed users\nok 2 - getUserSummary() excludes removed users # SKIP src/reporting.js is absent on this branch — reporting feature not present\n  ---\n  duration_ms: 0.1476\n  type: 'test'\n  ...\n1..2\n# tests 2\n# suites 0\n# pass 0\n# fail 0\n# cancelled 0\n# skipped 2\n# todo 0\n# duration_ms 702.1227\n",
+      "stderr": "",
+      "durationMs": 1393,
+      "summary": {
+        "tests": 2,
+        "passed": 0,
+        "failed": 0,
+        "skipped": 2
+      }
+    },
+    "controlB": {
+      "command": "C:\\Program Files\\nodejs\\node.exe",
+      "args": [
+        "--test",
+        "--test-reporter=tap",
+        "tests/collisionlab-generated.test.mjs"
+      ],
+      "cwd": "<tmp>",
+      "exitCode": 0,
+      "signal": null,
+      "error": null,
+      "stdout": "TAP version 13\n# Subtest: getActiveUserCount() returns 2 after one user is removed\nok 1 - getActiveUserCount() returns 2 after one user is removed\n  ---\n  duration_ms: 3.2747\n  type: 'test'\n  ...\n# Subtest: getUserSummary() excludes removed users\nok 2 - getUserSummary() excludes removed users\n  ---\n  duration_ms: 0.512\n  type: 'test'\n  ...\n1..2\n# tests 2\n# suites 0\n# pass 2\n# fail 0\n# cancelled 0\n# skipped 0\n# todo 0\n# duration_ms 700.8958\n",
+      "stderr": "",
+      "durationMs": 1398,
+      "summary": {
+        "tests": 2,
+        "passed": 2,
+        "failed": 0,
+        "skipped": 0
+      }
+    },
+    "combined": {
+      "command": "C:\\Program Files\\nodejs\\node.exe",
+      "args": [
+        "--test",
+        "--test-reporter=tap",
+        "tests/collisionlab-generated.test.mjs"
+      ],
+      "cwd": "<tmp>",
+      "exitCode": 1,
+      "signal": null,
+      "error": null,
+      "stdout": "TAP version 13\n# Subtest: getActiveUserCount() returns 2 after one user is removed\nnot ok 1 - getActiveUserCount() returns 2 after one user is removed\n  ---\n  duration_ms: 3.9252\n  type: 'test'\n  location: '<tmp>",
+      "stderr": "",
+      "durationMs": 1400,
+      "summary": {
+        "tests": 2,
+        "passed": 0,
+        "failed": 2,
+        "skipped": 0
+      }
+    }
+  },
+  "cleanup": [
+    {
+      "path": "<tmp>",
+      "result": {
+        "command": "git",
+        "args": [
+          "worktree",
+          "remove",
+          "--force",
+          "<tmp>"
+        ],
+        "cwd": "<tmp>",
+        "exitCode": 0,
+        "signal": null,
+        "error": null,
+        "stdout": "",
+        "stderr": "",
+        "durationMs": 109
+      }
+    },
+    {
+      "path": "<tmp>",
+      "result": {
+        "command": "git",
+        "args": [
+          "worktree",
+          "remove",
+          "--force",
+          "<tmp>"
+        ],
+        "cwd": "<tmp>",
+        "exitCode": 0,
+        "signal": null,
+        "error": null,
+        "stdout": "",
+        "stderr": "",
+        "durationMs": 104
+      }
+    },
+    {
+      "path": "<tmp>",
+      "result": {
+        "command": "git",
+        "args": [
+          "worktree",
+          "remove",
+          "--force",
+          "<tmp>"
+        ],
+        "cwd": "<tmp>",
+        "exitCode": 0,
+        "signal": null,
+        "error": null,
+        "stdout": "",
+        "stderr": "",
+        "durationMs": 106
+      }
+    }
+  ],
+  "merge": {
+    "command": "git",
+    "args": [
+      "-c",
+      "user.name=CollisionLab",
+      "-c",
+      "user.email=demo@collisionlab.local",
+      "merge",
+      "--no-edit",
+      "5e3c257785113367595d5507bfbde678ba5d2c3c"
+    ],
+    "cwd": "<tmp>",
+    "exitCode": 0,
+    "signal": null,
+    "error": null,
+    "stdout": "Merge made by the 'ort' strategy.\n src/userStore.js        | 20 ++++++++------------\n tests/userStore.test.js | 33 +++++++++++++++++++++++++++++++++\n 2 files changed, 41 insertions(+), 12 deletions(-)\n create mode 100644 tests/userStore.test.js\n",
+    "stderr": "",
+    "durationMs": 248
+  },
+  "unmergedPaths": {
+    "command": "git",
+    "args": [
+      "diff",
+      "--name-only",
+      "--diff-filter=U"
+    ],
+    "cwd": "<tmp>",
+    "exitCode": 0,
+    "signal": null,
+    "error": null,
+    "stdout": "",
+    "stderr": "",
+    "durationMs": 92
+  },
+  "cleanupOk": true,
+  "finishedAt": "2026-09-26T04:09:29.389Z"
+}
+

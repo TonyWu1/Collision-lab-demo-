@@ -1,0 +1,77 @@
+diff --git a/src/userStore.js b/src/userStore.js
+index 61a04f9..4d1e723 100644
+--- a/src/userStore.js
++++ b/src/userStore.js
+@@ -1,8 +1,9 @@
+-// User store with physical delete.
++// User store with soft delete (sets deleted: true instead of removing the record).
++// Downstream code that needs "active users" should filter on !u.deleted.
+ const users = [
+-  { id: 'u1', username: 'alice', email: 'alice@example.com' },
+-  { id: 'u2', username: 'bruno', email: 'bruno@example.com' },
+-  { id: 'u3', username: 'carla', email: 'carla@example.com' },
++  { id: 'u1', username: 'alice', email: 'alice@example.com', deleted: false },
++  { id: 'u2', username: 'bruno', email: 'bruno@example.com', deleted: false },
++  { id: 'u3', username: 'carla', email: 'carla@example.com', deleted: false },
+ ];
+ 
+ export function getAllUsers() {
+@@ -14,15 +15,10 @@ export function getUserById(id) {
+ }
+ 
+ export function removeUser(id) {
+-  const idx = users.findIndex((u) => u.id === id);
+-  if (idx !== -1) users.splice(idx, 1);
++  const user = users.find((u) => u.id === id);
++  if (user) user.deleted = true;
+ }
+ 
+ export function resetUsers() {
+-  users.splice(0);
+-  users.push(
+-    { id: 'u1', username: 'alice', email: 'alice@example.com' },
+-    { id: 'u2', username: 'bruno', email: 'bruno@example.com' },
+-    { id: 'u3', username: 'carla', email: 'carla@example.com' },
+-  );
++  for (const u of users) u.deleted = false;
+ }
+diff --git a/tests/userStore.test.js b/tests/userStore.test.js
+new file mode 100644
+index 0000000..041c417
+--- /dev/null
++++ b/tests/userStore.test.js
+@@ -0,0 +1,33 @@
++import test from 'node:test';
++import assert from 'node:assert/strict';
++import { getAllUsers, getUserById, removeUser, resetUsers } from '../src/userStore.js';
++
++test.beforeEach(() => { resetUsers(); });
++
++test('getAllUsers returns all three users initially', () => {
++  assert.equal(getAllUsers().length, 3);
++});
++
++test('getUserById returns correct user', () => {
++  const u = getUserById('u1');
++  assert.equal(u.username, 'alice');
++});
++
++test('removeUser soft-deletes: record still exists with deleted flag', () => {
++  removeUser('u1');
++  const u = getUserById('u1');
++  assert.ok(u !== null, 'record should still exist after soft delete');
++  assert.equal(u.deleted, true);
++});
++
++test('removeUser does not change total count in getAllUsers', () => {
++  removeUser('u1');
++  // getAllUsers returns all records including soft-deleted ones
++  assert.equal(getAllUsers().length, 3);
++});
++
++test('resetUsers clears deleted flags', () => {
++  removeUser('u1');
++  resetUsers();
++  assert.equal(getUserById('u1').deleted, false);
++});
+

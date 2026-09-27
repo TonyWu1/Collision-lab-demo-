@@ -1,0 +1,16 @@
+{
+  "schemaVersion": 1,
+  "kind": "bob-collision-workflow",
+  "createdAt": "2026-09-26T04:07:39.460Z",
+  "repoRoot": "<redacted>",
+  "branchA": {
+    "ref": "feature/price-object-v2",
+    "sha": "0f23c69f74ecb313f4609c889f248e057fab9d2b"
+  },
+  "branchB": {
+    "ref": "feature/cart",
+    "sha": "bd96dff65b0b68b90676566a09f808f43ed1f09d"
+  },
+  "mergeBase": "2333e05494449d80bfe4fa889a64b20dbe24f7e0"
+}
+
