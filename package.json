@@ -2,7 +2,7 @@
   "name": "collisionlab-demo",
   "version": "1.0.0",
   "private": true,
-  "description": "Baseline demo for CollisionLab semantic conflict detection",
+  "description": "Bob-assisted workflow for detecting and reproducing semantic conflicts across Git branches",
   "type": "module",
   "scripts": {
     "start": "node src/app.js",
