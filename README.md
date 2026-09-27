@@ -1,79 +1,98 @@
-# CollisionLab baseline demo
+# CollisionLab
 
-CollisionLab will detect hidden semantic conflicts between Git branches: each
-branch works independently and passes its tests, Git merges without a textual
-conflict, but the combined behavior breaks the application.
+> **Find the behavioral conflicts Git cannot see.**
 
-## Evidence dashboard
+CollisionLab demonstrates a common integration risk: two branches pass their own tests and merge without text conflicts, yet their combined behavior breaks an application.
 
-Requires Node.js 20 or newer. No dependencies to install.
+[🌐 Open the demo](https://tonywu1.github.io/Collision-lab-demo-/) · [📦 View the repository](https://github.com/TonyWu1/Collision-lab-demo-)
 
-```sh
-cd collisionlab-demo
-node scripts/server.mjs        # or: npm run dashboard
-```
+## The problem
 
-Open **http://localhost:7432/** in a browser.
+A clean Git merge only confirms that Git could combine the text. It does not confirm that the features agree on what data means or how the application should behave.
 
-The dashboard is a **known-scenario evidence viewer** for this specific demo.
-It does not automatically discover new conflicts or call external services.
+CollisionLab makes that gap visible with controlled examples. It checks the branches independently, merges them in an isolated worktree, and exercises the combined behavior with an integration test.
 
-- **Select a report** from the dropdown to view a previously saved run.
-- **Click "Run demo now"** to invoke `scripts/run-demo.mjs`, stream its output
-  live, and load the new report when it finishes.
-- A green "Evidence run completed" banner means the runner collected all five
-  expected observations — it does **not** mean the merged application passed.
-  Step 4 intentionally shows a failing integration test (the semantic collision).
+## Demonstrations
 
-## CLI commands
+| Example | Branch assumptions | Combined result |
+|---|---|---|
+| **Email login and profile cache** | Authentication accepts email; the profile cache looks up by username | Login succeeds, but the profile lookup returns `null` |
+| **Price object and cart total** | The catalog returns a price object; the cart expects a number | The total becomes `NaN` |
+| **Soft delete and reporting** | Deleted users remain stored; reporting counts every stored user | The active-user count is too high |
 
-```sh
-npm run demo        # run the evidence runner directly (no browser needed)
-npm test            # run the test suite for the current branch
-npm start           # run src/app.js
-```
+Scenario 1 includes a fix that keys the profile cache by immutable user ID. Scenarios 2 and 3 are demonstrations; their fixes are not implemented yet.
 
-## Run
+## What the prototype does
 
-Requires Node.js 20 or newer and npm. There are no dependencies to install.
+- Runs known scenario branches independently.
+- Checks whether Git can merge the selected scenario without textual conflicts.
+- Runs a focused integration check against the combined behavior.
+- Shows the result and supporting evidence in a browser dashboard.
+- Uses Node.js and Git worktrees for the local evidence runner.
 
-```sh
-cd collisionlab-demo
-npm start
+**Current scope:** this is a reproducible demo for three prepared scenarios. It is not yet a general service that accepts arbitrary repositories or discovers every possible semantic conflict.
+
+## Try the hosted demo
+
+[Open CollisionLab’s evidence dashboard](https://tonywu1.github.io/Collision-lab-demo-/).
+
+The hosted site presents saved demonstration evidence. It does not run IBM Bob or analyze a visitor’s branches live. The failing application tests shown in collision cards are intentional reproductions; they are evidence of the collision, not dashboard crashes.
+
+## Run locally
+
+You need Node.js 20 or newer and Git.
+
+```bash
+git clone https://github.com/TonyWu1/Collision-lab-demo-.git
+cd Collision-lab-demo-
 npm test
+npm run demo
+npm run dashboard
 ```
 
-The demo finds Alice by ID, logs in with her username, caches her by immutable
-ID, and retrieves her from the cache. Tests use Node's built-in test runner.
+There are no npm packages to install. The evidence runner uses the scenario branches in this repository; on a fresh clone, fetch the repository branches before running it:
 
-## Baseline contracts
+```bash
+git fetch origin '+refs/heads/*:refs/heads/*'
+```
 
-- Each sample user has `id`, `username`, `email`, and `displayName`.
-- `getUserById(id)`, `getUserByUsername(username)`, and `getUserByEmail(email)`
-  return the matching user or `null`. Matching is exact and case-sensitive.
-- `login(username)` looks up a username and returns a user or `null`.
-  This is a demo lookup, not production password authentication.
-- `cacheUser(user)` stores a user in an in-memory Map keyed only by `user.id`.
-- `getCachedUser(id)` returns the cached user or `null`.
-- `clearCache()` removes all cache entries.
-- Sample user IDs cannot be reassigned. Other fields remain editable. User
-  lookups and the cache return the in-memory user objects, not copies.
-- The data and cache last only for the running process; there is no database.
+The dashboard runs at **http://localhost:7432/**. The runner uses temporary Git worktrees and writes its reports under `scripts/reports/`.
 
-## Files
+## IBM Bob 2.0 workflow
+
+CollisionLab is designed around a Bob-assisted developer workflow:
+
+1. Review the two branch changes and the project requirements.
+2. Compare the identity or data assumptions each branch makes.
+3. Propose a focused integration test for the suspected interaction.
+4. Run the test against the combined code and inspect the result.
+5. Explain the collision and suggest a compatible change.
+
+The hosted dashboard is a saved-evidence viewer; Bob runs in the developer’s IDE, not inside the public webpage.
+
+### Bob task evidence
+
+The hackathon submission requires task-session summary screenshots captured in the hackathon-provisioned Bob account. Add the genuine screenshots to [`bob_sessions/`](bob_sessions/README.md) before submission. The folder currently contains instructions only; it does not claim that screenshots have already been added.
+
+## Technology
+
+- Node.js, plain JavaScript, and Git
+- Node.js built-in test runner
+- Static HTML, CSS, and JavaScript dashboard
+- No database or third-party runtime dependencies
+
+## Repository layout
 
 ```text
-collisionlab-demo/
-├── src/
-│   ├── users.js
-│   ├── auth.js
-│   ├── cache.js
-│   └── app.js
-├── tests/
-│   ├── users.test.js
-│   ├── auth.test.js
-│   └── cache.test.js
+.
+├── bob_sessions/       # Add genuine IBM Bob task-summary screenshots here
+├── scripts/            # Evidence runner, local dashboard, and checks
+├── src/                # Baseline sample application
+├── tests/              # Node.js tests
 ├── package.json
-├── README.md
-└── .gitignore
+└── README.md
 ```
+
+## Project status
+
+This repository is a hackathon prototype and evidence package. It demonstrates how individually valid changes can interact badly, and it documents what the current runner can verify. The public demo and local runner have different roles: the public site is a saved replay; the local runner executes the prepared Git scenarios.
