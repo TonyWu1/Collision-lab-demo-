@@ -4,36 +4,31 @@ The homepage executes the three prepared scenario functions in the visitor’s b
 
 Source snapshots are unchanged copies from the commits listed in `playground/sources.json`. The price snapshot comes from the available original `feature/price-object`; saved conflict-free Git merge evidence separately references `feature/price-object-v2`. Do not describe the browser run as proof of a new Git merge.
 
-The prior evidence dashboard is available at `evidence.html`. Two execution files contained invalid diagnostic strings caused by the earlier public export. Only those damaged log strings were replaced with explicit unavailable notices. Structured results were retained unchanged. `exportNotes` records the omissions; these historical runs were not rerun.
+The saved evidence dashboard is available at `evidence.html`. Two execution files contained invalid diagnostic strings caused by an earlier public export. Only those damaged log strings were replaced with explicit unavailable notices. Structured results were retained unchanged. `exportNotes` records the omissions; these historical runs were not rerun.
 
 Validation: `node --test scripts/test-public.mjs`. GitHub Pages runs this check before deployment so malformed evidence cannot be published silently. Preview: `node public/serve-test.mjs`, then open http://127.0.0.1:7433/.
 
 ---
 
-## Earlier evidence-bundle documentation
-
 # CollisionLab — Public Demo
 
-> **Saved demonstration evidence — analysis runs locally in IBM Bob.**
+> **Live browser playground + saved demonstration evidence. IBM Bob analysis runs in the developer IDE.**
 
-`public/` contains a static HTML dashboard that displays pre-recorded evidence from three semantic collision analyses. No Node.js, Git, or local API is required to view it.
-
----
+`public/` contains the hosted CollisionLab experience. Visitors can execute three prepared browser scenarios and inspect pre-recorded evidence from Bob-assisted semantic-collision analyses. No Node.js, Git, or local API is required to view the hosted site.
 
 ## What's included
 
 | Path | Description |
 |---|---|
-| `public/index.html` | Static dashboard (self-contained HTML+JS) |
+| `public/index.html` | Live browser playground for the three prepared scenarios |
+| `public/evidence.html` | Saved evidence dashboard |
 | `public/demo-data/index.json` | Bundle manifest listing analyses and the prepared-demo report |
 | `public/demo-data/prepared-demo.json` | Evidence from `npm run demo` (three scenarios, one run) |
 | `public/demo-data/analyses/analysis-1790394975281/` | Auth identity / profile-cache collision — `feature/email-auth` × `feature/profile-cache-v2` |
 | `public/demo-data/analyses/analysis-1790395587341/` | Soft-delete / reporting collision — `feature/soft-delete` × `feature/reporting` |
 | `public/demo-data/analyses/analysis-1790395659460/` | Price object / cart collision — `feature/price-object-v2` × `feature/cart` |
 
-All three analyses were produced by running `/collision` in IBM Bob Agent mode on this repository. All absolute paths have been redacted from the evidence files.
-
----
+All three saved analyses were produced by running `/collision` in IBM Bob Agent mode on this repository. All absolute paths have been redacted from the evidence files.
 
 ## View locally
 
@@ -49,72 +44,17 @@ node serve-test.mjs
 # Then open http://127.0.0.1:7433/
 ```
 
----
-
 ## Publish to GitHub Pages
 
-### Option 1 — `docs/` folder on the branch
+The repository uses `.github/workflows/deploy-pages.yml` to validate and deploy the `public/` directory from the canonical `main` branch.
 
-1. Copy the `public/` directory contents to `docs/` (or rename `public/` to `docs/`):
-   ```bash
-   cp -r public/* docs/public-demo/
-   # or move the directory if using docs/ as root
-   ```
-2. In your GitHub repository settings → **Pages** → Source: **Deploy from a branch** → select `feature/public-demo` → folder `/docs`.
-3. Push the branch. Pages deploys automatically.
+In repository settings → **Pages**, the source should be **GitHub Actions**. Every push to `main` runs the public validation suite before deployment.
 
-### Option 2 — `gh-pages` branch
+The public URL is:
 
-```bash
-# From the repo root on feature/public-demo:
-git subtree push --prefix public origin gh-pages
-```
+`https://tonywu1.github.io/Collision-lab-demo-/`
 
-Or using the `gh-pages` npm package:
-```bash
-npx gh-pages -d public
-```
-
-GitHub Pages will serve `public/index.html` as the root.
-
-### Option 3 — GitHub Actions (recommended for automation)
-
-Create `.github/workflows/pages.yml`:
-
-```yaml
-name: Deploy CollisionLab Public Demo
-on:
-  push:
-    branches: [feature/public-demo]
-permissions:
-  contents: read
-  pages: write
-  id-token: write
-jobs:
-  deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/configure-pages@v4
-      - uses: actions/upload-pages-artifact@v3
-        with:
-          path: public
-      - uses: actions/deploy-pages@v4
-        id: deployment
-```
-
-Then in repository settings → Pages → Source: **GitHub Actions**.
-
-> **Note:** Do not claim deployment until a public URL is actually reachable. The URL will be `https://<owner>.github.io/<repo>/` (or a custom domain if configured).
-
----
-
-## Local development dashboard (preserved)
-
-The full local dashboard with live analysis runner is unchanged:
+## Local development dashboard
 
 ```bash
 # Start local dashboard (requires Node ≥ 20)
@@ -129,11 +69,9 @@ npm run demo
 #   /collision feature/email-auth feature/profile-cache-v2 demo/combined-auth-cache:requirements/authentication-v2.md
 ```
 
----
-
 ## Evidence integrity
 
-Each analysis directory contains:
+Each saved analysis directory contains:
 
 - `manifest.json` — branch refs and SHAs recorded at workflow start
 - `execution.json` — test run results, merge outcome, cleanup status
