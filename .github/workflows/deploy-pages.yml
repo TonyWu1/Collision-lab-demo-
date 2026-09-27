@@ -3,7 +3,7 @@ name: Deploy CollisionLab Public Demo
 on:
   push:
     branches:
-      - feature/public-demo
+      - main
   workflow_dispatch:
 
 # Required for GitHub Pages deployment via OIDC
