@@ -46,9 +46,9 @@ node serve-test.mjs
 
 ## Publish to GitHub Pages
 
-The repository uses `.github/workflows/deploy-pages.yml` to validate and deploy the `public/` directory from the canonical `main` branch.
+`main` is the canonical submission branch. The deployment workflow runs from `feature/public-demo`, which is kept synchronized with `main` for GitHub Pages deployment.
 
-In repository settings → **Pages**, the source should be **GitHub Actions**. Every push to `main` runs the public validation suite before deployment.
+The workflow validates the public evidence and browser scenarios before publishing the `public/` directory. In repository settings → **Pages**, the source should be **GitHub Actions**.
 
 The public URL is:
 
