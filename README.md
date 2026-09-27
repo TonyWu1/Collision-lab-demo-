@@ -86,8 +86,6 @@ The hackathon submission requires task-session summary screenshots captured in t
 ```text
 .
 ├── bob_sessions/       # Add genuine IBM Bob task-summary screenshots here
-├── docs/               # Scenario and workflow documentation
-├── public/             # Public evidence viewer and saved demo data
 ├── scripts/            # Evidence runner, local dashboard, and checks
 ├── src/                # Baseline sample application
 ├── tests/              # Node.js tests
